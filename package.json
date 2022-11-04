@@ -1,39 +1,71 @@
 {
   "name": "things-to-do",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "A light and fast todo-app, built with angular 13",
+  "author": {
+    "email": "anirban.mjee@gmail.com",
+    "name": "anirbmuk"
+  },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/anirbmuk/things-to-do.git"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "lint": "ng lint",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "format:check": "prettier --config ./.prettierrc --list-different \"src/app/**/*{.ts,.js,.json,.css,.scss,.html}\"",
+    "format:fix": "prettier --config ./.prettierrc --write \"src/app/**/*{.ts,.js,.json,.css,.scss,.html}\"",
+    "prepare": "husky install",
+    "postinstall": "ngcc"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "~13.3.0",
+    "@angular/cdk": "^13.3.9",
     "@angular/common": "~13.3.0",
     "@angular/compiler": "~13.3.0",
     "@angular/core": "~13.3.0",
     "@angular/forms": "~13.3.0",
+    "@angular/material": "^13.3.9",
     "@angular/platform-browser": "~13.3.0",
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
+    "@angular/service-worker": "~13.3.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~13.3.9",
+    "@angular-eslint/builder": "13.5.0",
+    "@angular-eslint/eslint-plugin": "13.5.0",
+    "@angular-eslint/eslint-plugin-template": "13.5.0",
+    "@angular-eslint/schematics": "13.5.0",
+    "@angular-eslint/template-parser": "13.5.0",
     "@angular/cli": "~13.3.9",
     "@angular/compiler-cli": "~13.3.0",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
+    "@typescript-eslint/eslint-plugin": "5.27.1",
+    "@typescript-eslint/parser": "5.27.1",
+    "autoprefixer": "^10.4.13",
+    "eslint": "^8.17.0",
+    "husky": "^8.0.1",
     "jasmine-core": "~4.0.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "postcss": "^8.4.18",
+    "prettier": "^2.7.1",
+    "rimraf": "^3.0.2",
+    "source-map-explorer": "^2.5.3",
+    "tailwindcss": "^3.2.1",
     "typescript": "~4.6.2"
   }
 }
