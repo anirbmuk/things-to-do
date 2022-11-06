@@ -1,8 +1,7 @@
 export interface ITodo {
   todoid: string;
-  createdon: string;
   duedate: string;
+  heading: string;
   text: string;
   status: 'Incomplete' | 'Complete';
-  displaydate?: string | undefined;
 }

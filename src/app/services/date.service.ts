@@ -11,12 +11,4 @@ export class DateService {
     const now = new Date(date);
     return now.toISOString();
   }
-
-  getDisplayDate(date: string | undefined): string | undefined {
-    if (!date) {
-      return;
-    }
-    const now = new Date(date);
-    return now.toString();
-  }
 }
