@@ -34,15 +34,19 @@ export class TodoService {
 
   async getTodos() {
     const storedTodos = await this.storage.getItems<ITodo>();
-    return storedTodos.map(todo => {
-      const createdonLocal = this.dates.getDisplayDate(todo.createdon);
-      const duedateLocal = this.dates.getDisplayDate(todo.duedate);
-      return {
-        ...todo,
-        ...(createdonLocal && { createdon: createdonLocal }),
-        ...(duedateLocal && { duedate: duedateLocal })
-      };
-    });
+    return storedTodos
+      .map(todo => {
+        const createdonLocal = this.dates.getDisplayDate(todo.createdon);
+        const duedateLocal = this.dates.getDisplayDate(todo.duedate);
+        return {
+          ...todo,
+          ...(createdonLocal && { createdon: createdonLocal }),
+          ...(duedateLocal && { duedate: duedateLocal })
+        };
+      })
+      .sort(
+        (todo1, todo2) => +new Date(todo1.duedate) - +new Date(todo2.duedate)
+      );
   }
 
   async findTodos(conditions: ((item: ITodo) => boolean)[]) {
