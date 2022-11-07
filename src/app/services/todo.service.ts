@@ -9,9 +9,12 @@ import {
   map
 } from 'rxjs';
 import { ITodo } from '../models/todo.model';
-import { AddTodo, UpdateTodo } from '../types/todo.type';
+import { AddTodo, GroupBy, GroupedTodo, UpdateTodo } from '../types';
 import { DateService } from './date.service';
 import { StorageService } from './storage.service';
+
+const defaultSort = (todo1: ITodo, todo2: ITodo) =>
+  +new Date(todo1.duedate) - +new Date(todo2.duedate);
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +27,9 @@ export class TodoService {
     undefined
   );
   private searchString$ = this.searchString.asObservable();
+
+  private groupByClause = new BehaviorSubject<GroupBy>('day');
+  private groupByByClause$ = this.groupByClause.asObservable();
 
   private conditions$ = combineLatest([this.showAll$, this.searchString$]).pipe(
     map(([showAll, searchString]) => {
@@ -68,12 +74,13 @@ export class TodoService {
 
   private async _getTodos() {
     const storedTodos = await this.storage.getItems<ITodo>();
-    return storedTodos.sort(
-      (todo1, todo2) => +new Date(todo1.duedate) - +new Date(todo2.duedate)
-    );
+    return storedTodos.sort(defaultSort);
   }
 
-  private async _findTodos(conditions?: ((item: ITodo) => boolean)[]) {
+  private async _findTodos(
+    groupbyClause: GroupBy,
+    conditions?: ((item: ITodo) => boolean)[]
+  ) {
     try {
       const todos = await this._getTodos();
       if (todos.length && conditions?.length) {
@@ -81,9 +88,9 @@ export class TodoService {
         for (const condition of conditions) {
           filteredTodos = filteredTodos?.filter(condition);
         }
-        return filteredTodos;
+        return this.groupTodos(filteredTodos, groupbyClause);
       }
-      return todos;
+      return this.groupTodos(todos, groupbyClause);
     } catch (err) {
       console.error('[_findTodos]', err);
       throw new Error('Error while fetching todos');
@@ -91,9 +98,11 @@ export class TodoService {
   }
 
   findTodos() {
-    return this.conditions$.pipe(
-      exhaustMap(conditions =>
-        from(this._findTodos(conditions)).pipe(catchError(() => EMPTY))
+    return combineLatest([this.groupByByClause$, this.conditions$]).pipe(
+      exhaustMap(([groupByClause, conditions]) =>
+        from(this._findTodos(groupByClause, conditions)).pipe(
+          catchError(() => EMPTY)
+        )
       )
     );
   }
@@ -110,9 +119,45 @@ export class TodoService {
     this.searchString.next(text);
   }
 
+  updateGroupBy(clause: GroupBy) {
+    this.groupByClause.next(clause);
+  }
+
   private generateTodoId() {
     return btoa(`${+new Date()}`)
       .slice(0, -2)
       .toLowerCase();
+  }
+
+  groupTodos(todos: ITodo[], groupbyClause: GroupBy) {
+    const dategroups = new Set<string>();
+    for (const todo of todos) {
+      dategroups.add(this.groupByFn(new Date(todo.duedate), groupbyClause));
+    }
+    const groupedByTodos: GroupedTodo[] = [];
+    for (const group of [...dategroups]) {
+      const groupedTodo: GroupedTodo = {
+        datedivider: group,
+        todos: todos.filter(
+          todo =>
+            this.groupByFn(new Date(todo.duedate), groupbyClause) === group
+        )
+      };
+      groupedByTodos.push(groupedTodo);
+    }
+    return groupedByTodos;
+  }
+
+  private groupByFn(duedate: Date, groupby: GroupBy): string {
+    if (groupby === 'day') {
+      return `${duedate.getFullYear()}-${(duedate.getMonth() + 1)
+        .toString()
+        .padStart(2, '0')}-${duedate.getDate().toString().padStart(2, '0')}`;
+    } else if (groupby === 'month') {
+      return `${duedate.getFullYear()}-${(duedate.getMonth() + 1)
+        .toString()
+        .padStart(2, '0')}`;
+    }
+    return '';
   }
 }

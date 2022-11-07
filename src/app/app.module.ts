@@ -9,10 +9,10 @@ import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
 
-import { DisplayDatePipe } from './pipes/display-date.pipe';
+import { DisplayDatePipe, GroupDatePipe } from './pipes';
 
 const COMPONENTS = [AppComponent];
-const PIPES = [DisplayDatePipe];
+const PIPES = [DisplayDatePipe, GroupDatePipe];
 const CORE_MODULES = [
   BrowserModule,
   BrowserAnimationsModule,
