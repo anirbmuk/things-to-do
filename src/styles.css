@@ -6,5 +6,21 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+  }
+  .mat-toolbar,
+  .mat-button-toggle,
+  .mat-form-field,
+  .mat-label {
+    @apply font-sans;
+  }
+  .mat-button-toggle {
+    @apply text-md;
+  }
+  .mat-button-toggle-group {
+    @apply border-indigo;
+  }
+  .mat-button-toggle-checked {
+    @apply bg-indigo !text-white;
   }
 }

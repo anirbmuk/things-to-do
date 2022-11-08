@@ -8,10 +8,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
+import { HeaderComponent } from './header/header.component';
 
 import { TodoModule } from './features/todo/todo.module';
 
-const COMPONENTS = [AppComponent] as const;
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+
+const COMPONENTS = [AppComponent, HeaderComponent] as const;
 const CORE_MODULES = [
   BrowserModule,
   BrowserAnimationsModule,
@@ -23,10 +28,11 @@ const CORE_MODULES = [
   })
 ] as const;
 const CUSTOM_MODULES = [AppRoutingModule, TodoModule] as const;
+const MATERIAL_MODULES = [MatToolbarModule, MatButtonModule, MatIconModule];
 
 @NgModule({
   declarations: [...COMPONENTS],
-  imports: [...CORE_MODULES, ...CUSTOM_MODULES],
+  imports: [...CORE_MODULES, ...CUSTOM_MODULES, ...MATERIAL_MODULES],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

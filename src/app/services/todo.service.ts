@@ -36,7 +36,11 @@ export class TodoService extends ComponentStore<ITodoState> {
       conditions.push(
         (item: ITodo) =>
           item.text.toLowerCase().includes(searchString.toLowerCase()) ||
-          item.heading.toLowerCase().includes(searchString.toLowerCase())
+          item.heading.toLowerCase().includes(searchString.toLowerCase()) ||
+          item.additional?.message
+            ?.toLowerCase()
+            ?.includes(searchString.toLowerCase()) ||
+          false
       );
     }
 
@@ -98,7 +102,15 @@ export class TodoService extends ComponentStore<ITodoState> {
 
   private async _getTodos() {
     const storedTodos = await this.storage.getItems<ITodo>();
-    return storedTodos.sort(defaultSort);
+    return storedTodos
+      .map(todo => {
+        const additional = this.getAdditionalInfo(todo);
+        return {
+          ...todo,
+          ...(additional && { additional })
+        };
+      })
+      .sort(defaultSort);
   }
 
   private async _findTodos(
@@ -119,6 +131,11 @@ export class TodoService extends ComponentStore<ITodoState> {
       console.error('[_findTodos]', err);
       throw new Error('Error while fetching todos');
     }
+  }
+
+  private getAdditionalInfo(todo: ITodo) {
+    const duedate = +new Date(todo.duedate);
+    return todo.status === 'Incomplete' && this.dates.getStatus(duedate);
   }
 
   findTodos() {

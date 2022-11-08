@@ -2,9 +2,7 @@
   [showAll]="showAll$ | async"
   [groupBy]="groupBy$ | async"
   (toggleShowAll)="updateShowAll($event)"
-  (toggleGroupBy)="updateGroupBy($event)"
-  [search]="searchString$ | async"
-  (typeSearch)="updateSearchString($event)">
+  (toggleGroupBy)="updateGroupBy($event)">
 </ttd-action>
 <hr />
 <ttd-content [todos]="groupedtodo$ | async"></ttd-content>

@@ -16,7 +16,6 @@ import { GroupBy } from 'src/app/types';
 export class ActionComponent {
   @Input() showAll: boolean | null = false;
   @Input() groupBy: GroupBy | null = 'day';
-  @Input() search: string | undefined | null = '';
 
   @Output() toggleShowAll = new EventEmitter<boolean>();
   @Output() toggleGroupBy = new EventEmitter<GroupBy>();
@@ -28,9 +27,5 @@ export class ActionComponent {
 
   onToggleGroupBy() {
     this.toggleGroupBy.emit(this.groupBy === 'day' ? 'month' : 'day');
-  }
-
-  onTypeSearch() {
-    this.typeSearch.emit(this.search);
   }
 }
