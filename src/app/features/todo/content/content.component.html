@@ -1,0 +1,30 @@
+<div class="my-4">
+  <ng-container *ngIf="todos?.length; else nodata">
+    <ng-container *ngFor="let group of todos; trackBy: trackByGroupFn">
+      <div class="text-2xl font-bold">
+        {{ group.datedivider | tddGroupDate }}
+      </div>
+      <ng-container *ngFor="let todo of group.todos; trackBy: trackByTodoFn">
+        <div class="py-2 px-4">
+          <div class="text font-bold">
+            {{ todo.heading + ' | ' + todo.text }}
+          </div>
+          <div class="text-sm text-gray-600">
+            Due: {{ todo.duedate | tddDisplayDate | date: 'medium' }}
+          </div>
+          <div
+            class="text-md"
+            [ngClass]="{
+              'text-red-600': todo.status === 'Incomplete',
+              'text-green-600': todo.status === 'Complete'
+            }">
+            {{ todo.status }}
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+  <ng-template #nodata>
+    <div class="text-red-600">No TODO found</div>
+  </ng-template>
+</div>

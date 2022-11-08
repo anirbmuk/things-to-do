@@ -9,10 +9,9 @@ import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
 
-import { DisplayDatePipe, GroupDatePipe } from './pipes';
+import { TodoModule } from './features/todo/todo.module';
 
-const COMPONENTS = [AppComponent];
-const PIPES = [DisplayDatePipe, GroupDatePipe];
+const COMPONENTS = [AppComponent] as const;
 const CORE_MODULES = [
   BrowserModule,
   BrowserAnimationsModule,
@@ -22,13 +21,12 @@ const CORE_MODULES = [
     // or after 30 seconds (whichever comes first).
     registrationStrategy: 'registerWhenStable:30000'
   })
-];
-const CUSTOM_MODULES = [AppRoutingModule];
+] as const;
+const CUSTOM_MODULES = [AppRoutingModule, TodoModule] as const;
 
 @NgModule({
-  declarations: [...COMPONENTS, ...PIPES],
+  declarations: [...COMPONENTS],
   imports: [...CORE_MODULES, ...CUSTOM_MODULES],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

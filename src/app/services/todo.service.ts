@@ -1,13 +1,7 @@
 import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  catchError,
-  combineLatest,
-  EMPTY,
-  exhaustMap,
-  from,
-  map
-} from 'rxjs';
+import { ComponentStore } from '@ngrx/component-store';
+import { catchError, combineLatest, EMPTY, exhaustMap, from, tap } from 'rxjs';
+import { ITodoState } from '../models';
 import { ITodo } from '../models/todo.model';
 import { AddTodo, GroupBy, GroupedTodo, UpdateTodo } from '../types';
 import { DateService } from './date.service';
@@ -16,44 +10,74 @@ import { StorageService } from './storage.service';
 const defaultSort = (todo1: ITodo, todo2: ITodo) =>
   +new Date(todo1.duedate) - +new Date(todo2.duedate);
 
+const defaultState: ITodoState = {
+  todos: [] as GroupedTodo[],
+  showAll: false,
+  groupBy: 'day',
+  searchString: ''
+} as const;
+
 @Injectable({
   providedIn: 'root'
 })
-export class TodoService {
-  private showAll = new BehaviorSubject<boolean>(false);
-  private showAll$ = this.showAll.asObservable();
+export class TodoService extends ComponentStore<ITodoState> {
+  readonly todo$ = this.select(({ todos }) => todos);
+  readonly showAll$ = this.select(({ showAll }) => showAll);
+  readonly searchString$ = this.select(({ searchString }) => searchString);
+  readonly groupBy$ = this.select(({ groupBy }) => groupBy);
 
-  private searchString = new BehaviorSubject<string | undefined | null>(
-    undefined
+  private conditions$ = this.select(({ showAll, searchString }) => {
+    const conditions: ((item: ITodo) => boolean)[] = [];
+
+    if (!showAll) {
+      conditions.push((item: ITodo) => item.status === 'Incomplete');
+    }
+    if (searchString) {
+      conditions.push(
+        (item: ITodo) =>
+          item.text.toLowerCase().includes(searchString.toLowerCase()) ||
+          item.heading.toLowerCase().includes(searchString.toLowerCase())
+      );
+    }
+
+    return conditions;
+  });
+
+  readonly updateTodos = this.updater(
+    (state: ITodoState, todos: GroupedTodo[]) => ({
+      ...state,
+      todos
+    })
   );
-  private searchString$ = this.searchString.asObservable();
 
-  private groupByClause = new BehaviorSubject<GroupBy>('day');
-  private groupByByClause$ = this.groupByClause.asObservable();
+  readonly updateShowAll = this.updater(
+    (state: ITodoState, showAll: boolean) => ({
+      ...state,
+      showAll
+    })
+  );
 
-  private conditions$ = combineLatest([this.showAll$, this.searchString$]).pipe(
-    map(([showAll, searchString]) => {
-      const conditions: ((item: ITodo) => boolean)[] = [];
+  readonly updateSearchString = this.updater(
+    (state: ITodoState, searchString: string | undefined | null) => ({
+      ...state,
+      searchString
+    })
+  );
 
-      if (!showAll) {
-        conditions.push((item: ITodo) => item.status === 'Incomplete');
-      }
-      if (searchString) {
-        conditions.push(
-          (item: ITodo) =>
-            item.text.toLowerCase().includes(searchString.toLowerCase()) ||
-            item.heading.toLowerCase().includes(searchString.toLowerCase())
-        );
-      }
-
-      return conditions;
+  readonly updateGroupBy = this.updater(
+    (state: ITodoState, groupBy: GroupBy) => ({
+      ...state,
+      groupBy
     })
   );
 
   constructor(
     private readonly storage: StorageService,
     private readonly dates: DateService
-  ) {}
+  ) {
+    super(defaultState);
+    this.fetchTodos();
+  }
 
   addTodo(todo: AddTodo) {
     const duedateUTC = this.dates.getStorageDate(todo.duedate);
@@ -98,7 +122,7 @@ export class TodoService {
   }
 
   findTodos() {
-    return combineLatest([this.groupByByClause$, this.conditions$]).pipe(
+    return combineLatest([this.groupBy$, this.conditions$]).pipe(
       exhaustMap(([groupByClause, conditions]) =>
         from(this._findTodos(groupByClause, conditions)).pipe(
           catchError(() => EMPTY)
@@ -107,20 +131,16 @@ export class TodoService {
     );
   }
 
+  readonly fetchTodos = this.effect(param$ =>
+    param$.pipe(
+      exhaustMap(() =>
+        this.findTodos().pipe(tap(data => this.updateTodos(data)))
+      )
+    )
+  );
+
   clearTodos() {
     return this.storage.removeAll();
-  }
-
-  toggleShowAll(status: boolean) {
-    this.showAll.next(status);
-  }
-
-  searchText(text: string | undefined | null) {
-    this.searchString.next(text);
-  }
-
-  updateGroupBy(clause: GroupBy) {
-    this.groupByClause.next(clause);
   }
 
   private generateTodoId() {
