@@ -2,38 +2,60 @@
   <ng-container *ngIf="todos?.length; else nodata">
     <ng-container *ngFor="let group of todos; trackBy: trackByGroupFn">
       <fieldset class="text-2xl border-t border-gray-300 rounded">
-        <legend class="py-3 px-1">
+        <legend class="py-3 px-1 -mb-3">
           {{ group.datedivider | tddGroupDate }}
         </legend>
         <ng-container *ngFor="let todo of group.todos; trackBy: trackByTodoFn">
-          <div class="py-2 px-6">
-            <div class="text font-bold flex space-x-2 items-center">
-              <span>{{ todo.heading }}</span>
-              <ng-container *ngIf="todo.additional">
-                <span
-                  class="font-normal text-white rounded-sm text-sm py-1 px-2"
-                  [ngClass]="{
-                    'bg-red': todo.additional.state === 'error',
-                    'bg-warning': todo.additional.state === 'warn',
-                    'bg-info': todo.additional.state === 'info'
-                  }"
-                  >{{ todo.additional.message }}</span
-                >
-              </ng-container>
-            </div>
-            <div class="text-md" [ngClass]="{ 'mt-1': !!todo.additional }">
-              {{ todo.text }}
-            </div>
-            <div class="text-sm text-gray-600">
-              Due: {{ todo.duedate | tddDisplayDate | date: 'medium' }}
-            </div>
-            <div
-              class="text-md"
-              [ngClass]="{
-                'text-red-600': todo.status === 'Incomplete',
-                'text-green-600': todo.status === 'Complete'
-              }">
-              {{ todo.status }}
+          <div
+            class="py-2 px-6 bg-gray-100 rounded border border-gray-200 my-2 cursor-pointer"
+            role="listitem"
+            (click)="editTodo(todo)">
+            <div class="grid grid-cols-3 gap-2">
+              <div class="flex flex-col col-span-2">
+                <ng-container *ngIf="todo.additional">
+                  <span
+                    class="font-normal text-white rounded-sm text-sm py-1 px-2 max-w-1/2 text-center"
+                    [ngClass]="{
+                      'bg-red': todo.additional.state === 'error',
+                      'bg-warning': todo.additional.state === 'warn',
+                      'bg-info': todo.additional.state === 'info'
+                    }"
+                    >{{ todo.additional.message }}</span
+                  >
+                </ng-container>
+                <div class="text font-bold">
+                  {{ todo.heading }}
+                </div>
+                <div class="text-md">
+                  {{ todo.text }}
+                </div>
+                <div class="text-sm text-gray-600">
+                  Due: {{ todo.duedate | tddDisplayDate | date: 'medium' }}
+                </div>
+              </div>
+              <div class="flex flex-col justify-between">
+                <div class="flex justify-end">
+                  <mat-icon
+                    [ngClass]="{
+                      'text-red-600': todo.status === 'Incomplete',
+                      'text-green-600': todo.status === 'Complete'
+                    }"
+                    >{{
+                      todo.status === 'Incomplete'
+                        ? 'unpublished'
+                        : 'check_circle'
+                    }}</mat-icon
+                  >
+                </div>
+                <div class="flex justify-end">
+                  <mat-icon
+                    class="text-amber-900 flex justify-end"
+                    role="button"
+                    (click)="deleteTodo($event, todo)">
+                    delete</mat-icon
+                  >
+                </div>
+              </div>
             </div>
           </div>
         </ng-container>

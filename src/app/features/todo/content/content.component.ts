@@ -18,4 +18,10 @@ export class ContentComponent {
   trackByTodoFn(_: number, todo: ITodo) {
     return todo.todoid;
   }
+
+  editTodo(todo: ITodo) {}
+
+  deleteTodo(event: Event, todo: ITodo) {
+    event.stopPropagation();
+  }
 }
