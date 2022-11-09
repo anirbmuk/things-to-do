@@ -23,4 +23,7 @@
   .mat-button-toggle-checked {
     @apply bg-indigo !text-white;
   }
+  .text-shadow {
+    text-shadow: 0 0 1px var(--black-light);
+  }
 }
