@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  ViewChild
+} from '@angular/core';
 import { TodoService } from '../services';
 
 @Component({
@@ -8,6 +13,7 @@ import { TodoService } from '../services';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
+  @ViewChild('searchField') searchField?: ElementRef<HTMLInputElement>;
   showSearch = false;
   readonly searchString$ = this.todoService.searchString$;
 
@@ -17,6 +23,11 @@ export class HeaderComponent {
     this.todoService.updateSearchString(
       (event?.target as HTMLInputElement)?.value
     );
+  }
+
+  displaySearch() {
+    this.showSearch = !this.showSearch;
+    setTimeout(() => this.searchField?.nativeElement?.focus(), 0);
   }
 
   resetSearch() {
