@@ -1,17 +1,10 @@
 <section class="flex justify-between my-4 xl:w-1/2 mx-auto">
-  <mat-button-toggle-group
-    [value]="groupBy"
-    name="groupBy"
-    aria-label="Group By day or month"
-    (click)="onToggleGroupBy()"
-    class="flex justify-start items-center">
+  <mat-button-toggle-group [value]="groupBy" name="groupBy" aria-label="Group By day or month"
+    (click)="onToggleGroupBy()" class="flex justify-start items-center">
     <mat-button-toggle value="day">Day</mat-button-toggle>
     <mat-button-toggle value="month">Month</mat-button-toggle>
   </mat-button-toggle-group>
-  <mat-button-toggle-group
-    [value]="showAll ? 'show' : 'hide'"
-    name="showAll"
-    aria-label="Show or hide completed TODOs"
+  <mat-button-toggle-group [value]="showAll ? 'show' : 'hide'" name="showAll" aria-label="Show or hide completed TODOs"
     (click)="onToggleShowAll()">
     <mat-button-toggle value="hide">Hide</mat-button-toggle>
     <mat-button-toggle value="show">Show</mat-button-toggle>

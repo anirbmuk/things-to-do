@@ -1,11 +1,6 @@
-<ttd-action
-  [showAll]="showAll$ | async"
-  [groupBy]="groupBy$ | async"
-  (toggleShowAll)="updateShowAll($event)"
+<ttd-action [showAll]="showAll$ | async" [groupBy]="groupBy$ | async" (toggleShowAll)="updateShowAll($event)"
   (toggleGroupBy)="updateGroupBy($event)">
 </ttd-action>
 <hr />
-<ttd-content
-  [todos]="groupedtodos$ | async"
-  (updateTodo)="updateTodoAction($event)"
+<ttd-content [todos]="groupedtodos$ | async" (updateTodo)="updateTodoAction($event)"
   (deleteTodo)="deleteTodoAction($event)"></ttd-content>
