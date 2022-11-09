@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output
+} from '@angular/core';
 import { ITodo } from 'src/app/models';
 import { GroupedTodo } from 'src/app/types';
 
@@ -10,6 +16,7 @@ import { GroupedTodo } from 'src/app/types';
 })
 export class ContentComponent {
   @Input() todos: GroupedTodo[] | null = [];
+  @Output() deleteTodo = new EventEmitter<ITodo['todoid']>();
 
   trackByGroupFn(_: number, groupedTodo: GroupedTodo) {
     return groupedTodo.datedivider;
@@ -21,7 +28,8 @@ export class ContentComponent {
 
   editTodo(todo: ITodo) {}
 
-  deleteTodo(event: Event, todo: ITodo) {
+  onDeleteTodo(event: Event, todo: ITodo) {
     event.stopPropagation();
+    this.deleteTodo.emit(todo.todoid);
   }
 }

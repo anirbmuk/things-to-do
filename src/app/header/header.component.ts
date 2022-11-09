@@ -4,7 +4,7 @@ import {
   ElementRef,
   ViewChild
 } from '@angular/core';
-import { TodoService } from '../services';
+import { StoreService } from '../store/store.service';
 
 @Component({
   selector: 'ttd-header',
@@ -15,12 +15,12 @@ import { TodoService } from '../services';
 export class HeaderComponent {
   @ViewChild('searchField') searchField?: ElementRef<HTMLInputElement>;
   showSearch = false;
-  readonly searchString$ = this.todoService.searchString$;
+  readonly searchString$ = this.todoStore.searchString$;
 
-  constructor(private readonly todoService: TodoService) {}
+  constructor(private readonly todoStore: StoreService) {}
 
   updateSearchString(event: Event) {
-    this.todoService.updateSearchString(
+    this.todoStore.updateSearchString(
       (event?.target as HTMLInputElement)?.value
     );
   }
@@ -31,6 +31,6 @@ export class HeaderComponent {
   }
 
   resetSearch() {
-    this.todoService.patchState({ searchString: null });
+    this.todoStore.patchState({ searchString: null });
   }
 }

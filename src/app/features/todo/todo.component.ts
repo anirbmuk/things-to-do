@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TodoService } from 'src/app/services';
+import { ITodo } from 'src/app/models';
+import { StoreService } from 'src/app/store/store.service';
 import { GroupBy, GroupedTodo } from 'src/app/types';
 
 @Component({
@@ -10,17 +11,22 @@ import { GroupBy, GroupedTodo } from 'src/app/types';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodoComponent {
-  readonly groupedtodo$: Observable<GroupedTodo[]> = this.todoService.todo$;
-  readonly showAll$: Observable<boolean> = this.todoService.showAll$;
-  readonly groupBy$: Observable<GroupBy> = this.todoService.groupBy$;
+  readonly groupedtodos$: Observable<GroupedTodo[]> =
+    this.todoStore.groupedtodos$;
+  readonly showAll$: Observable<boolean> = this.todoStore.showAll$;
+  readonly groupBy$: Observable<GroupBy> = this.todoStore.groupBy$;
 
-  constructor(private readonly todoService: TodoService) {}
+  constructor(private readonly todoStore: StoreService) {}
 
   updateShowAll(status: boolean) {
-    this.todoService.updateShowAll(status);
+    this.todoStore.updateShowAll(status);
   }
 
   updateGroupBy(groupBy: GroupBy) {
-    this.todoService.updateGroupBy(groupBy);
+    this.todoStore.updateGroupBy(groupBy);
+  }
+
+  deleteTodoAction(todoid: ITodo['todoid']) {
+    this.todoStore.deleteTodo(todoid);
   }
 }

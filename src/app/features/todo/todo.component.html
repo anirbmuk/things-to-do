@@ -5,4 +5,6 @@
   (toggleGroupBy)="updateGroupBy($event)">
 </ttd-action>
 <hr />
-<ttd-content [todos]="groupedtodo$ | async"></ttd-content>
+<ttd-content
+  [todos]="groupedtodos$ | async"
+  (deleteTodo)="deleteTodoAction($event)"></ttd-content>

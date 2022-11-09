@@ -4,7 +4,7 @@ export interface ITodo {
   heading: string;
   text: string;
   status: 'Incomplete' | 'Complete';
-  additional: {
+  additional?: {
     state?: 'error' | 'warn' | 'info';
     message?: string;
     remaining: number | undefined;
