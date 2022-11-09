@@ -4,10 +4,9 @@ export interface ITodo {
   heading: string;
   text: string;
   status: 'Incomplete' | 'Complete';
-  additional?:
-    | {
-        state: 'error' | 'warn' | 'info';
-        message: string;
-      }
-    | undefined;
+  additional: {
+    state?: 'error' | 'warn' | 'info';
+    message?: string;
+    remaining: number | undefined;
+  };
 }

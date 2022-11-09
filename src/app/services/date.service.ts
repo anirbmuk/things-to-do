@@ -13,31 +13,64 @@ export class DateService {
     return now.toISOString();
   }
 
-  getStatus(date: number): ITodo['additional'] | undefined {
-    const now = Date.now();
-    if (date < now) {
+  getStatus(date: string): ITodo['additional'] | undefined {
+    const now = new Date();
+    const duedate = new Date(date);
+
+    const formattedNow = `${now.getFullYear()}-${(now.getMonth() + 1)
+      .toString()
+      .padStart(2, '0')}-${now
+      .getDate()
+      .toString()
+      .padStart(2, '0')}T00:00:00.000Z`;
+    const formattedNowDate = new Date(formattedNow);
+
+    const formattedDue = `${duedate.getFullYear()}-${(duedate.getMonth() + 1)
+      .toString()
+      .padStart(2, '0')}-${duedate
+      .getDate()
+      .toString()
+      .padStart(2, '0')}T00:00:00.000Z`;
+    const formattedDueDate = new Date(formattedDue);
+
+    if (+formattedDueDate < +formattedNowDate) {
       return {
         state: 'error',
-        message: 'Past due date'
+        message: 'Past due date',
+        remaining: undefined
       };
     }
-    const remaining = Math.ceil((date - now) / (24 * 60 * 60 * 1000));
-    if (remaining === 1) {
+
+    const remaining = Math.round(
+      (+formattedDueDate - +formattedNowDate) / (24 * 60 * 60 * 1000)
+    );
+    if (remaining === 0) {
       return {
         state: 'warn',
-        message: 'Due tomorrow'
+        message: 'Due today',
+        remaining
+      };
+    } else if (remaining === 1) {
+      return {
+        state: 'warn',
+        message: 'Due tomorrow',
+        remaining
       };
     } else if (remaining > 1 && remaining < 7) {
       return {
         state: 'warn',
-        message: `Due in ${remaining} days`
+        message: `Due in ${remaining} days`,
+        remaining
       };
     } else if (remaining >= 7 && remaining < 14) {
       return {
         state: 'info',
-        message: `Due by next week`
+        message: `Due by next week`,
+        remaining
       };
     }
-    return;
+    return {
+      remaining
+    };
   }
 }

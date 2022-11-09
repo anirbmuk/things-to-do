@@ -10,6 +10,8 @@ import { StorageService } from './storage.service';
 const defaultSort = (todo1: ITodo, todo2: ITodo) =>
   +new Date(todo1.duedate) - +new Date(todo2.duedate);
 
+const OPERATORS = ['eq', '<', '>', '>=', '<='];
+
 const defaultState: ITodoState = {
   todos: [] as GroupedTodo[],
   showAll: false,
@@ -33,17 +35,35 @@ export class TodoService extends ComponentStore<ITodoState> {
       conditions.push((item: ITodo) => item.status === 'Incomplete');
     }
     if (searchString) {
-      conditions.push(
-        (item: ITodo) =>
-          item.text.toLowerCase().includes(searchString.toLowerCase()) ||
-          item.heading.toLowerCase().includes(searchString.toLowerCase()) ||
-          item.additional?.message
-            ?.toLowerCase()
-            ?.includes(searchString.toLowerCase()) ||
-          false
-      );
+      let hasOperator = false;
+      if (OPERATORS.some(operator => searchString.includes(operator))) {
+        hasOperator = true;
+        OPERATORS.forEach(operator => {
+          if (searchString.includes(operator)) {
+            const [, value] = searchString.split(operator);
+            const comparator = +value?.trim();
+            if (comparator && !isNaN(comparator)) {
+              const compareConditions = this.getCompareConditions(
+                operator,
+                comparator
+              );
+              compareConditions && conditions.push(compareConditions);
+            }
+          }
+        });
+      }
+      !hasOperator &&
+        conditions.length &&
+        conditions.push(
+          (item: ITodo) =>
+            item.text.toLowerCase().includes(searchString.toLowerCase()) ||
+            item.heading.toLowerCase().includes(searchString.toLowerCase()) ||
+            item.additional?.message
+              ?.toLowerCase()
+              ?.includes(searchString.toLowerCase()) ||
+            false
+        );
     }
-
     return conditions;
   });
 
@@ -134,8 +154,7 @@ export class TodoService extends ComponentStore<ITodoState> {
   }
 
   private getAdditionalInfo(todo: ITodo) {
-    const duedate = +new Date(todo.duedate);
-    return todo.status === 'Incomplete' && this.dates.getStatus(duedate);
+    return todo.status === 'Incomplete' && this.dates.getStatus(todo.duedate);
   }
 
   findTodos() {
@@ -196,5 +215,32 @@ export class TodoService extends ComponentStore<ITodoState> {
         .padStart(2, '0')}`;
     }
     return '';
+  }
+
+  private getCompareConditions(
+    operator: string,
+    comparator: number
+  ): ((item: ITodo) => boolean) | undefined {
+    switch (operator) {
+      case '<': {
+        return (item: ITodo) => (item.additional.remaining ?? 0) < comparator;
+      }
+      case '>': {
+        return (item: ITodo) => (item.additional.remaining ?? 0) > comparator;
+      }
+      case '<=': {
+        return (item: ITodo) => (item.additional.remaining ?? 0) <= comparator;
+      }
+      case '>=': {
+        return (item: ITodo) => (item.additional.remaining ?? 0) >= comparator;
+      }
+      case 'eq': {
+        return (item: ITodo) =>
+          (item.additional?.remaining ?? 0) === comparator;
+      }
+      default: {
+        return;
+      }
+    }
   }
 }
