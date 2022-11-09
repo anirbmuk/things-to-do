@@ -10,7 +10,7 @@ import {
 } from 'rxjs/operators';
 import { ITodo, ITodoState } from '../models';
 import { TodoService } from '../services';
-import { GroupBy, GroupedTodo } from '../types';
+import { AddTodo, GroupBy, GroupedTodo, UpdateTodo } from '../types';
 
 const defaultState: ITodoState = {
   todos: [] as GroupedTodo[],
@@ -114,6 +114,31 @@ export class StoreService extends ComponentStore<ITodoState> {
       ...state,
       groupBy
     })
+  );
+
+  readonly addTodo = this.effect<AddTodo>(param$ =>
+    param$.pipe(
+      concatMap(param =>
+        from(this.todoService.addTodo(param)).pipe(
+          tap(() => this.fetchTodos()),
+          catchError(() => EMPTY)
+        )
+      )
+    )
+  );
+
+  readonly updateTodo = this.effect<{
+    todoid: ITodo['todoid'];
+    todo: UpdateTodo;
+  }>(param$ =>
+    param$.pipe(
+      concatMap(param =>
+        from(this.todoService.updateTodo(param)).pipe(
+          tap(() => this.fetchTodos()),
+          catchError(() => EMPTY)
+        )
+      )
+    )
   );
 
   readonly deleteTodo = this.effect<ITodo['todoid']>(todoid$ =>

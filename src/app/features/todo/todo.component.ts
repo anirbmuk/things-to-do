@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ITodo } from 'src/app/models';
 import { StoreService } from 'src/app/store/store.service';
-import { GroupBy, GroupedTodo } from 'src/app/types';
+import { AddTodo, GroupBy, GroupedTodo, UpdateTodo } from 'src/app/types';
 
 @Component({
   selector: 'ttd-todo',
@@ -24,6 +24,14 @@ export class TodoComponent {
 
   updateGroupBy(groupBy: GroupBy) {
     this.todoStore.updateGroupBy(groupBy);
+  }
+
+  addTodoAction(todo: AddTodo) {
+    this.todoStore.addTodo(todo);
+  }
+
+  updateTodoAction(param: { todoid: ITodo['todoid']; todo: UpdateTodo }) {
+    this.todoStore.updateTodo(param);
   }
 
   deleteTodoAction(todoid: ITodo['todoid']) {

@@ -33,4 +33,13 @@ export class HeaderComponent {
   resetSearch() {
     this.todoStore.patchState({ searchString: null });
   }
+
+  addTodo() {
+    const time = `${Math.random() * 100}`.slice(-2);
+    this.todoStore.addTodo({
+      heading: 'New ' + time,
+      text: 'Created from app',
+      duedate: `2022-11-13 15:${time}:00`
+    });
+  }
 }

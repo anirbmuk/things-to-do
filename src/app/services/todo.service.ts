@@ -21,12 +21,17 @@ export class TodoService {
     return this.storage.addItem<ITodo>({
       ...todo,
       todoid: this.generateTodoId(),
+      status: 'Incomplete',
       ...(duedateUTC && { duedate: duedateUTC })
     });
   }
 
-  updateTodo(todoid: ITodo['todoid'], todo: UpdateTodo) {
-    return this.storage.updateItem<ITodo, UpdateTodo>('todoid', todoid, todo);
+  updateTodo(params: { todoid: ITodo['todoid']; todo: UpdateTodo }) {
+    return this.storage.updateItem<ITodo, UpdateTodo>(
+      'todoid',
+      params.todoid,
+      params.todo
+    );
   }
 
   deleteTodo(todoid: ITodo['todoid']) {
@@ -40,7 +45,7 @@ export class TodoService {
         const additional = this.getAdditionalInfo(todo);
         return {
           ...todo,
-          ...(additional && { additional })
+          additional
         };
       })
       .sort(defaultSort);
@@ -67,7 +72,9 @@ export class TodoService {
   }
 
   private getAdditionalInfo(todo: ITodo) {
-    return todo.status === 'Incomplete' && this.dates.getStatus(todo.duedate);
+    return todo.status === 'Incomplete'
+      ? this.dates.getStatus(todo.duedate)
+      : undefined;
   }
 
   clearTodos() {

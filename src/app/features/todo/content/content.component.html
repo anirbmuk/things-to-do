@@ -11,7 +11,7 @@
             role="listitem"
             (click)="editTodo(todo)">
             <div class="grid grid-cols-3 gap-2">
-              <div class="flex flex-col col-span-2">
+              <div class="flex flex-col col-span-2 space-y-1">
                 <ng-container *ngIf="todo.additional">
                   <span
                     class="font-normal text-white rounded-sm text-sm py-1 px-2 max-w-fit text-center"
@@ -36,10 +36,12 @@
               <div class="flex flex-col justify-between">
                 <div class="flex justify-end">
                   <mat-icon
+                    role="button"
                     [ngClass]="{
                       'text-red-600': todo.status === 'Incomplete',
                       'text-green-600': todo.status === 'Complete'
                     }"
+                    (click)="toogleStatus($event, todo)"
                     >{{
                       todo.status === 'Incomplete'
                         ? 'unpublished'
