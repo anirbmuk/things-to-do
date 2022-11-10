@@ -121,7 +121,7 @@ export class StoreService extends ComponentStore<ITodoState> {
       concatMap(param =>
         from(this.todoService.addTodo(param)).pipe(
           tap(() => this.fetchTodos()),
-          catchError(() => EMPTY)
+          catchError(this.handleError)
         )
       )
     )
@@ -135,7 +135,7 @@ export class StoreService extends ComponentStore<ITodoState> {
       concatMap(param =>
         from(this.todoService.updateTodo(param)).pipe(
           tap(() => this.fetchTodos()),
-          catchError(() => EMPTY)
+          catchError(this.handleError)
         )
       )
     )
@@ -146,7 +146,7 @@ export class StoreService extends ComponentStore<ITodoState> {
       concatMap(todoid =>
         from(this.todoService.deleteTodo(todoid)).pipe(
           tap(() => this.fetchTodos()),
-          catchError(() => EMPTY)
+          catchError(this.handleError)
         )
       )
     )
@@ -155,6 +155,11 @@ export class StoreService extends ComponentStore<ITodoState> {
   constructor(private readonly todoService: TodoService) {
     super(defaultState);
     this.fetchTodos();
+  }
+
+  private handleError(err: Error) {
+    console.error(err);
+    return EMPTY;
   }
 
   private getCompareConditions(

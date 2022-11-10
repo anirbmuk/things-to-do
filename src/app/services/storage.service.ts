@@ -7,7 +7,7 @@ const EMPTY_ARRAY = '[]';
   providedIn: 'root'
 })
 export class StorageService {
-  addItem<T>(item: T) {
+  create<T>(item: T) {
     return new Promise<T | undefined>((resolve, reject) => {
       if (!window) {
         return reject('Window object is undefined');
@@ -24,30 +24,19 @@ export class StorageService {
     });
   }
 
-  deleteItem<T>(id: keyof T, key: unknown) {
-    return new Promise<T | undefined>((resolve, reject) => {
+  read<T>() {
+    return new Promise<T[]>((resolve, reject) => {
       if (!window) {
         return reject('Window object is undefined');
       }
       const items =
         window.localStorage.getItem(environment.dbname) || EMPTY_ARRAY;
       const parsedItems = JSON.parse(items) as T[];
-      const itemToBeDeleted = parsedItems.find(each => each[id] === key);
-      if (!itemToBeDeleted) {
-        return reject(
-          `[deleteItem] object with { ${String(id)}: ${key} } not found`
-        );
-      }
-      const updatedItems = parsedItems.filter(each => each[id] !== key);
-      window.localStorage.setItem(
-        environment.dbname,
-        JSON.stringify(updatedItems)
-      );
-      resolve(itemToBeDeleted);
+      resolve(parsedItems);
     });
   }
 
-  updateItem<T, U>(id: keyof T, key: unknown, item: U) {
+  update<T, U>(id: keyof T, key: unknown, item: U) {
     return new Promise<T | undefined>((resolve, reject) => {
       if (!window) {
         return reject('Window object is undefined');
@@ -77,19 +66,30 @@ export class StorageService {
     });
   }
 
-  getItems<T>() {
-    return new Promise<T[]>((resolve, reject) => {
+  delete<T>(id: keyof T, key: unknown) {
+    return new Promise<T | undefined>((resolve, reject) => {
       if (!window) {
         return reject('Window object is undefined');
       }
       const items =
         window.localStorage.getItem(environment.dbname) || EMPTY_ARRAY;
       const parsedItems = JSON.parse(items) as T[];
-      resolve(parsedItems);
+      const itemToBeDeleted = parsedItems.find(each => each[id] === key);
+      if (!itemToBeDeleted) {
+        return reject(
+          `[deleteItem] object with { ${String(id)}: ${key} } not found`
+        );
+      }
+      const updatedItems = parsedItems.filter(each => each[id] !== key);
+      window.localStorage.setItem(
+        environment.dbname,
+        JSON.stringify(updatedItems)
+      );
+      resolve(itemToBeDeleted);
     });
   }
 
-  removeAll() {
+  deleteAll() {
     return new Promise<void>((resolve, reject) => {
       if (!window) {
         return reject('Window object is undefined');

@@ -18,7 +18,7 @@ export class TodoService {
 
   addTodo(todo: AddTodo) {
     const duedateUTC = this.dates.getStorageDate(todo.duedate);
-    return this.storage.addItem<ITodo>({
+    return this.storage.create<ITodo>({
       ...todo,
       todoid: this.generateTodoId(),
       status: 'Incomplete',
@@ -27,7 +27,7 @@ export class TodoService {
   }
 
   updateTodo(params: { todoid: ITodo['todoid']; todo: UpdateTodo }) {
-    return this.storage.updateItem<ITodo, UpdateTodo>(
+    return this.storage.update<ITodo, UpdateTodo>(
       'todoid',
       params.todoid,
       params.todo
@@ -35,11 +35,11 @@ export class TodoService {
   }
 
   deleteTodo(todoid: ITodo['todoid']) {
-    return this.storage.deleteItem<ITodo>('todoid', todoid);
+    return this.storage.delete<ITodo>('todoid', todoid);
   }
 
   private async _getTodos() {
-    const storedTodos = await this.storage.getItems<ITodo>();
+    const storedTodos = await this.storage.read<ITodo>();
     return storedTodos
       .map(todo => {
         const additional = this.getAdditionalInfo(todo);
@@ -78,7 +78,7 @@ export class TodoService {
   }
 
   clearTodos() {
-    return this.storage.removeAll();
+    return this.storage.deleteAll();
   }
 
   private generateTodoId() {
