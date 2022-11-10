@@ -5,9 +5,11 @@ import {
   catchError,
   concatMap,
   exhaustMap,
+  filter,
   switchMap,
   tap
 } from 'rxjs/operators';
+import { ModalService } from '../modals';
 import { ITodo, ITodoState } from '../models';
 import { TodoService } from '../services';
 import { AddTodo, GroupBy, GroupedTodo, UpdateTodo } from '../types';
@@ -152,7 +154,22 @@ export class StoreService extends ComponentStore<ITodoState> {
     )
   );
 
-  constructor(private readonly todoService: TodoService) {
+  readonly deleteTodoWithConfirmation = this.effect<ITodo['todoid']>(todoid$ =>
+    todoid$.pipe(
+      concatMap(todoid =>
+        this.modalService.showConfirmDialog('Delete the TODO?').pipe(
+          filter(data => data.decision),
+          tap(() => this.deleteTodo(todoid)),
+          catchError(this.handleError)
+        )
+      )
+    )
+  );
+
+  constructor(
+    private readonly todoService: TodoService,
+    private readonly modalService: ModalService
+  ) {
     super(defaultState);
     this.fetchTodos();
   }

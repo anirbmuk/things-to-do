@@ -35,6 +35,6 @@ export class TodoComponent {
   }
 
   deleteTodoAction(todoid: ITodo['todoid']) {
-    this.todoStore.deleteTodo(todoid);
+    this.todoStore.deleteTodoWithConfirmation(todoid);
   }
 }

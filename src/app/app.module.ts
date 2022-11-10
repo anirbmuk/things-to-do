@@ -9,14 +9,17 @@ import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
+import { ConfirmDialogComponent } from './modals';
 
 import { TodoModule } from './features/todo/todo.module';
 
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 const COMPONENTS = [AppComponent, HeaderComponent] as const;
+const ENTRY_COMPONENTS = [ConfirmDialogComponent] as const;
 const CORE_MODULES = [
   BrowserModule,
   BrowserAnimationsModule,
@@ -28,10 +31,15 @@ const CORE_MODULES = [
   })
 ] as const;
 const CUSTOM_MODULES = [AppRoutingModule, TodoModule] as const;
-const MATERIAL_MODULES = [MatToolbarModule, MatButtonModule, MatIconModule];
+const MATERIAL_MODULES = [
+  MatToolbarModule,
+  MatButtonModule,
+  MatIconModule,
+  MatDialogModule
+] as const;
 
 @NgModule({
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS, ...ENTRY_COMPONENTS],
   imports: [...CORE_MODULES, ...CUSTOM_MODULES, ...MATERIAL_MODULES],
   bootstrap: [AppComponent]
 })

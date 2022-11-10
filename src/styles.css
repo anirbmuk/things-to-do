@@ -11,8 +11,11 @@
   .mat-toolbar,
   .mat-button-toggle,
   .mat-form-field,
-  .mat-label {
-    @apply font-sans;
+  .mat-label,
+  .mat-dialog,
+  .mat-dialog-title,
+  .mat-dialog-content {
+    @apply !font-sans;
   }
   .mat-button-toggle {
     @apply text-md;
@@ -22,6 +25,12 @@
   }
   .mat-button-toggle-checked {
     @apply bg-indigo !text-white;
+  }
+  .mat-dialog-title {
+    @apply mb-2 text-xl;
+  }
+  .mat-dialog-content {
+    @apply text-md;
   }
   .text-shadow {
     text-shadow: 0 0 1px var(--black-light);

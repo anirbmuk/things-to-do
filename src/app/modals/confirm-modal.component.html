@@ -1,0 +1,16 @@
+<h3 class="!text-lg font-semiBold !mb-2" mat-dialog-title>
+  Confirm Action
+</h3>
+<hr />
+<mat-dialog-content>
+  <div class="my-4 text-primary">{{ message }}</div>
+</mat-dialog-content>
+<hr />
+<div class="flex justify-end space-x-2 !mt-2">
+  <button mat-stroked-button color="primary" (click)="onDialogAction()" type="button">
+    Yes
+  </button>
+  <button mat-stroked-button mat-dialog-close color="warn" (click)="closeModal()" type="reset">
+    No
+  </button>
+</div>
