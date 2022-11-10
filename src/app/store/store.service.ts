@@ -129,6 +129,21 @@ export class StoreService extends ComponentStore<ITodoState> {
     )
   );
 
+  readonly addTodoModal = this.effect<void>(param$ =>
+    param$.pipe(
+      concatMap(() =>
+        this.modalService.showCreateUpdateDialog('create').pipe(
+          filter(data => data.decision),
+          tap(data => {
+            const dataToBeCreated = { ...data.output } as AddTodo;
+            this.addTodo(dataToBeCreated);
+          }),
+          catchError(this.handleError)
+        )
+      )
+    )
+  );
+
   readonly updateTodo = this.effect<{
     todoid: ITodo['todoid'];
     todo: UpdateTodo;
@@ -139,6 +154,26 @@ export class StoreService extends ComponentStore<ITodoState> {
           tap(() => this.fetchTodos()),
           catchError(this.handleError)
         )
+      )
+    )
+  );
+
+  readonly updateTodoModal = this.effect<{
+    todoid: ITodo['todoid'];
+    todo: UpdateTodo;
+  }>(param$ =>
+    param$.pipe(
+      concatMap(param =>
+        this.modalService
+          .showCreateUpdateDialog('update', { ...param.todo })
+          .pipe(
+            filter(data => data.decision),
+            tap(data => {
+              const dataToBeUpdated = { ...data.output } as UpdateTodo;
+              this.updateTodo({ todoid: param.todoid, todo: dataToBeUpdated });
+            }),
+            catchError(this.handleError)
+          )
       )
     )
   );

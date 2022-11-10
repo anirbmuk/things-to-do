@@ -9,7 +9,7 @@ import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { ConfirmDialogComponent } from './modals';
+import { ConfirmDialogComponent, CreateUpdateDialogComponent } from './modals';
 
 import { TodoModule } from './features/todo/todo.module';
 
@@ -19,7 +19,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 const COMPONENTS = [AppComponent, HeaderComponent] as const;
-const ENTRY_COMPONENTS = [ConfirmDialogComponent] as const;
+const ENTRY_COMPONENTS = [
+  ConfirmDialogComponent,
+  CreateUpdateDialogComponent
+] as const;
 const CORE_MODULES = [
   BrowserModule,
   BrowserAnimationsModule,

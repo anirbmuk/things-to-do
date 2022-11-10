@@ -21,6 +21,10 @@ export class ContentComponent {
     todoid: ITodo['todoid'];
     todo: UpdateTodo;
   }>();
+  @Output() updateTodoStatus = new EventEmitter<{
+    todoid: ITodo['todoid'];
+    todo: UpdateTodo;
+  }>();
 
   trackByGroupFn(_: number, groupedTodo: GroupedTodo) {
     return groupedTodo.datedivider;
@@ -39,7 +43,7 @@ export class ContentComponent {
 
   toogleStatus(event: Event, todo: ITodo) {
     event.stopPropagation();
-    this.updateTodo.emit({
+    this.updateTodoStatus.emit({
       todoid: todo.todoid,
       todo: {
         ...todo,
