@@ -83,8 +83,7 @@ module.exports = {
       bold: 700
     },
     fontFamily: {
-      sans: ['Noto Sans', 'sans-serif', 'monospace'],
-      material: ['Material Symbols Rounded', 'monospace']
+      sans: ['Noto Sans', 'sans-serif', 'monospace']
     },
     extend: {
       spacing: {
@@ -153,25 +152,12 @@ module.exports = {
         black: {
           DEFAULT: 'var(--black)',
           light: 'var(--black-light)',
-          dark: 'var(--black-dark)'
-        },
-        'black-alt': {
-          DEFAULT: 'var(--black-alt)'
+          dark: 'var(--black-dark)',
+          alt: 'var(--black-alt)'
         },
         red: {
           DEFAULT: 'var(--red)',
           light: 'var(--red-light)'
-        },
-        yellow: {
-          DEFAULT: 'var(--yellow)',
-          light: 'var(--yellow-light)'
-        },
-        'fluorescent-green': {
-          DEFAULT: 'var(--fluorescent-green)',
-          light: 'var(--fluorescent-green-light)'
-        },
-        mauve: {
-          DEFAULT: 'var(--mauve)'
         },
         blue: {
           DEFAULT: 'var(--blue)'
@@ -184,20 +170,6 @@ module.exports = {
         },
         warning: {
           DEFAULT: 'var(--warning)'
-        },
-        gradient: {
-          start: 'var(--grad-start)',
-          middle: 'var(--grad-middle)',
-          end: 'var(--grad-end)'
-        }
-      },
-      animation: {
-        rotate: 'rotate var(--duration) var(--timing) infinite'
-      },
-      keyframes: {
-        rotate: {
-          '0%': { transform: 'rotate(0)' },
-          '100%': { transform: 'rotate(360deg)' }
         }
       }
     }
