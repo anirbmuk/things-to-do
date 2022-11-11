@@ -11,6 +11,7 @@ import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ConfirmDialogComponent, CreateUpdateDialogComponent } from './modals';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 import { TodoModule } from './features/todo/todo.module';
 
@@ -19,7 +20,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
-const COMPONENTS = [AppComponent, HeaderComponent] as const;
+const COMPONENTS = [AppComponent, HeaderComponent, NotFoundComponent] as const;
 const ENTRY_COMPONENTS = [
   ConfirmDialogComponent,
   CreateUpdateDialogComponent
