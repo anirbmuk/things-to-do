@@ -10,13 +10,15 @@
           <mat-icon class="text-2xl md:text-3xl text-gray-800">close</mat-icon>
         </button>
       </div>
-      <button *ngIf="!showSearch" mat-icon-button color="primary" aria-label="Search for a TODO"
-        (click)="displaySearch()">
-        <mat-icon class="text-white text-2xl md:text-3xl">search</mat-icon>
-      </button>
-      <button mat-icon-button color="primary" aria-label="Add a new TODO" (click)="addTodo()">
-        <mat-icon class="text-white text-2xl md:text-3xl">add</mat-icon>
-      </button>
+      <ng-container *ngIf="showActionButtons$ | async">
+        <button *ngIf="!showSearch" mat-icon-button color="primary" aria-label="Search for a TODO"
+          (click)="displaySearch()">
+          <mat-icon class="text-white text-2xl md:text-3xl">search</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" aria-label="Add a new TODO" (click)="addTodo()">
+          <mat-icon class="text-white text-2xl md:text-3xl">add</mat-icon>
+        </button>
+      </ng-container>
     </div>
   </mat-toolbar>
 </header>
