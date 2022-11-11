@@ -13,7 +13,9 @@
   .mat-label,
   .mat-dialog,
   .mat-dialog-title,
-  .mat-dialog-content {
+  .mat-dialog-content,
+  .mat-button,
+  .mat-stroked-button {
     @apply !font-sans;
   }
   .mat-button-toggle {
