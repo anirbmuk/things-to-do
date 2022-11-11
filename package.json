@@ -19,6 +19,9 @@
     "test": "ng test",
     "format:check": "prettier --config ./.prettierrc --list-different \"src/app/**/*{.ts,.js,.json,.css,.scss,.html}\"",
     "format:fix": "prettier --config ./.prettierrc --write \"src/app/**/*{.ts,.js,.json,.css,.scss,.html}\"",
+    "clean": "rimraf dist && rimraf .firebase && rimraf firebase-debug.log",
+    "build:prod": "ng build --configuration production",
+    "deploy:prod": "npm run clean && npm run lint && npm run build:prod && firebase deploy && npm run clean",
     "prepare": "husky install",
     "postinstall": "ngcc"
   },
