@@ -24,8 +24,8 @@
   .mat-button-toggle-group {
     @apply border-indigo;
   }
-  .mat-button-toggle-checked {
-    @apply bg-indigo !text-white;
+  .mat-button-toggle-checked.mat-button-toggle-appearance-standard {
+    @apply !bg-indigo !text-white;
   }
   .mat-dialog-title {
     @apply mb-2 text-xl;
