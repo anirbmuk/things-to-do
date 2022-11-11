@@ -24,6 +24,7 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
+              "src/apple-touch-icon.png",
               "src/assets",
               "src/manifest.webmanifest"
             ],
@@ -60,9 +61,6 @@
               "optimization": {
                 "fonts": {
                   "inline": true
-                },
-                "styles": {
-                  "inlineCritical": true
                 }
               }
             },
@@ -104,10 +102,12 @@
             "karmaConfig": "karma.conf.js",
             "assets": [
               "src/favicon.ico",
+              "src/apple-touch-icon.png",
               "src/assets",
               "src/manifest.webmanifest"
             ],
             "styles": [
+              "src/root.css",
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
