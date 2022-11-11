@@ -1,0 +1,86 @@
+name: things-to-do production onpush
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on push events but only for the master branch
+  push:
+    branches: [production]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Cache node_modules
+        id: cache-node-modules-pre
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-thingstodo-node-modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Install node_modules
+        if: steps.cache-node-modules-pre.outputs.cache-hit != 'true'
+        run: npm i
+
+  check:
+    needs: [install]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-thingstodo-node-modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Check linting
+        run: npm run lint
+
+  build:
+    needs: [check]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-thingstodo-node-modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Build things-to-do project
+        run: npm run build:prod
+
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist-things-to-do
+          path: dist/things-to-do
+
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-thingstodo-node-modules-${{ hashFiles('package-lock.json') }}
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist-things-to-do
+          path: dist/things-to-do
+
+      - name: Install firebase-tools
+        run: sudo npm i -g firebase-tools
+
+      - name: Deploy things-to-do project
+        run: firebase deploy
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
