@@ -1,3 +1,7 @@
+## 1.1.1
+- Performance improvement with inline css and font loading.  
+- Fixed toggle-button background-colour.  
+
 ## 1.1.0
 - GitHub Actions automation setup.  
 - Tailwind config cleanup and minor UI fix.  
