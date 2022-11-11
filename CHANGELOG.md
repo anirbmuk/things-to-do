@@ -1,0 +1,8 @@
+## 1.1.0
+- GitHub Actions automation setup.  
+- Tailwind config cleanup and minor UI fix.  
+
+## 1.0.0
+- Create, Read, Update and Delete TODOs from browser's LocalStorage.  
+- Intelligent search mechanism.  
+- PWA software updates.  
