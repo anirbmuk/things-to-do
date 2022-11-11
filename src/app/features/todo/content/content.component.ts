@@ -37,7 +37,7 @@ export class ContentComponent {
   editTodo(todo: ITodo) {
     this.updateTodo.emit({
       todoid: todo.todoid,
-      todo: { ...todo, status: 'Complete' }
+      todo
     });
   }
 

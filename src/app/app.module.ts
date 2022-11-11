@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -31,7 +32,8 @@ const CORE_MODULES = [
     // Register the ServiceWorker as soon as the application is stable
     // or after 30 seconds (whichever comes first).
     registrationStrategy: 'registerWhenStable:30000'
-  })
+  }),
+  ReactiveFormsModule
 ] as const;
 const CUSTOM_MODULES = [AppRoutingModule, TodoModule] as const;
 const MATERIAL_MODULES = [

@@ -73,4 +73,30 @@ export class DateService {
       remaining
     };
   }
+
+  getCurrentFormDateTime(date: string | undefined): string | undefined {
+    if (!date) {
+      const currentDate = new Date();
+      const yyyy = currentDate.getFullYear();
+      const mm = `${currentDate.getMonth() + 1}`.padStart(2, '0');
+      const dd = `${currentDate.getDate() + 1}`.padStart(2, '0');
+      return `${yyyy}-${mm}-${dd}T12:00:00`;
+    } else {
+      const currentDate = new Date(date);
+      const yyyy = currentDate.getFullYear();
+      const mm = `${currentDate.getMonth() + 1}`.padStart(2, '0');
+      const dd = `${currentDate.getDate()}`.padStart(2, '0');
+      const HH = `${currentDate.getHours()}`.padStart(2, '0');
+      const MM = `${currentDate.getMinutes()}`.padStart(2, '0');
+      return `${yyyy}-${mm}-${dd}T${HH}:${MM}:00`;
+    }
+  }
+
+  getStorageFormDateTime(date: string | undefined): string {
+    let now = new Date();
+    if (date) {
+      now = new Date(date);
+    }
+    return now.toISOString();
+  }
 }

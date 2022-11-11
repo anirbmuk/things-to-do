@@ -40,6 +40,7 @@ export class StoreService extends ComponentStore<ITodoState> {
     }
     if (searchString) {
       let hasOperator = false;
+      const tempConditions: ((item: ITodo) => boolean)[] = [];
       if (OPERATORS.some(operator => searchString.includes(operator))) {
         hasOperator = true;
         OPERATORS.forEach(operator => {
@@ -51,13 +52,14 @@ export class StoreService extends ComponentStore<ITodoState> {
                 operator,
                 comparator
               );
-              compareConditions && conditions.push(compareConditions);
+              compareConditions && tempConditions.push(compareConditions);
             }
           }
         });
+        hasOperator = !!tempConditions.length;
+        conditions.push(...tempConditions);
       }
       !hasOperator &&
-        conditions.length &&
         conditions.push(
           (item: ITodo) =>
             item.text.toLowerCase().includes(searchString.toLowerCase()) ||
