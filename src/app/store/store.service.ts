@@ -11,7 +11,7 @@ import {
 } from 'rxjs/operators';
 import { ModalService } from '../modals';
 import { ITodo, ITodoState } from '../models';
-import { TodoService } from '../services';
+import { StorageService, TodoService } from '../services';
 import { AddTodo, GroupBy, GroupedTodo, UpdateTodo } from '../types';
 
 const defaultState: ITodoState = {
@@ -98,10 +98,13 @@ export class StoreService extends ComponentStore<ITodoState> {
   );
 
   readonly updateShowAll = this.updater(
-    (state: ITodoState, showAll: boolean) => ({
-      ...state,
-      showAll
-    })
+    (state: ITodoState, showAll: boolean) => {
+      this.storageService.setItem('showall', showAll);
+      return {
+        ...state,
+        showAll
+      };
+    }
   );
 
   readonly updateSearchString = this.updater(
@@ -112,10 +115,13 @@ export class StoreService extends ComponentStore<ITodoState> {
   );
 
   readonly updateGroupBy = this.updater(
-    (state: ITodoState, groupBy: GroupBy) => ({
-      ...state,
-      groupBy
-    })
+    (state: ITodoState, groupBy: GroupBy) => {
+      this.storageService.setItem('groupby', groupBy);
+      return {
+        ...state,
+        groupBy
+      };
+    }
   );
 
   readonly addTodo = this.effect<AddTodo>(param$ =>
@@ -203,9 +209,19 @@ export class StoreService extends ComponentStore<ITodoState> {
 
   constructor(
     private readonly todoService: TodoService,
-    private readonly modalService: ModalService
+    private readonly modalService: ModalService,
+    private readonly storageService: StorageService
   ) {
-    super(defaultState);
+    const groupBy = JSON.parse(
+      storageService.getItem('groupby') || '"day"'
+    ) as GroupBy;
+    const showAll =
+      JSON.parse(storageService.getItem('showall') || 'false') === true;
+    super({
+      ...defaultState,
+      groupBy,
+      showAll
+    });
     this.fetchTodos();
   }
 

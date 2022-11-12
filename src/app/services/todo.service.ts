@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ITodo } from '../models/todo.model';
 import { AddTodo, GroupBy, GroupedTodo, UpdateTodo } from '../types';
+import { CrudService } from './crud.service';
 import { DateService } from './date.service';
-import { StorageService } from './storage.service';
 
 const defaultSort = (todo1: ITodo, todo2: ITodo) =>
   +new Date(todo1.duedate) - +new Date(todo2.duedate);
@@ -12,13 +12,13 @@ const defaultSort = (todo1: ITodo, todo2: ITodo) =>
 })
 export class TodoService {
   constructor(
-    private readonly storage: StorageService,
-    private readonly dates: DateService
+    private readonly crudService: CrudService,
+    private readonly dateService: DateService
   ) {}
 
   addTodo(todo: AddTodo) {
-    const duedateUTC = this.dates.getStorageDate(todo.duedate);
-    return this.storage.create<ITodo>({
+    const duedateUTC = this.dateService.getStorageDate(todo.duedate);
+    return this.crudService.create<ITodo>({
       ...todo,
       todoid: this.generateTodoId(),
       status: 'Incomplete',
@@ -27,7 +27,7 @@ export class TodoService {
   }
 
   updateTodo(params: { todoid: ITodo['todoid']; todo: UpdateTodo }) {
-    return this.storage.update<ITodo, UpdateTodo>(
+    return this.crudService.update<ITodo, UpdateTodo>(
       'todoid',
       params.todoid,
       params.todo
@@ -35,11 +35,11 @@ export class TodoService {
   }
 
   deleteTodo(todoid: ITodo['todoid']) {
-    return this.storage.delete<ITodo>('todoid', todoid);
+    return this.crudService.delete<ITodo>('todoid', todoid);
   }
 
   private async _getTodos() {
-    const storedTodos = await this.storage.read<ITodo>();
+    const storedTodos = await this.crudService.read<ITodo>();
     return storedTodos
       .map(todo => {
         const additional = this.getAdditionalInfo(todo);
@@ -73,12 +73,12 @@ export class TodoService {
 
   private getAdditionalInfo(todo: ITodo) {
     return todo.status === 'Incomplete'
-      ? this.dates.getStatus(todo.duedate)
+      ? this.dateService.getStatus(todo.duedate)
       : undefined;
   }
 
   clearTodos() {
-    return this.storage.deleteAll();
+    return this.crudService.deleteAll();
   }
 
   private generateTodoId() {
