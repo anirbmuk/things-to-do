@@ -1,3 +1,6 @@
+## 1.1.4
+- UI improvements for accessibility.  
+
 ## 1.1.3
 - Fixed issue of arithmetic operators not working with uppercase search.  
 
