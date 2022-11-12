@@ -1,3 +1,6 @@
+## 1.2.0
+- Store user action results in localstorage for better UX.  
+
 ## 1.1.4
 - UI improvements for accessibility.  
 
