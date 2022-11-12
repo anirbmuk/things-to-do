@@ -62,11 +62,9 @@ export class StoreService extends ComponentStore<ITodoState> {
       !hasOperator &&
         conditions.push(
           (item: ITodo) =>
-            item.text.toLowerCase().includes(searchString.toLowerCase()) ||
-            item.heading.toLowerCase().includes(searchString.toLowerCase()) ||
-            item.additional?.message
-              ?.toLowerCase()
-              ?.includes(searchString.toLowerCase()) ||
+            item.text.toLowerCase().includes(searchString) ||
+            item.heading.toLowerCase().includes(searchString) ||
+            item.additional?.message?.toLowerCase()?.includes(searchString) ||
             false
         );
     }
@@ -109,7 +107,7 @@ export class StoreService extends ComponentStore<ITodoState> {
   readonly updateSearchString = this.updater(
     (state: ITodoState, searchString: string | undefined | null) => ({
       ...state,
-      searchString
+      searchString: searchString?.toLowerCase()
     })
   );
 
