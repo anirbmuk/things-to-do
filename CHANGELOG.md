@@ -1,3 +1,6 @@
+## 1.1.3
+- Fixed issue of arithmetic operators not working with uppercase search.  
+
 ## 1.1.2
 - Additional fix for toggle-button background-colour.  
 
