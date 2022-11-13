@@ -1,3 +1,7 @@
+## 1.4.0
+- Minor bug fixes.  
+- Added support for dark mode.  
+
 ## 1.3.0
 - UI improvements.  
 - Added new badge `Due next month`.  
