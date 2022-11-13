@@ -1,3 +1,8 @@
+## 1.3.0
+- UI improvements.  
+- Added new badge `Due next month`.  
+- Added min date validation.  
+
 ## 1.2.0
 - Store user action results in localstorage for better UX.  
 
