@@ -39,4 +39,8 @@
   label {
     @apply font-bold;
   }
+  label[required]::after {
+    content: ' *';
+    @apply text-red-600 text-sm;
+  }
 }

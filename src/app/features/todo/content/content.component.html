@@ -14,7 +14,8 @@
                   <span class="font-normal text-white rounded-sm text-sm py-1 px-2 max-w-fit text-center" [ngClass]="{
                       'bg-red': todo.additional.state === 'error',
                       'bg-warning': todo.additional.state === 'warn',
-                      'bg-info': todo.additional.state === 'info'
+                      'bg-info': todo.additional.state === 'info',
+                      'bg-green-600': todo.additional.state === 'safe'
                     }">{{ todo.additional.message }}</span>
                 </ng-container>
                 <div class="text font-bold">

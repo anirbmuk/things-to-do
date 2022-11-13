@@ -5,7 +5,7 @@ export interface ITodo {
   text: string;
   status: 'Incomplete' | 'Complete';
   additional?: {
-    state?: 'error' | 'warn' | 'info';
+    state?: 'error' | 'warn' | 'info' | 'safe';
     message?: string;
     remaining: number | undefined;
   };

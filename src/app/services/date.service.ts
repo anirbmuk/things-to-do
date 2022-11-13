@@ -44,6 +44,9 @@ export class DateService {
     const remaining = Math.round(
       (+formattedDueDate - +formattedNowDate) / (24 * 60 * 60 * 1000)
     );
+    const nextMonth =
+      formattedDueDate.getMonth() - formattedNowDate.getMonth() === 1 &&
+      formattedDueDate.getFullYear() >= formattedNowDate.getFullYear();
     if (remaining === 0) {
       return {
         state: 'warn',
@@ -65,7 +68,13 @@ export class DateService {
     } else if (remaining >= 7 && remaining < 14) {
       return {
         state: 'info',
-        message: `Due by next week`,
+        message: 'Due by next week',
+        remaining
+      };
+    } else if (remaining >= 14 && nextMonth) {
+      return {
+        state: 'safe',
+        message: 'Due next month',
         remaining
       };
     }
@@ -98,5 +107,19 @@ export class DateService {
       now = new Date(date);
     }
     return now.toISOString();
+  }
+
+  getMinDate() {
+    const currentDate = new Date();
+    const yyyy = currentDate.getFullYear();
+    const mm = `${currentDate.getMonth() + 1}`.padStart(2, '0');
+    const dd = `${currentDate.getDate()}`.padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}T00:00:00`;
+  }
+
+  isDateInvalid(inputDateString: string, minDateString: string): boolean {
+    const inputDate = +new Date(inputDateString);
+    const minDate = +new Date(minDateString);
+    return inputDate < minDate;
   }
 }

@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { map, Observable } from 'rxjs';
 import { ITodo } from '../models';
 import { AddTodo, UpdateTodo } from '../types';
 import { DateService } from './../services/date.service';
@@ -52,6 +53,10 @@ export class CreateUpdateDialogComponent implements OnInit {
 
   createUpdateForm = this.formBuilder.group({});
 
+  minDate?: string;
+
+  mindateInvalid$?: Observable<boolean>;
+
   ngOnInit() {
     const duedateValue = this.dateService.getCurrentFormDateTime(
       this.data.todo?.duedate as string | undefined
@@ -61,6 +66,12 @@ export class CreateUpdateDialogComponent implements OnInit {
       text: new FormControl(this.data.todo?.text),
       duedate: new FormControl(duedateValue, [Validators.required])
     });
+    this.minDate = this.dateService.getMinDate();
+    this.mindateInvalid$ = this.createUpdateForm
+      .get('duedate')
+      ?.valueChanges.pipe(
+        map(value => this.dateService.isDateInvalid(value, this.minDate!))
+      );
   }
 
   onDialogAction(): void {
