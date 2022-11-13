@@ -62,7 +62,7 @@ export class StoreService extends ComponentStore<ITodoState> {
       !hasOperator &&
         conditions.push(
           (item: ITodo) =>
-            item.text.toLowerCase().includes(searchString) ||
+            item.text?.toLowerCase().includes(searchString) ||
             item.heading.toLowerCase().includes(searchString) ||
             item.additional?.message?.toLowerCase()?.includes(searchString) ||
             false
