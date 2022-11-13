@@ -1,0 +1,9 @@
+h1 {
+  @ppaly text-black-dark text-12xl font-bold;
+}
+
+@media (prefers-color-scheme: dark) {
+  h1 {
+    @apply text-white text-12xl font-bold;
+  }
+}

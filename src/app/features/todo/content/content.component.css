@@ -1,0 +1,23 @@
+.todo-content-wrapper {
+  @apply bg-gray-100 border border-gray-200;
+}
+
+.todo-duedate {
+  @apply text-gray-600;
+}
+
+.todo-delete {
+  @apply text-amber-900;
+}
+
+@media (prefers-color-scheme: dark) {
+  .todo-content-wrapper {
+    @apply bg-transparent border border-white;
+  }
+  .todo-duedate {
+    @apply text-white;
+  }
+  .todo-delete {
+    @apply text-warning;
+  }
+}

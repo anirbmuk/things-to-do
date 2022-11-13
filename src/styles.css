@@ -43,4 +43,16 @@
     content: ' *';
     @apply text-red-600 text-sm;
   }
+
+  @media (prefers-color-scheme: dark) {
+    .mat-toolbar.mat-primary {
+      @apply bg-transparent text-white;
+    }
+    .mat-button-toggle-checked.mat-button-toggle-appearance-standard {
+      @apply !bg-transparent;
+    }
+    .mat-button-toggle-group {
+      @apply border-white;
+    }
+  }
 }
