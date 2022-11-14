@@ -1,3 +1,6 @@
+## 1.4.1
+- Bug fixes for dark mode.  
+
 ## 1.4.0
 - Minor bug fixes.  
 - Added support for dark mode.  
