@@ -54,5 +54,17 @@
     .mat-button-toggle-group {
       @apply border-white;
     }
+    .mat-dialog-container {
+      @apply bg-black-dark border border-white text-white;
+    }
+    .mat-stroked-button:not(:disabled) {
+      @apply border !border-white !text-white;
+    }
+    .mat-stroked-button:disabled {
+      @apply border !border-white !text-white opacity-25;
+    }
+    label {
+      @apply font-normal;
+    }
   }
 }
