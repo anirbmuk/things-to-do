@@ -9,8 +9,13 @@ export class DateService {
     if (!date) {
       return;
     }
-    const now = new Date(date);
-    return now.toISOString();
+    try {
+      const dateObject = new Date(date);
+      return dateObject.toISOString();
+    } catch (error) {
+      console.error(`Invalid date input: '${date}'`);
+      return;
+    }
   }
 
   getStatus(date: string): ITodo['additional'] | undefined {
