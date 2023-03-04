@@ -6,17 +6,29 @@
           {{ group.datedivider | tddGroupDate }}
         </legend>
         <ng-container *ngFor="let todo of group.todos; trackBy: trackByTodoFn">
-          <div class="py-2 px-2 md:px-4 mx-2 md:mx-6 rounded my-2 cursor-pointer todo-content-wrapper" role="listitem"
+          <div
+            class="py-2 px-2 md:px-4 mx-2 md:mx-6 rounded my-2 cursor-pointer todo-content-wrapper"
+            [ngClass]="{
+              'border-red-300': todo.additional?.state === 'error',
+              'border-warning': todo.additional?.state === 'warn',
+              'border-info': todo.additional?.state === 'info',
+              'border-green-300': todo.status === 'Complete'
+            }"
+            role="listitem"
             (click)="editTodo(todo)">
             <div class="grid grid-cols-3 gap-2">
               <div class="flex flex-col col-span-2 space-y-1">
                 <ng-container *ngIf="todo.additional">
-                  <span class="font-normal text-white rounded-sm text-sm py-1 px-2 max-w-fit text-center" [ngClass]="{
+                  <span
+                    class="font-normal text-white rounded-sm text-sm py-1 px-2 max-w-fit text-center"
+                    [ngClass]="{
                       'bg-red': todo.additional.state === 'error',
                       'bg-warning': todo.additional.state === 'warn',
                       'bg-info': todo.additional.state === 'info',
                       'bg-green-600': todo.additional.state === 'safe'
-                    }">{{ todo.additional.message }}</span>
+                    }"
+                    >{{ todo.additional.message }}</span
+                  >
                 </ng-container>
                 <div class="text font-bold">
                   {{ todo.heading }}
@@ -30,18 +42,27 @@
               </div>
               <div class="flex flex-col justify-between">
                 <div class="flex justify-end">
-                  <mat-icon role="button" [ngClass]="{
+                  <mat-icon
+                    role="button"
+                    [ngClass]="{
                       'text-red-600': todo.status === 'Incomplete',
                       'text-green-600': todo.status === 'Complete'
-                    }" (click)="toogleStatus($event, todo)">{{
-                    todo.status === 'Incomplete'
-                    ? 'unpublished'
-                    : 'check_circle'
-                    }}</mat-icon>
+                    }"
+                    (click)="toogleStatus($event, todo)"
+                    >{{
+                      todo.status === 'Incomplete'
+                        ? 'unpublished'
+                        : 'check_circle'
+                    }}</mat-icon
+                  >
                 </div>
                 <div class="flex justify-end">
-                  <mat-icon class="flex justify-end todo-delete" role="button" (click)="onDeleteTodo($event, todo)">
-                    delete</mat-icon>
+                  <mat-icon
+                    class="flex justify-end todo-delete"
+                    role="button"
+                    (click)="onDeleteTodo($event, todo)">
+                    delete</mat-icon
+                  >
                 </div>
               </div>
             </div>
