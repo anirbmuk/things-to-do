@@ -1,21 +1,39 @@
 <header>
-  <mat-toolbar color="primary" class="flex justify-between items-center">
+  <mat-toolbar
+    color="primary"
+    class="flex justify-between items-center">
     <nav class="text md:text-2xl text-center">Things TODO</nav>
     <div class="flex justify-end items-center">
-      <div *ngIf="showSearch" class="flex flex-row bg-indigo-100 rounded px-2">
-        <input type="text" placeholder="Search TODOs"
+      <div
+        *ngIf="showSearch"
+        class="flex flex-row bg-indigo-100 rounded px-2">
+        <input
+          type="text"
+          placeholder="Search TODOs"
           class="caret-indigo bg-indigo-100 outline-none text-black-dark text-sm md:text-md w-36 md:w-48 lg:w-60 xl:w-72"
-          [value]="searchString$ | async" (input)="updateSearchString($event)" #searchField />
-        <button class="mt-[7px]" (click)="showSearch = false; resetSearch()">
+          [value]="searchString$ | async"
+          (input)="updateSearchString($event)"
+          #searchField />
+        <button
+          class="mt-[7px]"
+          (click)="showSearch = false; resetSearch()">
           <mat-icon class="text-2xl md:text-3xl text-gray-800">close</mat-icon>
         </button>
       </div>
       <ng-container *ngIf="showActionButtons$ | async">
-        <button *ngIf="!showSearch" mat-icon-button color="primary" aria-label="Search for a TODO"
+        <button
+          *ngIf="!showSearch"
+          mat-icon-button
+          color="primary"
+          aria-label="Search for a TODO"
           (click)="displaySearch()">
           <mat-icon class="text-white text-2xl md:text-3xl">search</mat-icon>
         </button>
-        <button mat-icon-button color="primary" aria-label="Add a new TODO" (click)="addTodo()">
+        <button
+          mat-icon-button
+          color="primary"
+          aria-label="Add a new TODO"
+          (click)="addTodo()">
           <mat-icon class="text-white text-2xl md:text-3xl">add</mat-icon>
         </button>
       </ng-container>
