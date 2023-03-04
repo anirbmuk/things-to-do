@@ -1,3 +1,7 @@
+## 1.4.2
+- Border for TODOs for better visual
+- Added sample unit tests (WIP)  
+
 ## 1.4.1
 - Bug fixes for dark mode.  
 
