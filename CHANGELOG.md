@@ -1,3 +1,6 @@
+## 1.4.3
+- Set up **lint-staged** with **husky**  
+
 ## 1.4.2
 - Border for TODOs for better visual
 - Added sample unit tests (WIP)  
