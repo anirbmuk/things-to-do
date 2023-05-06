@@ -8,10 +8,16 @@
       "resources": {
         "files": [
           "/favicon.ico",
+          "/favicon-16x16.png",
+          "/favicon-32x32.png",
           "/index.html",
           "/manifest.webmanifest",
           "/*.css",
           "/*.js"
+        ],
+        "urls": [
+          "https://fonts.googleapis.com/**",
+          "https://fonts.gstatic.com/**"
         ]
       }
     },
