@@ -1,3 +1,7 @@
+## 1.4.4
+- Updated to latest angular 13  
+- Updated pwa icons for iOS  
+
 ## 1.4.3
 - Set up **lint-staged** with **husky**  
 
