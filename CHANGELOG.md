@@ -1,3 +1,6 @@
+## 1.4.5
+- Fixed zoom-in for input, textarea and select components in iOS  
+
 ## 1.4.4
 - Updated to latest angular 13  
 - Updated pwa icons for iOS  

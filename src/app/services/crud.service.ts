@@ -46,7 +46,7 @@ export class CrudService {
       }
       const items = this.storageService.getItem(storage) || EMPTY_ARRAY;
       const parsedItems = JSON.parse(items) as T[];
-      const itemToBeUpdated = parsedItems.find(each => each[id] === key);
+      const itemToBeUpdated = parsedItems.find((each) => each[id] === key);
       if (!itemToBeUpdated) {
         return reject(
           `[updateItem] object with { ${String(id)}: ${key} } not found`
@@ -57,7 +57,7 @@ export class CrudService {
         ...item
       };
       const updatedItems = [
-        ...parsedItems.filter(each => each[id] !== key),
+        ...parsedItems.filter((each) => each[id] !== key),
         updatedItem
       ];
       this.storageService.setItem(storage, updatedItems);
@@ -72,13 +72,13 @@ export class CrudService {
       }
       const items = this.storageService.getItem(storage) || EMPTY_ARRAY;
       const parsedItems = JSON.parse(items) as T[];
-      const itemToBeDeleted = parsedItems.find(each => each[id] === key);
+      const itemToBeDeleted = parsedItems.find((each) => each[id] === key);
       if (!itemToBeDeleted) {
         return reject(
           `[deleteItem] object with { ${String(id)}: ${key} } not found`
         );
       }
-      const updatedItems = parsedItems.filter(each => each[id] !== key);
+      const updatedItems = parsedItems.filter((each) => each[id] !== key);
       this.storageService.setItem(storage, updatedItems);
       resolve(itemToBeDeleted);
     });

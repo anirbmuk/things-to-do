@@ -70,7 +70,7 @@ export class CreateUpdateDialogComponent implements OnInit {
     this.mindateInvalid$ = this.createUpdateForm
       .get('duedate')
       ?.valueChanges.pipe(
-        map(value => this.dateService.isDateInvalid(value, this.minDate!))
+        map((value) => this.dateService.isDateInvalid(value, this.minDate!))
       );
   }
 

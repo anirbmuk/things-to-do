@@ -43,6 +43,11 @@
     content: ' *';
     @apply text-red-600 text-sm;
   }
+  input,
+  textarea,
+  select {
+    @apply !text;
+  }
 
   @media (prefers-color-scheme: dark) {
     .mat-toolbar.mat-primary {
