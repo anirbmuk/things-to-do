@@ -19,8 +19,8 @@ export class HeaderComponent {
   showSearch = false;
   readonly searchString$ = this.todoStore.searchString$;
   readonly showActionButtons$ = this.router.events.pipe(
-    filter(event => event instanceof NavigationEnd),
-    map(event => (event as NavigationEnd)?.url === '/')
+    filter((event) => event instanceof NavigationEnd),
+    map((event) => (event as NavigationEnd)?.url === '/')
   );
 
   constructor(

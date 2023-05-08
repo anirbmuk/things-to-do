@@ -41,9 +41,9 @@ export class StoreService extends ComponentStore<ITodoState> {
     if (searchString) {
       let hasOperator = false;
       const tempConditions: ((item: ITodo) => boolean)[] = [];
-      if (OPERATORS.some(operator => searchString.includes(operator))) {
+      if (OPERATORS.some((operator) => searchString.includes(operator))) {
         hasOperator = true;
-        OPERATORS.forEach(operator => {
+        OPERATORS.forEach((operator) => {
           if (searchString.includes(operator)) {
             const [, value] = searchString.split(operator);
             const comparator = +value?.trim();
@@ -82,10 +82,10 @@ export class StoreService extends ComponentStore<ITodoState> {
     )
   );
 
-  readonly fetchTodos = this.effect<void>(param$ =>
+  readonly fetchTodos = this.effect<void>((param$) =>
     param$.pipe(
       switchMap(() =>
-        this.filteredTodos$.pipe(tap(data => this.updateTodos(data)))
+        this.filteredTodos$.pipe(tap((data) => this.updateTodos(data)))
       )
     )
   );
@@ -124,9 +124,9 @@ export class StoreService extends ComponentStore<ITodoState> {
     }
   );
 
-  readonly addTodo = this.effect<AddTodo>(param$ =>
+  readonly addTodo = this.effect<AddTodo>((param$) =>
     param$.pipe(
-      concatMap(param =>
+      concatMap((param) =>
         from(this.todoService.addTodo(param)).pipe(
           tap(() => this.fetchTodos()),
           catchError(this.handleError)
@@ -135,12 +135,12 @@ export class StoreService extends ComponentStore<ITodoState> {
     )
   );
 
-  readonly addTodoModal = this.effect<void>(param$ =>
+  readonly addTodoModal = this.effect<void>((param$) =>
     param$.pipe(
       concatMap(() =>
         this.modalService.showCreateUpdateDialog('create').pipe(
-          filter(data => data.decision),
-          tap(data => {
+          filter((data) => data.decision),
+          tap((data) => {
             const dataToBeCreated = { ...data.output } as AddTodo;
             this.addTodo(dataToBeCreated);
           }),
@@ -153,9 +153,9 @@ export class StoreService extends ComponentStore<ITodoState> {
   readonly updateTodo = this.effect<{
     todoid: ITodo['todoid'];
     todo: UpdateTodo;
-  }>(param$ =>
+  }>((param$) =>
     param$.pipe(
-      concatMap(param =>
+      concatMap((param) =>
         from(this.todoService.updateTodo(param)).pipe(
           tap(() => this.fetchTodos()),
           catchError(this.handleError)
@@ -167,14 +167,14 @@ export class StoreService extends ComponentStore<ITodoState> {
   readonly updateTodoModal = this.effect<{
     todoid: ITodo['todoid'];
     todo: UpdateTodo;
-  }>(param$ =>
+  }>((param$) =>
     param$.pipe(
-      concatMap(param =>
+      concatMap((param) =>
         this.modalService
           .showCreateUpdateDialog('update', { ...param.todo })
           .pipe(
-            filter(data => data.decision),
-            tap(data => {
+            filter((data) => data.decision),
+            tap((data) => {
               const dataToBeUpdated = { ...data.output } as UpdateTodo;
               this.updateTodo({ todoid: param.todoid, todo: dataToBeUpdated });
             }),
@@ -184,9 +184,9 @@ export class StoreService extends ComponentStore<ITodoState> {
     )
   );
 
-  readonly deleteTodo = this.effect<ITodo['todoid']>(todoid$ =>
+  readonly deleteTodo = this.effect<ITodo['todoid']>((todoid$) =>
     todoid$.pipe(
-      concatMap(todoid =>
+      concatMap((todoid) =>
         from(this.todoService.deleteTodo(todoid)).pipe(
           tap(() => this.fetchTodos()),
           catchError(this.handleError)
@@ -195,16 +195,17 @@ export class StoreService extends ComponentStore<ITodoState> {
     )
   );
 
-  readonly deleteTodoWithConfirmation = this.effect<ITodo['todoid']>(todoid$ =>
-    todoid$.pipe(
-      concatMap(todoid =>
-        this.modalService.showConfirmDialog('Delete the TODO?').pipe(
-          filter(data => data.decision),
-          tap(() => this.deleteTodo(todoid)),
-          catchError(this.handleError)
+  readonly deleteTodoWithConfirmation = this.effect<ITodo['todoid']>(
+    (todoid$) =>
+      todoid$.pipe(
+        concatMap((todoid) =>
+          this.modalService.showConfirmDialog('Delete the TODO?').pipe(
+            filter((data) => data.decision),
+            tap(() => this.deleteTodo(todoid)),
+            catchError(this.handleError)
+          )
         )
       )
-    )
   );
 
   constructor(

@@ -41,7 +41,7 @@ export class TodoService {
   private async _getTodos() {
     const storedTodos = await this.crudService.read<ITodo>();
     return storedTodos
-      .map(todo => {
+      .map((todo) => {
         const additional = this.getAdditionalInfo(todo);
         return {
           ...todo,
@@ -97,7 +97,7 @@ export class TodoService {
       const groupedTodo: GroupedTodo = {
         datedivider: group,
         todos: todos.filter(
-          todo =>
+          (todo) =>
             this.groupByFn(new Date(todo.duedate), groupbyClause) === group
         )
       };
