@@ -5,8 +5,8 @@ import {
   OnInit
 } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { map, Observable } from 'rxjs';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Observable, map } from 'rxjs';
 import { ITodo } from '../models';
 import { AddTodo, UpdateTodo } from '../types';
 import { DateService } from './../services/date.service';

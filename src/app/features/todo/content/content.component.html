@@ -1,7 +1,7 @@
 <section class="my-4 xl:w-1/2 mx-auto">
   <ng-container *ngIf="todos?.length; else nodata">
     <ng-container *ngFor="let group of todos; trackBy: trackByGroupFn">
-      <fieldset class="text-2xl border-t border-gray-300 rounded">
+      <fieldset class="text-2xl border-t border-gray-300">
         <legend class="py-3 pl-1 pr-2.5 -mb-3 text-shadow">
           {{ group.datedivider | tddGroupDate }}
         </legend>
@@ -36,8 +36,21 @@
                 <div class="text-md whitespace-pre-line break-all">
                   {{ todo.text }}
                 </div>
-                <div class="text-sm todo-duedate">
+                <div
+                  *ngIf="todo.status === 'Incomplete'"
+                  class="text-sm todo-duedate">
                   Due: {{ todo.duedate | tddDisplayDate | date : 'medium' }}
+                </div>
+                <div
+                  *ngIf="todo.completedon && todo.status === 'Complete'"
+                  class="text-sm todo-duedate !-mt-0.5 font-semiBold"
+                  [ngClass]="{
+                    '!text-red-600': todo.performance?.rating === 'late',
+                    '!text-green-600':
+                      todo.performance?.rating === 'ontime' ||
+                      todo.performance?.rating === 'beforetime'
+                  }">
+                  {{ todo?.performance?.message }}
                 </div>
               </div>
               <div class="flex flex-col justify-between">
