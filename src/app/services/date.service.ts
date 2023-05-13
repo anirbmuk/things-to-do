@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ITodo } from 'src/app/models';
+import { ITodo } from './../models';
 
 @Injectable({
   providedIn: 'root'
@@ -88,6 +88,43 @@ export class DateService {
     };
   }
 
+  getPerformance(
+    duedate: string,
+    completeddate: string | undefined
+  ): ITodo['performance'] | undefined {
+    if (!completeddate) {
+      return;
+    }
+
+    const dueDate = new Date(duedate);
+    const completedDate = new Date(completeddate);
+
+    const formattedDueDateString = `${dueDate.getFullYear()}-${(
+      dueDate.getMonth() + 1
+    )
+      .toString()
+      .padStart(2, '0')}-${dueDate
+      .getDate()
+      .toString()
+      .padStart(2, '0')}T00:00:00.000Z`;
+    const formattedDueDate = new Date(formattedDueDateString);
+
+    const formattedcompletedDateString = `${completedDate.getFullYear()}-${(
+      completedDate.getMonth() + 1
+    )
+      .toString()
+      .padStart(2, '0')}-${completedDate
+      .getDate()
+      .toString()
+      .padStart(2, '0')}T00:00:00.000Z`;
+    const formattedcompletedDate = new Date(formattedcompletedDateString);
+
+    const variation =
+      Math.round(+formattedcompletedDate - +formattedDueDate) /
+      (24 * 60 * 60 * 1000);
+    return this.getRating(variation);
+  }
+
   getCurrentFormDateTime(date: string | undefined): string | undefined {
     if (!date) {
       const currentDate = new Date();
@@ -106,7 +143,7 @@ export class DateService {
     }
   }
 
-  getStorageFormDateTime(date: string | undefined): string {
+  getStorageFormDateTime(date?: string | undefined): string {
     let now = new Date();
     if (date) {
       now = new Date(date);
@@ -126,5 +163,26 @@ export class DateService {
     const inputDate = +new Date(inputDateString);
     const minDate = +new Date(minDateString);
     return inputDate < minDate;
+  }
+
+  getRating(variation: number): ITodo['performance'] {
+    if (variation < 0) {
+      return {
+        variation,
+        rating: 'beforetime',
+        message: 'Completed before due date :-)'
+      };
+    } else if (variation < 1) {
+      return {
+        variation,
+        rating: 'ontime',
+        message: 'Completed on time :-)'
+      };
+    }
+    return {
+      variation,
+      rating: 'late',
+      message: 'Task was delayed :-('
+    };
   }
 }

@@ -6,7 +6,8 @@ import {
   Output
 } from '@angular/core';
 import { ITodo } from 'src/app/models';
-import { GroupedTodo, UpdateTodo } from 'src/app/types';
+import { DateService } from './../../../services/date.service';
+import { GroupedTodo, UpdateTodo } from './../../../types';
 
 @Component({
   selector: 'ttd-content',
@@ -25,6 +26,8 @@ export class ContentComponent {
     todoid: ITodo['todoid'];
     todo: UpdateTodo;
   }>();
+
+  constructor(private readonly dateService: DateService) {}
 
   trackByGroupFn(_: number, groupedTodo: GroupedTodo) {
     return groupedTodo.datedivider;
@@ -47,7 +50,11 @@ export class ContentComponent {
       todoid: todo.todoid,
       todo: {
         ...todo,
-        status: todo.status === 'Complete' ? 'Incomplete' : 'Complete'
+        status: todo.status === 'Complete' ? 'Incomplete' : 'Complete',
+        completedon:
+          todo.status === 'Incomplete'
+            ? this.dateService.getStorageFormDateTime()
+            : undefined
       }
     });
   }

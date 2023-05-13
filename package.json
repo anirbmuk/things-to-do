@@ -1,6 +1,6 @@
 {
   "name": "things-to-do",
-  "version": "1.4.5",
+  "version": "1.5.0",
   "description": "A light and fast todo-app, built with angular 13",
   "author": {
     "email": "anirban.mjee@gmail.com",
@@ -27,7 +27,7 @@
     "postinstall": "ngcc"
   },
   "lint-staged": {
-    "src/**/*{.ts,.js,.html,.css}": "npm run pre-commit"
+    "src/**/*{.ts,.js,.html,.css}": "npm run lint --staged"
   },
   "private": true,
   "dependencies": {

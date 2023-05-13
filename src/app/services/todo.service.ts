@@ -43,9 +43,11 @@ export class TodoService {
     return storedTodos
       .map((todo) => {
         const additional = this.getAdditionalInfo(todo);
+        const performance = this.getPerformanceInfo(todo);
         return {
           ...todo,
-          additional
+          additional,
+          ...(performance && { performance })
         };
       })
       .sort(defaultSort);
@@ -74,6 +76,12 @@ export class TodoService {
   private getAdditionalInfo(todo: ITodo) {
     return todo.status === 'Incomplete'
       ? this.dateService.getStatus(todo.duedate)
+      : undefined;
+  }
+
+  private getPerformanceInfo(todo: ITodo) {
+    return todo.status === 'Complete'
+      ? this.dateService.getPerformance(todo.duedate, todo.completedon)
       : undefined;
   }
 

@@ -3,10 +3,22 @@ export interface ITodo {
   duedate: string;
   heading: string;
   text: string | undefined;
-  status: 'Incomplete' | 'Complete';
+  status: Status;
   additional?: {
-    state?: 'error' | 'warn' | 'info' | 'safe';
+    state?: State;
     message?: string;
     remaining: number | undefined;
   };
+  performance?: {
+    variation: number;
+    rating: Rating;
+    message: string;
+  };
+  completedon?: string | undefined;
 }
+
+export type Status = 'Incomplete' | 'Complete';
+
+export type State = 'error' | 'warn' | 'info' | 'safe';
+
+export type Rating = 'beforetime' | 'ontime' | 'late';

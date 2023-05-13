@@ -1,3 +1,6 @@
+## 1.5.0
+- Added feature to track `completedon` and provide feedback  
+
 ## 1.4.5
 - Fixed zoom-in for input, textarea and select components in iOS  
 
