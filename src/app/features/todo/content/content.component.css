@@ -1,5 +1,5 @@
 .todo-content-wrapper {
-  @apply bg-gray-100 border-2;
+  @apply bg-gray-100 border-2 min-h-2xs;
 }
 
 .todo-duedate {

@@ -33,7 +33,8 @@
                 <div class="text font-bold">
                   {{ todo.heading }}
                 </div>
-                <div class="text-md whitespace-pre-line break-all">
+                <div
+                  class="text-md whitespace-pre-line break-all py-2 xl:py-1.5 3xl:py-1">
                   {{ todo.text }}
                 </div>
                 <div
@@ -46,6 +47,7 @@
                   class="text-sm todo-duedate !-mt-0.5 font-semiBold"
                   [ngClass]="{
                     '!text-red-600': todo.performance?.rating === 'late',
+                    '!text-orange-600': todo.performance?.rating === 'delayed',
                     '!text-green-600':
                       todo.performance?.rating === 'ontime' ||
                       todo.performance?.rating === 'beforetime'
