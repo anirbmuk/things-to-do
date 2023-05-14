@@ -21,4 +21,4 @@ export type Status = 'Incomplete' | 'Complete';
 
 export type State = 'error' | 'warn' | 'info' | 'safe';
 
-export type Rating = 'beforetime' | 'ontime' | 'late';
+export type Rating = 'beforetime' | 'ontime' | 'delayed' | 'late';

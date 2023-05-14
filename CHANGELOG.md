@@ -1,3 +1,7 @@
+## 1.6.0
+- Set TODOs as Incomplete when edited  
+- Minor CSS fixes for mobile  
+
 ## 1.5.0
 - Added feature to track `completedon` and provide feedback  
 

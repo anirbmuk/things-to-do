@@ -178,6 +178,12 @@ export class DateService {
         rating: 'ontime',
         message: 'Completed on time :-)'
       };
+    } else if (variation < 2) {
+      return {
+        variation,
+        rating: 'delayed',
+        message: 'Almost on time :-|'
+      };
     }
     return {
       variation,

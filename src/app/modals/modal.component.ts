@@ -85,17 +85,20 @@ export class CreateUpdateDialogComponent implements OnInit {
             this.createUpdateForm?.value.duedate
           )
         } as AddTodo;
-      } else {
+        this.dialogRef.close({ decision: true, output });
+      } else if (this.data.mode === 'update' && this.createUpdateForm?.dirty) {
         output = {
           heading: this.createUpdateForm?.value.heading,
           text: this.createUpdateForm?.value.text,
           duedate: this.dateService.getStorageFormDateTime(
             this.createUpdateForm?.value.duedate
           ),
-          status: this.data.todo?.status
+          status: 'Incomplete'
         } as UpdateTodo;
+        this.dialogRef.close({ decision: true, output });
+      } else {
+        this.closeModal();
       }
-      this.dialogRef.close({ decision: true, output });
     }
   }
 
