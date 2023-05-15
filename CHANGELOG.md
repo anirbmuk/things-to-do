@@ -1,3 +1,6 @@
+## 1.6.1
+- UI improvements  
+
 ## 1.6.0
 - Set TODOs as editable only when Incomplete  
 - Minor CSS fixes for mobile  
