@@ -1,5 +1,4 @@
 ## 1.6.0
-- Set TODOs as Incomplete when edited  
 - Set TODOs as editable only when Incomplete  
 - Minor CSS fixes for mobile  
 
