@@ -1,5 +1,11 @@
 <h3 class="!text-lg font-semiBold !mb-2" mat-dialog-title>
-  {{ data.mode === 'create' ? 'Create TODO' : 'Update TODO' }}
+  {{
+    data.mode === 'create'
+      ? 'Create TODO'
+      : editable
+      ? 'Update TODO'
+      : 'View TODO'
+  }}
 </h3>
 <hr />
 <mat-dialog-content>

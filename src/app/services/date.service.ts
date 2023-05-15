@@ -130,8 +130,8 @@ export class DateService {
       const currentDate = new Date();
       const yyyy = currentDate.getFullYear();
       const mm = `${currentDate.getMonth() + 1}`.padStart(2, '0');
-      const dd = `${currentDate.getDate() + 1}`.padStart(2, '0');
-      return `${yyyy}-${mm}-${dd}T12:00:00`;
+      const dd = `${currentDate.getDate()}`.padStart(2, '0');
+      return `${yyyy}-${mm}-${dd}T23:59:00`;
     } else {
       const currentDate = new Date(date);
       const yyyy = currentDate.getFullYear();

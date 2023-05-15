@@ -3,7 +3,7 @@
 }
 
 .todo-duedate {
-  @apply text-gray-600;
+  @apply text-gray-700;
 }
 
 .todo-delete {
