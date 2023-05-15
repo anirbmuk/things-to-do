@@ -20,7 +20,7 @@
               (click)="editTodo(todo)">
               <div class="grid grid-cols-6 gap-2">
                 <div class="flex flex-col col-span-5 space-y-1">
-                  <ng-container *ngIf="todo.additional">
+                  <div *ngIf="todo.additional" class="z-10">
                     <span
                       class="font-normal text-white rounded-sm text-sm py-1 px-2 max-w-fit text-center"
                       [ngClass]="{
@@ -31,7 +31,7 @@
                       }"
                       >{{ todo.additional.message }}</span
                     >
-                  </ng-container>
+                  </div>
                   <div class="text font-bold pt-1 pb-2">
                     {{ todo.heading }}
                   </div>
@@ -43,12 +43,12 @@
                   </div>
                   <div
                     *ngIf="todo.status === 'Incomplete'"
-                    class="text-sm todo-duedate pt-2 pb-1">
+                    class="text-sm todo-duedate pt-4 pb-1 z-10">
                     Due: {{ todo.duedate | tddDisplayDate | date : 'medium' }}
                   </div>
                   <div
                     *ngIf="todo.completedon && todo.status === 'Complete'"
-                    class="text-sm todo-duedate !-mt-0.5 font-semiBold"
+                    class="text-sm todo-duedate !-mt-0.5 font-semiBold pt-4 pb-1 z-10"
                     [ngClass]="{
                       '!text-red-600': todo.performance?.rating === 'late',
                       '!text-orange-600':

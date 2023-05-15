@@ -40,8 +40,7 @@
         class="caret-indigo text-black-dark text-sm md:text-md w-full my-1 p-2 rounded"
         required
         type="datetime-local"
-        formControlName="duedate"
-        [min]="minDate" />
+        formControlName="duedate" />
     </form>
   </div>
 </mat-dialog-content>
@@ -52,9 +51,7 @@
     color="primary"
     (click)="onDialogAction()"
     type="button"
-    [disabled]="
-      createUpdateForm.invalid || (mindateInvalid$ | async) || !editable
-    ">
+    [disabled]="createUpdateForm.invalid || !editable">
     Save
   </button>
   <button

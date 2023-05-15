@@ -6,7 +6,6 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Observable, map } from 'rxjs';
 import { ITodo } from '../models';
 import { AddTodo, UpdateTodo } from '../types';
 import { DateService } from './../services/date.service';
@@ -53,9 +52,6 @@ export class CreateUpdateDialogComponent implements OnInit {
 
   createUpdateForm = this.formBuilder.group({});
   editable = true;
-  minDate?: string;
-
-  mindateInvalid$?: Observable<boolean>;
 
   ngOnInit() {
     this.editable =
@@ -74,15 +70,9 @@ export class CreateUpdateDialogComponent implements OnInit {
       }),
       duedate: new FormControl(
         { value: duedateValue, disabled: !this.editable },
-        [Validators.required]
+        [Validators.required, this.checkMinDate.bind(this)]
       )
     });
-    this.minDate = this.dateService.getMinDate();
-    this.mindateInvalid$ = this.createUpdateForm
-      .get('duedate')
-      ?.valueChanges.pipe(
-        map((value) => this.dateService.isDateInvalid(value, this.minDate!))
-      );
   }
 
   onDialogAction(): void {
@@ -115,5 +105,14 @@ export class CreateUpdateDialogComponent implements OnInit {
 
   closeModal(): void {
     this.dialogRef.close({ decision: false });
+  }
+
+  private checkMinDate(control: FormControl): { [s: string]: boolean } | null {
+    const dateString = control.value;
+    const minDate = this.dateService.getMinDate();
+    if (+new Date(dateString) < +new Date(minDate)) {
+      return { mindate: true };
+    }
+    return null;
   }
 }

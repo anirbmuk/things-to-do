@@ -53,10 +53,7 @@
   textarea:disabled {
     @apply cursor-not-allowed bg-gray-100 border border-gray-300;
   }
-  input:out-of-range {
-    @apply bg-red-100 text-red-700 outline-red-400 border-red-400;
-  }
-  input.ng-invalid.ng-touched {
+  input.ng-invalid.ng-dirty {
     @apply bg-red-100 text-red-700 outline-red-400 border-red-400;
   }
   form,
