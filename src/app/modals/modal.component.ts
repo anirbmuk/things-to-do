@@ -52,19 +52,30 @@ export class CreateUpdateDialogComponent implements OnInit {
   ) {}
 
   createUpdateForm = this.formBuilder.group({});
-
+  editable = true;
   minDate?: string;
 
   mindateInvalid$?: Observable<boolean>;
 
   ngOnInit() {
+    this.editable =
+      this.data.mode === 'create' || this.data.todo?.status === 'Incomplete';
     const duedateValue = this.dateService.getCurrentFormDateTime(
       this.data.todo?.duedate as string | undefined
     );
     this.createUpdateForm = this.formBuilder.group({
-      heading: new FormControl(this.data.todo?.heading, [Validators.required]),
-      text: new FormControl(this.data.todo?.text),
-      duedate: new FormControl(duedateValue, [Validators.required])
+      heading: new FormControl(
+        { value: this.data.todo?.heading, disabled: !this.editable },
+        [Validators.required]
+      ),
+      text: new FormControl({
+        value: this.data.todo?.text,
+        disabled: !this.editable
+      }),
+      duedate: new FormControl(
+        { value: duedateValue, disabled: !this.editable },
+        [Validators.required]
+      )
     });
     this.minDate = this.dateService.getMinDate();
     this.mindateInvalid$ = this.createUpdateForm

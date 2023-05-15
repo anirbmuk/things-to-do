@@ -5,25 +5,33 @@
 <mat-dialog-content>
   <div class="mb-2 my-6">
     <form [formGroup]="createUpdateForm">
-      <label aria-required="true" for="headingid" required>Heading</label>
+      <label
+        aria-required="true"
+        for="headingid"
+        required
+        [attr.aria-disabled]="!editable"
+        >Heading</label
+      >
       <input
         id="headingid"
         type="text"
-        class="caret-indigo bg-indigo-100 outline-none text-black-dark text-sm md:text-md w-full my-1 p-2 rounded"
+        class="caret-indigo text-black-dark text-sm md:text-md w-full my-1 p-2 rounded"
         required
         formControlName="heading" />
       <label for="textid">Text</label>
       <textarea
         id="textid"
         type="text"
-        class="caret-indigo bg-indigo-100 outline-none text-black-dark text-sm md:text-md w-full my-1 p-2 rounded"
+        class="caret-indigo text-black-dark text-sm md:text-md w-full my-1 p-2 rounded"
         formControlName="text"
         rows="3"></textarea>
-      <label for="duedateid" required>Due On</label>
+      <label for="duedateid" required [attr.aria-disabled]="!editable"
+        >Due On</label
+      >
       <input
         aria-required="true"
         id="duedateid"
-        class="caret-indigo bg-indigo-100 outline-none text-black-dark text-sm md:text-md w-full my-1 p-2 rounded"
+        class="caret-indigo text-black-dark text-sm md:text-md w-full my-1 p-2 rounded"
         required
         type="datetime-local"
         formControlName="duedate"
@@ -38,7 +46,9 @@
     color="primary"
     (click)="onDialogAction()"
     type="button"
-    [disabled]="createUpdateForm.invalid || (mindateInvalid$ | async)">
+    [disabled]="
+      createUpdateForm.invalid || (mindateInvalid$ | async) || !editable
+    ">
     Save
   </button>
   <button
