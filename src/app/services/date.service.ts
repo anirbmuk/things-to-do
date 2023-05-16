@@ -84,6 +84,8 @@ export class DateService {
       };
     }
     return {
+      state: 'later',
+      message: 'Due later',
       remaining
     };
   }
@@ -93,7 +95,7 @@ export class DateService {
     completeddate: string | undefined
   ): ITodo['performance'] | undefined {
     if (!completeddate) {
-      return;
+      return this.getRating(0);
     }
 
     const dueDate = new Date(duedate);
