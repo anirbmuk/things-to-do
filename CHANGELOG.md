@@ -1,6 +1,9 @@
+## 1.7.1
+- Fix for incorrect logic to display feedback for old TODOs  
+
 ## 1.7.0
-- Added **`later`** label for future TODOs
-- Added default rating for older TODOs in the system    
+- Added **`later`** label for future TODOs  
+- Added default rating for older TODOs in the system  
 
 ## 1.6.1
 - UI improvements  
