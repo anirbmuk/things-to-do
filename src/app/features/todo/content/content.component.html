@@ -48,15 +48,14 @@
                     Due: {{ todo.duedate | tddDisplayDate | date : 'medium' }}
                   </div>
                   <div
-                    *ngIf="todo.completedon && todo.status === 'Complete'"
+                    *ngIf="todo.performance && todo.status === 'Complete'"
                     class="text-sm todo-duedate !-mt-0.5 font-semiBold pt-4 pb-1 z-10"
                     [ngClass]="{
-                      '!text-red-600': todo.performance?.rating === 'late',
-                      '!text-orange-600':
-                        todo.performance?.rating === 'delayed',
+                      '!text-red-600': todo.performance.rating === 'late',
+                      '!text-orange-600': todo.performance.rating === 'delayed',
                       '!text-green-600':
-                        todo.performance?.rating === 'ontime' ||
-                        todo.performance?.rating === 'beforetime'
+                        todo.performance.rating === 'ontime' ||
+                        todo.performance.rating === 'beforetime'
                     }">
                     {{ todo?.performance?.message }}
                   </div>
