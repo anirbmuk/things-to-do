@@ -1,3 +1,7 @@
+## 1.7.0
+- Added **`later`** label for future TODOs
+- Added default rating for older TODOs in the system    
+
 ## 1.6.1
 - UI improvements  
 
