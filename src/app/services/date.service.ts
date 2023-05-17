@@ -145,7 +145,7 @@ export class DateService {
     }
   }
 
-  getStorageFormDateTime(date?: string | undefined): string {
+  getStorageFormDateTime(date?: string | null | undefined): string {
     let now = new Date();
     if (date) {
       now = new Date(date);

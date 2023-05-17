@@ -10,7 +10,7 @@
 <hr />
 <div mat-dialog-content>
   <div class="mb-2 my-6">
-    <form [formGroup]="createUpdateForm">
+    <form *ngIf="createUpdateForm" [formGroup]="createUpdateForm">
       <label
         aria-required="true"
         for="headingid"
@@ -51,7 +51,7 @@
     color="primary"
     (click)="onDialogAction()"
     type="button"
-    [disabled]="createUpdateForm.invalid || !editable"
+    [disabled]="createUpdateForm?.invalid || !editable"
     mat-dialog-close
     cdkFocusInitial>
     Save

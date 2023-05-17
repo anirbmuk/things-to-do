@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,9 +6,10 @@ import {
   inject
 } from '@angular/core';
 import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
   ReactiveFormsModule,
-  UntypedFormBuilder,
-  UntypedFormControl,
   Validators
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,7 +22,7 @@ import { ITodo } from '../models';
 import { AddTodo, UpdateTodo } from '../types';
 import { DateService } from './../services/date.service';
 
-const CORE_MODULES = [ReactiveFormsModule];
+const CORE_MODULES = [CommonModule, ReactiveFormsModule];
 const MATERIAL_MODULES = [MatDialogModule, MatButtonModule] as const;
 
 @Component({
@@ -60,10 +62,14 @@ export class CreateUpdateDialogComponent implements OnInit {
   readonly data: { mode: 'create' | 'update'; todo?: ITodo } =
     inject(MAT_DIALOG_DATA);
   readonly dialogRef = inject(MatDialogRef<ConfirmDialogComponent>);
-  private readonly formBuilder = inject(UntypedFormBuilder);
+  private readonly formBuilder = inject(FormBuilder);
   private readonly dateService = inject(DateService);
 
-  createUpdateForm = this.formBuilder.group({});
+  createUpdateForm?: FormGroup<{
+    heading: FormControl<string | null | undefined>;
+    text: FormControl<string | null | undefined>;
+    duedate: FormControl<string | null | undefined>;
+  }>;
   editable = true;
 
   ngOnInit() {
@@ -72,16 +78,16 @@ export class CreateUpdateDialogComponent implements OnInit {
     const duedateValue = this.dateService.getCurrentFormDateTime(
       this.data.todo?.duedate as string | undefined
     );
-    this.createUpdateForm = this.formBuilder.group({
-      heading: new UntypedFormControl(
+    this.createUpdateForm = new FormGroup({
+      heading: new FormControl(
         { value: this.data.todo?.heading, disabled: !this.editable },
         [Validators.required]
       ),
-      text: new UntypedFormControl({
+      text: new FormControl({
         value: this.data.todo?.text,
         disabled: !this.editable
       }),
-      duedate: new UntypedFormControl(
+      duedate: new FormControl(
         { value: duedateValue, disabled: !this.editable },
         [Validators.required, this.checkMinDate.bind(this)]
       )
@@ -120,9 +126,7 @@ export class CreateUpdateDialogComponent implements OnInit {
     this.dialogRef.close({ decision: false });
   }
 
-  private checkMinDate(
-    control: UntypedFormControl
-  ): { [s: string]: boolean } | null {
+  private checkMinDate(control: FormControl): { [s: string]: boolean } | null {
     const dateString = control.value;
     const minDate = this.dateService.getMinDate();
     if (+new Date(dateString) < +new Date(minDate)) {

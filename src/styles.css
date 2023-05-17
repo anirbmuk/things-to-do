@@ -65,6 +65,9 @@
   .mat-mdc-dialog-actions {
     @apply !justify-end;
   }
+  .mdc-dialog__title + .mdc-dialog__content {
+    @apply !pb-0;
+  }
   .text-shadow {
     text-shadow: 0 0 1px var(--black-light);
   }
