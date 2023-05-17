@@ -18,7 +18,7 @@ A light and fast todo-app, built with angular 15
 > Turn on dark mode on your mobile/laptop/PC and the page looks as elegant as it can get.  
 
 :heavy_check_mark: **Built with Angular v15**  
-> All standalone components (no ngModules)  
+> All standalone components  
 > Typed forms  
 > New **`inject`** function (no constructors)  
 
