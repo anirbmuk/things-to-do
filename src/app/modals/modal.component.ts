@@ -4,7 +4,11 @@ import {
   Inject,
   OnInit
 } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormControl,
+  Validators
+} from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ITodo } from '../models';
 import { AddTodo, UpdateTodo } from '../types';
@@ -46,7 +50,7 @@ export class CreateUpdateDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<CreateUpdateDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
     public data: { mode: 'create' | 'update'; todo?: ITodo },
-    private readonly formBuilder: FormBuilder,
+    private readonly formBuilder: UntypedFormBuilder,
     private readonly dateService: DateService
   ) {}
 
@@ -60,15 +64,15 @@ export class CreateUpdateDialogComponent implements OnInit {
       this.data.todo?.duedate as string | undefined
     );
     this.createUpdateForm = this.formBuilder.group({
-      heading: new FormControl(
+      heading: new UntypedFormControl(
         { value: this.data.todo?.heading, disabled: !this.editable },
         [Validators.required]
       ),
-      text: new FormControl({
+      text: new UntypedFormControl({
         value: this.data.todo?.text,
         disabled: !this.editable
       }),
-      duedate: new FormControl(
+      duedate: new UntypedFormControl(
         { value: duedateValue, disabled: !this.editable },
         [Validators.required, this.checkMinDate.bind(this)]
       )
@@ -107,7 +111,9 @@ export class CreateUpdateDialogComponent implements OnInit {
     this.dialogRef.close({ decision: false });
   }
 
-  private checkMinDate(control: FormControl): { [s: string]: boolean } | null {
+  private checkMinDate(
+    control: UntypedFormControl
+  ): { [s: string]: boolean } | null {
     const dateString = control.value;
     const minDate = this.dateService.getMinDate();
     if (+new Date(dateString) < +new Date(minDate)) {

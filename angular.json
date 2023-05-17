@@ -129,8 +129,9 @@
       }
     }
   },
-  "defaultProject": "things-to-do",
   "cli": {
-    "defaultCollection": "@angular-eslint/schematics"
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }
