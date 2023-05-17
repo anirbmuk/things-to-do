@@ -8,7 +8,7 @@
   }}
 </h3>
 <hr />
-<mat-dialog-content>
+<div mat-dialog-content>
   <div class="mb-2 my-6">
     <form [formGroup]="createUpdateForm">
       <label
@@ -43,15 +43,17 @@
         formControlName="duedate" />
     </form>
   </div>
-</mat-dialog-content>
+</div>
 <hr />
-<div class="flex justify-end space-x-2 !mt-2">
+<div mat-dialog-actions>
   <button
     mat-stroked-button
     color="primary"
     (click)="onDialogAction()"
     type="button"
-    [disabled]="createUpdateForm.invalid || !editable">
+    [disabled]="createUpdateForm.invalid || !editable"
+    mat-dialog-close
+    cdkFocusInitial>
     Save
   </button>
   <button

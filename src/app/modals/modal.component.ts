@@ -10,17 +10,18 @@ import {
   UntypedFormControl,
   Validators
 } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import {
-  MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
-  MatLegacyDialogModule as MatDialogModule,
-  MatLegacyDialogRef as MatDialogRef
-} from '@angular/material/legacy-dialog';
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef
+} from '@angular/material/dialog';
 import { ITodo } from '../models';
 import { AddTodo, UpdateTodo } from '../types';
 import { DateService } from './../services/date.service';
 
 const CORE_MODULES = [ReactiveFormsModule];
-const MATERIAL_MODULES = [MatDialogModule] as const;
+const MATERIAL_MODULES = [MatDialogModule, MatButtonModule] as const;
 
 @Component({
   standalone: true,

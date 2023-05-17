@@ -17,6 +17,9 @@
   h3 {
     @apply text-2xl md:text-4xl;
   }
+  h3[mat-dialog-title] {
+    @apply !pl-4;
+  }
   h4 {
     @apply text-xl md:text-3xl;
   }
@@ -27,13 +30,14 @@
     @apply text-md md:text;
   }
   .mat-toolbar,
-  .mat-button-toggle,
+  .mat-mdc-button-toggle,
   .mat-label,
   .mat-dialog,
-  .mat-dialog-title,
-  .mat-dialog-content,
+  .mat-mdc-dialog-title,
+  .mat-mdc-dialog-content,
   .mat-button,
-  .mat-stroked-button {
+  .mat-mdc-outlined-button,
+  .mat-button-toggle-label-content {
     @apply !font-sans;
   }
   .mat-button-toggle {
@@ -45,17 +49,27 @@
   .mat-button-toggle-checked.mat-button-toggle-appearance-standard {
     @apply !bg-indigo !text-white;
   }
-  .mat-dialog-title {
-    @apply mb-2 text-xl;
+  .mat-mdc-dialog-title {
+    @apply !mb-2 !text-xl !font-semiBold !text-black-alt;
   }
-  .mat-dialog-content {
-    @apply text-md;
+  .mat-mdc-dialog-content {
+    @apply !text-md;
+  }
+  .mat-mdc-dialog-surface.mdc-dialog__surface {
+    @apply !pb-4 !px-2;
+  }
+  .mat-mdc-dialog-content.mdc-dialog__content {
+    @apply !px-4;
+    --mdc-dialog-supporting-text-color: var(--black);
+  }
+  .mat-mdc-dialog-actions {
+    @apply !justify-end;
   }
   .text-shadow {
     text-shadow: 0 0 1px var(--black-light);
   }
   label {
-    @apply font-bold;
+    @apply font-bold text-black;
   }
   label[required]::after {
     content: ' *';
@@ -97,13 +111,13 @@
     .mat-button-toggle-group {
       @apply border-white;
     }
-    .mat-dialog-container {
+    .mat-mdc-dialog-container {
       @apply bg-black-dark border border-white text-white;
     }
-    .mat-stroked-button:not(:disabled) {
+    .mat-mdc-outlined-button:not(:disabled) {
       @apply border !border-white !text-white;
     }
-    .mat-stroked-button:disabled {
+    .mat-mdc-outlined-button:disabled {
       @apply border !border-white !text-white opacity-25;
     }
     label {

@@ -6,13 +6,9 @@ import {
   Output
 } from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatLegacyButtonModule } from '@angular/material/legacy-button';
 import { GroupBy } from 'src/app/types';
 
-const MATERIAL_MODULES = [
-  MatLegacyButtonModule,
-  MatButtonToggleModule
-] as const;
+const MATERIAL_MODULES = [MatButtonToggleModule] as const;
 
 @Component({
   standalone: true,

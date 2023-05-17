@@ -1,15 +1,17 @@
 <h3 class="!text-lg font-semiBold !mb-2" mat-dialog-title>Confirm Action</h3>
-<hr />
-<mat-dialog-content>
-  <div class="my-4 text-primary">{{ message }}</div>
-</mat-dialog-content>
-<hr />
-<div class="flex justify-end space-x-2 !mt-2">
+<div mat-dialog-content>
+  <hr />
+  <div class="my-4">{{ message }}</div>
+  <hr />
+</div>
+<div mat-dialog-actions>
   <button
     mat-stroked-button
     color="primary"
     (click)="onDialogAction()"
-    type="button">
+    type="button"
+    mat-dialog-close
+    cdkFocusInitial>
     Yes
   </button>
   <button
@@ -17,7 +19,8 @@
     mat-dialog-close
     color="warn"
     (click)="closeModal()"
-    type="reset">
+    type="reset"
+    mat-dialog-close>
     No
   </button>
 </div>
