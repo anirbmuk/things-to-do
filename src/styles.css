@@ -116,7 +116,7 @@
     -webkit-appearance: textfield;
     -moz-appearance: textfield;
   }
-  hr {
+  .mat-mdc-dialog-container hr {
     @apply mx-4;
   }
   @media (prefers-color-scheme: dark) {
