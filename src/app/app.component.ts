@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.update.versionUpdates
       .pipe(
-        filter((event) => event.type === 'VERSION_READY'),
+        filter(({ type }) => type === 'VERSION_READY'),
         take(1)
       )
       .subscribe(async () => {
