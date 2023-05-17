@@ -1,5 +1,5 @@
 # things-to-do  
-A light and fast todo-app, built with angular 13  
+A light and fast todo-app, built with angular 15  
 
 - - - -
 
@@ -16,6 +16,11 @@ A light and fast todo-app, built with angular 13
 
 :heavy_check_mark: **Dark Mode Support**  
 > Turn on dark mode on your mobile/laptop/PC and the page looks as elegant as it can get.  
+
+:heavy_check_mark: **Built with Angular v15**  
+> All standalone components (no ngModules)  
+> Typed forms  
+> New **`inject`** function (no constructors)  
 
 - - - -
 
