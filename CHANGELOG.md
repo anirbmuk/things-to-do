@@ -1,5 +1,6 @@
 ## 2.0.1
 - Fixed infinite reload caused by new **@angular/service-worker** API change  
+- UI fixes  
 
 ## 2.0.0
 - Updated to angular 15 (with standalone components, inject function, typed forms)  
