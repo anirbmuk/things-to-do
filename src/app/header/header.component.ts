@@ -1,14 +1,23 @@
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  ViewChild
+  ViewChild,
+  inject
 } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter, map } from 'rxjs';
 import { StoreService } from '../store/store.service';
 
+const CORE_MODULES = [CommonModule, RouterModule] as const;
+const MATERIAL_MODULES = [MatToolbarModule, MatIconModule] as const;
+
 @Component({
+  standalone: true,
+  imports: [...CORE_MODULES, ...MATERIAL_MODULES],
   selector: 'ttd-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
@@ -16,17 +25,17 @@ import { StoreService } from '../store/store.service';
 })
 export class HeaderComponent {
   @ViewChild('searchField') searchField?: ElementRef<HTMLInputElement>;
+
+  private readonly todoStore = inject(StoreService);
+  private readonly router = inject(Router);
+
   showSearch = false;
+
   readonly searchString$ = this.todoStore.searchString$;
   readonly showActionButtons$ = this.router.events.pipe(
     filter((event) => event instanceof NavigationEnd),
     map((event) => (event as NavigationEnd)?.url === '/')
   );
-
-  constructor(
-    private readonly todoStore: StoreService,
-    private readonly router: Router
-  ) {}
 
   updateSearchString(event: Event) {
     this.todoStore.updateSearchString(

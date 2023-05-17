@@ -5,9 +5,14 @@ import {
   Input,
   Output
 } from '@angular/core';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { GroupBy } from 'src/app/types';
 
+const MATERIAL_MODULES = [MatButtonToggleModule] as const;
+
 @Component({
+  standalone: true,
+  imports: [...MATERIAL_MODULES],
   selector: 'ttd-action',
   templateUrl: './action.component.html',
   styleUrls: ['./action.component.css'],

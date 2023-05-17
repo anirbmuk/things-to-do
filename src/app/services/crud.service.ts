@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { StorageService } from './storage.service';
 
@@ -8,7 +8,7 @@ const EMPTY_ARRAY = '[]';
   providedIn: 'root'
 })
 export class CrudService {
-  constructor(private readonly storageService: StorageService) {}
+  private readonly storageService = inject(StorageService);
 
   create<T>(item: T, storage = environment.dbname) {
     return new Promise<T | undefined>((resolve, reject) => {

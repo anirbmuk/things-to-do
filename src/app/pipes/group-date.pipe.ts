@@ -16,6 +16,7 @@ const MONTHS = [
 ] as const;
 
 @Pipe({
+  standalone: true,
   name: 'tddGroupDate'
 })
 export class GroupDatePipe implements PipeTransform {

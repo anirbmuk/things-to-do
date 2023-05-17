@@ -1,13 +1,36 @@
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { enableProdMode, importProvidersFrom } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
-import { AppModule } from './app/app.module';
+import { AppRoutingModule } from './app/app-routing.module';
+
+import { AppComponent } from './app/app.component';
 import { environment } from './environments/environment';
+
+import { MatDialogModule } from '@angular/material/dialog';
 
 if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic()
-  .bootstrapModule(AppModule)
-  .catch((err) => console.error(err));
+const CORE_MODULES = [
+  BrowserModule,
+  BrowserAnimationsModule,
+  ServiceWorkerModule.register('ngsw-worker.js', {
+    enabled: environment.production,
+    // Register the ServiceWorker as soon as the application is stable
+    // or after 30 seconds (whichever comes first).
+    registrationStrategy: 'registerWhenStable:30000'
+  }),
+  ReactiveFormsModule
+] as const;
+const MATERIAL_MODULES = [MatDialogModule] as const;
+const CUSTOM_MODULES = [AppRoutingModule] as const;
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    importProvidersFrom(...CORE_MODULES, ...CUSTOM_MODULES, ...MATERIAL_MODULES)
+  ]
+}).catch((err) => console.error(err));

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, take } from 'rxjs';
 import { AddTodo, UpdateTodo } from '../types';
@@ -11,7 +11,7 @@ import {
   providedIn: 'root'
 })
 export class ModalService {
-  constructor(private dialog: MatDialog) {}
+  private readonly dialog = inject(MatDialog);
 
   showConfirmDialog(message: string): Observable<{ decision: boolean }> {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {

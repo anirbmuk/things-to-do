@@ -8,14 +8,36 @@
     scroll-behavior: smooth;
     text-rendering: optimizeLegibility;
   }
+  h1 {
+    @apply text-4xl md:text-6xl;
+  }
+  h2 {
+    @apply text-3xl md:text-5xl;
+  }
+  h3 {
+    @apply text-2xl md:text-4xl;
+  }
+  h3[mat-dialog-title] {
+    @apply !pl-4;
+  }
+  h4 {
+    @apply text-xl md:text-3xl;
+  }
+  h5 {
+    @apply text md:text-2xl;
+  }
+  h6 {
+    @apply text-md md:text;
+  }
   .mat-toolbar,
-  .mat-button-toggle,
+  .mat-mdc-button-toggle,
   .mat-label,
   .mat-dialog,
-  .mat-dialog-title,
-  .mat-dialog-content,
+  .mat-mdc-dialog-title,
+  .mat-mdc-dialog-content,
   .mat-button,
-  .mat-stroked-button {
+  .mat-mdc-outlined-button,
+  .mat-button-toggle-label-content {
     @apply !font-sans;
   }
   .mat-button-toggle {
@@ -27,17 +49,42 @@
   .mat-button-toggle-checked.mat-button-toggle-appearance-standard {
     @apply !bg-indigo !text-white;
   }
-  .mat-dialog-title {
-    @apply mb-2 text-xl;
+  .mat-mdc-dialog-container {
+    @apply !border-none;
   }
-  .mat-dialog-content {
-    @apply text-md;
+  .mat-mdc-dialog-title {
+    @apply !mb-2 !text-xl !font-semiBold !text-black-alt;
+  }
+  .mat-mdc-dialog-content {
+    @apply !text-md;
+  }
+  .mat-mdc-dialog-surface.mdc-dialog__surface {
+    @apply !pb-4 !px-2;
+  }
+  .mat-mdc-dialog-content.mdc-dialog__content {
+    @apply !px-4;
+    --mdc-dialog-supporting-text-color: var(--black);
+  }
+  .mdc-button--outlined {
+    @apply !transition-none;
+  }
+  .mat-mdc-dialog-actions {
+    @apply !justify-end;
+  }
+  .mdc-dialog__title + .mdc-dialog__content {
+    @apply !pb-0;
+  }
+  .mdc-dialog__actions {
+    @apply !px-4;
+  }
+  [mat-dialog-actions] {
+    @apply !mt-3;
   }
   .text-shadow {
     text-shadow: 0 0 1px var(--black-light);
   }
   label {
-    @apply font-bold;
+    @apply font-bold text-black;
   }
   label[required]::after {
     content: ' *';
@@ -69,28 +116,51 @@
     -webkit-appearance: textfield;
     -moz-appearance: textfield;
   }
-
+  hr {
+    @apply mx-4;
+  }
   @media (prefers-color-scheme: dark) {
+    input:focus,
+    textarea:focus,
+    select:focus {
+      @apply !bg-indigo-200;
+    }
+    input.ng-invalid.ng-dirty {
+      @apply !bg-red-100;
+      outline: 2px solid rgb(185 28 28);
+    }
     .mat-toolbar.mat-primary {
-      @apply bg-transparent text-white;
+      @apply !bg-transparent !text-white;
     }
     .mat-button-toggle-checked.mat-button-toggle-appearance-standard {
       @apply !bg-transparent;
     }
     .mat-button-toggle-group {
-      @apply border-white;
+      @apply !border-white;
     }
-    .mat-dialog-container {
-      @apply bg-black-dark border border-white text-white;
+    .mat-mdc-dialog-container {
+      @apply !bg-black-dark !border border-white !text-white;
     }
-    .mat-stroked-button:not(:disabled) {
-      @apply border !border-white !text-white;
+    .mat-mdc-outlined-button:not(:disabled) {
+      @apply !border !border-white !text-white;
     }
-    .mat-stroked-button:disabled {
-      @apply border !border-white !text-white opacity-25;
+    .mat-mdc-outlined-button:disabled {
+      @apply !border !border-white !text-white !opacity-25;
     }
-    label {
-      @apply font-normal;
+    .mat-mdc-dialog-container .mdc-dialog__surface {
+      --mdc-dialog-container-color: black;
+      --mdc-dialog-supporting-text-color: white;
+      @apply !border-2 !border-white;
+    }
+    .mat-mdc-dialog-content.mdc-dialog__content {
+      --mdc-dialog-supporting-text-color: white;
+    }
+    label,
+    [mat-dialog-title] {
+      @apply !font-normal !text-white;
+    }
+    ::-webkit-calendar-picker-indicator {
+      filter: invert(1);
     }
   }
 }

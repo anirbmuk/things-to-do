@@ -1,3 +1,6 @@
+## 2.0.0
+- Updated to angular 15 (with standalone components, inject function, typed forms)  
+
 ## 1.7.1
 - Fix for incorrect logic to display feedback for old TODOs  
 

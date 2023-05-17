@@ -1,31 +1,46 @@
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  Inject,
-  OnInit
+  OnInit,
+  inject
 } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef
+} from '@angular/material/dialog';
 import { ITodo } from '../models';
 import { AddTodo, UpdateTodo } from '../types';
 import { DateService } from './../services/date.service';
 
+const CORE_MODULES = [CommonModule, ReactiveFormsModule];
+const MATERIAL_MODULES = [MatDialogModule, MatButtonModule] as const;
+
 @Component({
+  standalone: true,
+  imports: [...MATERIAL_MODULES],
   templateUrl: './confirm-modal.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConfirmDialogComponent implements OnInit {
   message: string | undefined;
 
-  constructor(
-    public dialogRef: MatDialogRef<ConfirmDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { message: string | undefined }
-  ) {}
+  readonly data: { message: string | undefined } = inject(MAT_DIALOG_DATA);
+  readonly dialogRef = inject(MatDialogRef<ConfirmDialogComponent>);
 
   ngOnInit() {
     this.message =
       this.data.message ||
-      `Are you sure you want to continue with this operation?`;
+      'Are you sure you want to continue with this operation?';
   }
 
   onDialogAction(): void {
@@ -38,19 +53,23 @@ export class ConfirmDialogComponent implements OnInit {
 }
 
 @Component({
+  standalone: true,
+  imports: [...CORE_MODULES, ...MATERIAL_MODULES],
   templateUrl: './create-update-modal.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateUpdateDialogComponent implements OnInit {
-  constructor(
-    public dialogRef: MatDialogRef<CreateUpdateDialogComponent>,
-    @Inject(MAT_DIALOG_DATA)
-    public data: { mode: 'create' | 'update'; todo?: ITodo },
-    private readonly formBuilder: FormBuilder,
-    private readonly dateService: DateService
-  ) {}
+  readonly data: { mode: 'create' | 'update'; todo?: ITodo } =
+    inject(MAT_DIALOG_DATA);
+  readonly dialogRef = inject(MatDialogRef<ConfirmDialogComponent>);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly dateService = inject(DateService);
 
-  createUpdateForm = this.formBuilder.group({});
+  createUpdateForm?: FormGroup<{
+    heading: FormControl<string | null | undefined>;
+    text: FormControl<string | null | undefined>;
+    duedate: FormControl<string | null | undefined>;
+  }>;
   editable = true;
 
   ngOnInit() {
@@ -59,7 +78,7 @@ export class CreateUpdateDialogComponent implements OnInit {
     const duedateValue = this.dateService.getCurrentFormDateTime(
       this.data.todo?.duedate as string | undefined
     );
-    this.createUpdateForm = this.formBuilder.group({
+    this.createUpdateForm = new FormGroup({
       heading: new FormControl(
         { value: this.data.todo?.heading, disabled: !this.editable },
         [Validators.required]
