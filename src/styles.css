@@ -49,6 +49,9 @@
   .mat-button-toggle-checked.mat-button-toggle-appearance-standard {
     @apply !bg-indigo !text-white;
   }
+  .mat-mdc-dialog-container {
+    @apply !border-none;
+  }
   .mat-mdc-dialog-title {
     @apply !mb-2 !text-xl !font-semiBold !text-black-alt;
   }
@@ -62,11 +65,20 @@
     @apply !px-4;
     --mdc-dialog-supporting-text-color: var(--black);
   }
+  .mdc-button--outlined {
+    @apply !transition-none;
+  }
   .mat-mdc-dialog-actions {
     @apply !justify-end;
   }
   .mdc-dialog__title + .mdc-dialog__content {
     @apply !pb-0;
+  }
+  .mdc-dialog__actions {
+    @apply !px-4;
+  }
+  [mat-dialog-actions] {
+    @apply !mt-3;
   }
   .text-shadow {
     text-shadow: 0 0 1px var(--black-light);
@@ -104,27 +116,51 @@
     -webkit-appearance: textfield;
     -moz-appearance: textfield;
   }
+  hr {
+    @apply mx-4;
+  }
   @media (prefers-color-scheme: dark) {
+    input:focus,
+    textarea:focus,
+    select:focus {
+      @apply !bg-indigo-200;
+    }
+    input.ng-invalid.ng-dirty {
+      @apply !bg-red-100;
+      outline: 2px solid rgb(185 28 28);
+    }
     .mat-toolbar.mat-primary {
-      @apply bg-transparent text-white;
+      @apply !bg-transparent !text-white;
     }
     .mat-button-toggle-checked.mat-button-toggle-appearance-standard {
       @apply !bg-transparent;
     }
     .mat-button-toggle-group {
-      @apply border-white;
+      @apply !border-white;
     }
     .mat-mdc-dialog-container {
-      @apply bg-black-dark border border-white text-white;
+      @apply !bg-black-dark !border border-white !text-white;
     }
     .mat-mdc-outlined-button:not(:disabled) {
-      @apply border !border-white !text-white;
+      @apply !border !border-white !text-white;
     }
     .mat-mdc-outlined-button:disabled {
-      @apply border !border-white !text-white opacity-25;
+      @apply !border !border-white !text-white !opacity-25;
     }
-    label {
-      @apply font-normal;
+    .mat-mdc-dialog-container .mdc-dialog__surface {
+      --mdc-dialog-container-color: black;
+      --mdc-dialog-supporting-text-color: white;
+      @apply !border-2 !border-white;
+    }
+    .mat-mdc-dialog-content.mdc-dialog__content {
+      --mdc-dialog-supporting-text-color: white;
+    }
+    label,
+    [mat-dialog-title] {
+      @apply !font-normal !text-white;
+    }
+    ::-webkit-calendar-picker-indicator {
+      filter: invert(1);
     }
   }
 }

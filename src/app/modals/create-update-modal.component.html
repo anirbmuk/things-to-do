@@ -52,13 +52,13 @@
     (click)="onDialogAction()"
     type="button"
     [disabled]="createUpdateForm?.invalid || !editable"
-    mat-dialog-close
-    cdkFocusInitial>
+    mat-dialog-close>
     Save
   </button>
   <button
     mat-stroked-button
     mat-dialog-close
+    cdkFocusInitial
     color="warn"
     (click)="closeModal()"
     type="reset">
