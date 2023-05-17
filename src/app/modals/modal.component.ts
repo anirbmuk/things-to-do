@@ -5,19 +5,26 @@ import {
   OnInit
 } from '@angular/core';
 import {
+  ReactiveFormsModule,
   UntypedFormBuilder,
   UntypedFormControl,
   Validators
 } from '@angular/forms';
 import {
   MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
+  MatLegacyDialogModule as MatDialogModule,
   MatLegacyDialogRef as MatDialogRef
 } from '@angular/material/legacy-dialog';
 import { ITodo } from '../models';
 import { AddTodo, UpdateTodo } from '../types';
 import { DateService } from './../services/date.service';
 
+const CORE_MODULES = [ReactiveFormsModule];
+const MATERIAL_MODULES = [MatDialogModule] as const;
+
 @Component({
+  standalone: true,
+  imports: [...MATERIAL_MODULES],
   templateUrl: './confirm-modal.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -32,7 +39,7 @@ export class ConfirmDialogComponent implements OnInit {
   ngOnInit() {
     this.message =
       this.data.message ||
-      `Are you sure you want to continue with this operation?`;
+      'Are you sure you want to continue with this operation?';
   }
 
   onDialogAction(): void {
@@ -45,6 +52,8 @@ export class ConfirmDialogComponent implements OnInit {
 }
 
 @Component({
+  standalone: true,
+  imports: [...CORE_MODULES, ...MATERIAL_MODULES],
   templateUrl: './create-update-modal.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

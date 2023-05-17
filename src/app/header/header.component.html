@@ -1,12 +1,14 @@
 <header>
   <mat-toolbar color="primary" class="flex justify-between items-center">
-    <nav class="text md:text-2xl text-center">Things TODO</nav>
-    <div class="flex justify-end items-center">
+    <nav class="text md:text-2xl text-center cursor-pointer" routerLink="/">
+      Things TODO
+    </nav>
+    <div class="flex justify-end items-center space-x-2 md:space-x-4">
       <div *ngIf="showSearch" class="flex flex-row bg-indigo-100 rounded px-2">
         <input
           type="text"
           placeholder="Search TODOs"
-          class="caret-indigo bg-indigo-100 outline-none text-black-dark text-sm md:text-md w-36 md:w-48 lg:w-60 xl:w-72"
+          class="caret-indigo bg-indigo-100 outline-none border-none text-black-dark text-sm md:text-md w-36 md:w-48 lg:w-60 xl:w-72"
           [value]="searchString$ | async"
           (input)="updateSearchString($event)"
           #searchField />

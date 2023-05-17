@@ -1,10 +1,20 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
+
+import { ActionComponent } from './action/action.component';
+import { ContentComponent } from './content/content.component';
+
 import { ITodo } from 'src/app/models';
 import { StoreService } from 'src/app/store/store.service';
 import { GroupBy, GroupedTodo, UpdateTodo } from 'src/app/types';
 
+const CORE_MODULES = [CommonModule] as const;
+const COMPONENTS = [ContentComponent, ActionComponent] as const;
+
 @Component({
+  standalone: true,
+  imports: [...CORE_MODULES, ...COMPONENTS],
   selector: 'ttd-todo',
   templateUrl: './todo.component.html',
   styleUrls: ['./todo.component.css'],

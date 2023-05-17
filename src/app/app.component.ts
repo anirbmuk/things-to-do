@@ -6,10 +6,17 @@ import {
   OnInit,
   PLATFORM_ID
 } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
 import { take } from 'rxjs';
+import { HeaderComponent } from './header/header.component';
+
+const COMPONENTS = [HeaderComponent] as const;
+const MODULES = [RouterModule] as const;
 
 @Component({
+  standalone: true,
+  imports: [...COMPONENTS, ...MODULES],
   selector: 'ttd-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
