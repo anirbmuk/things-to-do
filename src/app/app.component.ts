@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
-import { take } from 'rxjs';
+import { filter, take } from 'rxjs';
 import { HeaderComponent } from './header/header.component';
 
 const COMPONENTS = [HeaderComponent] as const;
@@ -26,13 +26,18 @@ export class AppComponent implements OnInit {
   private readonly document = inject(DOCUMENT);
 
   ngOnInit(): void {
-    this.update.versionUpdates.pipe(take(1)).subscribe(async () => {
-      try {
-        await this.update.activateUpdate();
-        this.document.location.reload();
-      } catch (err) {
-        console.error('[AppComponent] [ngOnInit] [versionUpdates]', err);
-      }
-    });
+    this.update.versionUpdates
+      .pipe(
+        filter((event) => event.type === 'VERSION_READY'),
+        take(1)
+      )
+      .subscribe(async () => {
+        try {
+          await this.update.activateUpdate();
+          this.document.location.reload();
+        } catch (err) {
+          console.error('[AppComponent] [ngOnInit] [versionUpdates]', err);
+        }
+      });
   }
 }
