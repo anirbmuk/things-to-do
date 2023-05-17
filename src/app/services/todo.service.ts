@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ITodo } from '../models/todo.model';
 import { AddTodo, GroupBy, GroupedTodo, UpdateTodo } from '../types';
 import { CrudService } from './crud.service';
@@ -11,10 +11,8 @@ const defaultSort = (todo1: ITodo, todo2: ITodo) =>
   providedIn: 'root'
 })
 export class TodoService {
-  constructor(
-    private readonly crudService: CrudService,
-    private readonly dateService: DateService
-  ) {}
+  private readonly crudService = inject(CrudService);
+  private readonly dateService = inject(DateService);
 
   addTodo(todo: AddTodo) {
     const duedateUTC = this.dateService.getStorageDate(todo.duedate);

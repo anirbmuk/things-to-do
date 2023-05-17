@@ -4,7 +4,8 @@ import {
   Component,
   EventEmitter,
   Input,
-  Output
+  Output,
+  inject
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { ITodo } from 'src/app/models';
@@ -36,7 +37,7 @@ export class ContentComponent {
     todo: UpdateTodo;
   }>();
 
-  constructor(private readonly dateService: DateService) {}
+  private readonly dateService = inject(DateService);
 
   trackByGroupFn(_: number, groupedTodo: GroupedTodo) {
     return groupedTodo.datedivider;

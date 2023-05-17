@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { combineLatest, EMPTY, from } from 'rxjs';
 import {
@@ -27,6 +27,10 @@ const OPERATORS = ['eq', '<', '>', '>=', '<='];
   providedIn: 'root'
 })
 export class StoreService extends ComponentStore<ITodoState> {
+  private readonly todoService = inject(TodoService);
+  private readonly modalService = inject(ModalService);
+  private readonly storageService = inject(StorageService);
+
   readonly groupedtodos$ = this.select(({ todos }) => todos);
   readonly showAll$ = this.select(({ showAll }) => showAll);
   readonly searchString$ = this.select(({ searchString }) => searchString);
@@ -208,11 +212,8 @@ export class StoreService extends ComponentStore<ITodoState> {
       )
   );
 
-  constructor(
-    private readonly todoService: TodoService,
-    private readonly modalService: ModalService,
-    private readonly storageService: StorageService
-  ) {
+  constructor() {
+    const storageService = inject(StorageService);
     const groupBy = JSON.parse(
       storageService.getItem('groupby') || '"day"'
     ) as GroupBy;

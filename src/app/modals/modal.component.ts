@@ -1,8 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Inject,
-  OnInit
+  OnInit,
+  inject
 } from '@angular/core';
 import {
   ReactiveFormsModule,
@@ -32,10 +32,8 @@ const MATERIAL_MODULES = [MatDialogModule, MatButtonModule] as const;
 export class ConfirmDialogComponent implements OnInit {
   message: string | undefined;
 
-  constructor(
-    public dialogRef: MatDialogRef<ConfirmDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { message: string | undefined }
-  ) {}
+  readonly data: { message: string | undefined } = inject(MAT_DIALOG_DATA);
+  readonly dialogRef = inject(MatDialogRef<ConfirmDialogComponent>);
 
   ngOnInit() {
     this.message =
@@ -59,13 +57,11 @@ export class ConfirmDialogComponent implements OnInit {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateUpdateDialogComponent implements OnInit {
-  constructor(
-    public dialogRef: MatDialogRef<CreateUpdateDialogComponent>,
-    @Inject(MAT_DIALOG_DATA)
-    public data: { mode: 'create' | 'update'; todo?: ITodo },
-    private readonly formBuilder: UntypedFormBuilder,
-    private readonly dateService: DateService
-  ) {}
+  readonly data: { mode: 'create' | 'update'; todo?: ITodo } =
+    inject(MAT_DIALOG_DATA);
+  readonly dialogRef = inject(MatDialogRef<ConfirmDialogComponent>);
+  private readonly formBuilder = inject(UntypedFormBuilder);
+  private readonly dateService = inject(DateService);
 
   createUpdateForm = this.formBuilder.group({});
   editable = true;

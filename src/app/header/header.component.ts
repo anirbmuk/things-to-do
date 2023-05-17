@@ -3,7 +3,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  ViewChild
+  ViewChild,
+  inject
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -24,17 +25,17 @@ const MATERIAL_MODULES = [MatToolbarModule, MatIconModule] as const;
 })
 export class HeaderComponent {
   @ViewChild('searchField') searchField?: ElementRef<HTMLInputElement>;
+
+  private readonly todoStore = inject(StoreService);
+  private readonly router = inject(Router);
+
   showSearch = false;
+
   readonly searchString$ = this.todoStore.searchString$;
   readonly showActionButtons$ = this.router.events.pipe(
     filter((event) => event instanceof NavigationEnd),
     map((event) => (event as NavigationEnd)?.url === '/')
   );
-
-  constructor(
-    private readonly todoStore: StoreService,
-    private readonly router: Router
-  ) {}
 
   updateSearchString(event: Event) {
     this.todoStore.updateSearchString(

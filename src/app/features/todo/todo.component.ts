@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { ActionComponent } from './action/action.component';
@@ -21,12 +21,11 @@ const COMPONENTS = [ContentComponent, ActionComponent] as const;
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodoComponent {
+  private readonly todoStore = inject(StoreService);
   readonly groupedtodos$: Observable<GroupedTodo[]> =
     this.todoStore.groupedtodos$;
   readonly showAll$: Observable<boolean> = this.todoStore.showAll$;
   readonly groupBy$: Observable<GroupBy> = this.todoStore.groupBy$;
-
-  constructor(private readonly todoStore: StoreService) {}
 
   updateShowAll(status: boolean) {
     this.todoStore.updateShowAll(status);
