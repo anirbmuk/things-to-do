@@ -12,15 +12,15 @@ A light and fast todo-app, built with angular 15
 
 :heavy_check_mark: **Strong Search**  
 > Searches your TODOs by text or heading or due-date tags. e.g. search by **`grocery`**, **`due tomorrow`**, **`next week`** etc.  
-> You can also use arithmetic operators such as **`eq`**, **`>`**, **`<`**, **`>=`** or **`<=`**, e.g. **`eq 7`** or **`>= 5`** or **`< 3`** to filter on the due date.  
+> You can also use arithmetic operators such as **`eq, >, <, >=, <=`**. For example, **`eq 7`** or **`>= 5`** or **`< 3`** to filter on the due date.  
 
 :heavy_check_mark: **Dark Mode Support**  
 > Turn on dark mode on your mobile/laptop/PC and the page looks as elegant as it can get.  
 
 :heavy_check_mark: **Built with Angular v15**  
-> All standalone components  
-> Typed forms  
-> New **`inject`** function (no constructors)  
+> - All standalone components  
+> - Typed reactive forms  
+> - New **`inject`** function (replacing constructors)  
 
 - - - -
 
