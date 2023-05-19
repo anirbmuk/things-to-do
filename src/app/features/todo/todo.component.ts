@@ -5,9 +5,9 @@ import { Observable } from 'rxjs';
 import { ActionComponent } from './action/action.component';
 import { ContentComponent } from './content/content.component';
 
-import { ITodo } from 'src/app/models';
-import { StoreService } from 'src/app/store/store.service';
-import { GroupBy, GroupedTodo, UpdateTodo } from 'src/app/types';
+import { ITodo } from '@models';
+import { StoreService } from '@store';
+import { GroupBy, GroupedTodo, UpdateTodo } from '@types';
 
 const CORE_MODULES = [CommonModule] as const;
 const COMPONENTS = [ContentComponent, ActionComponent] as const;

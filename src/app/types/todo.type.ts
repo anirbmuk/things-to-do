@@ -1,4 +1,4 @@
-import { ITodo } from '../models/todo.model';
+import { ITodo } from '@models';
 
 export type AddTodo = Omit<ITodo, 'todoid' | 'status'>;
 

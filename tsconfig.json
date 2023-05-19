@@ -18,11 +18,17 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "es2020",
-    "lib": [
-      "es2020",
-      "dom"
-    ],
-    "useDefineForClassFields": false
+    "lib": ["es2020", "dom"],
+    "useDefineForClassFields": false,
+    "paths": {
+      "@types": ["src/app/types/index.ts"],
+      "@store": ["src/app/store/index.ts"],
+      "@models": ["src/app/models/index.ts"],
+      "@modals": ["src/app/modals/index.ts"],
+      "@services": ["src/app/services/index.ts"],
+      "@pipes": ["src/app/pipes/index.ts"],
+      "@environment": ["src/environments/environment.ts"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

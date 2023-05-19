@@ -18,9 +18,9 @@ import {
   MatDialogModule,
   MatDialogRef
 } from '@angular/material/dialog';
-import { ITodo } from '../models';
-import { AddTodo, UpdateTodo } from '../types';
-import { DateService } from './../services/date.service';
+import { ITodo } from '@models';
+import { DateService } from '@services';
+import { AddTodo, UpdateTodo } from '@types';
 
 const CORE_MODULES = [CommonModule, ReactiveFormsModule];
 const MATERIAL_MODULES = [MatDialogModule, MatButtonModule] as const;

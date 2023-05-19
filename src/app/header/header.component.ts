@@ -9,8 +9,8 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { StoreService } from '@store';
 import { filter, map } from 'rxjs';
-import { StoreService } from '../store/store.service';
 
 const CORE_MODULES = [CommonModule, RouterModule] as const;
 const MATERIAL_MODULES = [MatToolbarModule, MatIconModule] as const;

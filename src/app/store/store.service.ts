@@ -1,11 +1,11 @@
 import { inject, Injectable } from '@angular/core';
+import { ModalService } from '@modals';
+import { ITodo, ITodoState } from '@models';
 import { ComponentStore } from '@ngrx/component-store';
+import { StorageService, TodoService } from '@services';
+import { AddTodo, GroupBy, GroupedTodo, UpdateTodo } from '@types';
 import { BehaviorSubject, combineLatest, EMPTY, from } from 'rxjs';
 import { catchError, concatMap, filter, switchMap, tap } from 'rxjs/operators';
-import { ModalService } from '../modals';
-import { ITodo, ITodoState } from '../models';
-import { StorageService, TodoService } from '../services';
-import { AddTodo, GroupBy, GroupedTodo, UpdateTodo } from '../types';
 
 const defaultState: ITodoState = {
   showAll: false,

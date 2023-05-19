@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { AddTodo, UpdateTodo } from '@types';
 import { Observable, take } from 'rxjs';
-import { AddTodo, UpdateTodo } from '../types';
 import {
   ConfirmDialogComponent,
   CreateUpdateDialogComponent

@@ -8,10 +8,10 @@ import {
   inject
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { ITodo } from 'src/app/models';
-import { DisplayDatePipe, GroupDatePipe } from 'src/app/pipes';
-import { DateService } from './../../../services/date.service';
-import { GroupedTodo, UpdateTodo } from './../../../types';
+import { ITodo } from '@models';
+import { DisplayDatePipe, GroupDatePipe } from '@pipes';
+import { DateService } from '@services';
+import { GroupedTodo, UpdateTodo } from '@types';
 
 const CORE_MODULES = [CommonModule] as const;
 const MATERIAL_MODULES = [MatIconModule];

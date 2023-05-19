@@ -1,4 +1,4 @@
-import { GroupBy } from './../types';
+import { GroupBy } from '@types';
 
 export interface ITodoState {
   showAll: boolean;

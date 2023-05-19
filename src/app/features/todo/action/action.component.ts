@@ -6,7 +6,7 @@ import {
   Output
 } from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { GroupBy } from 'src/app/types';
+import { GroupBy } from '@types';
 
 const MATERIAL_MODULES = [MatButtonToggleModule] as const;
 

@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { ITodo, enumerables } from '../models/todo.model';
-import { AddTodo, GroupBy, GroupedTodo, UpdateTodo } from '../types';
+import { ITodo, enumerables } from '@models';
+import { AddTodo, GroupBy, GroupedTodo, UpdateTodo } from '@types';
 import { CrudService } from './crud.service';
 import { DateService } from './date.service';
 

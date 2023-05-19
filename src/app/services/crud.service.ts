@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { environment } from '../../environments/environment';
+import { environment } from '@environment';
 import { StorageService } from './storage.service';
 
 const EMPTY_ARRAY = '[]';
