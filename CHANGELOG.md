@@ -1,3 +1,8 @@
+## 2.1.0
+- Fixed possible infinite loop caused state changes being overwritten by effect  
+- Added replacer function to prevent unnecessary attributes being stringified and save storage space  
+- Updated unit test cases for dates  
+
 ## 2.0.1
 - Fixed infinite reload caused by new **@angular/service-worker** API change  
 - UI fixes  
