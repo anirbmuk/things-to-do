@@ -1,3 +1,6 @@
+## 2.1.1
+- Named shortcuts for relative path, for easy imports  
+
 ## 2.1.0
 - Fixed possible infinite loop caused state changes being overwritten by effect  
 - Added replacer function to prevent unnecessary attributes being stringified and save storage space  
