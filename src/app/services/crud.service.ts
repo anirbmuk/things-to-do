@@ -10,7 +10,11 @@ const EMPTY_ARRAY = '[]';
 export class CrudService {
   private readonly storageService = inject(StorageService);
 
-  create<T>(item: T, storage = environment.dbname) {
+  create<T>(
+    item: T,
+    replacer: (number | string)[] | undefined,
+    storage = environment.dbname
+  ) {
     return new Promise<T | undefined>((resolve, reject) => {
       if (!window) {
         return reject('Window object is undefined');
@@ -18,7 +22,7 @@ export class CrudService {
       const items = this.storageService.getItem(storage) || EMPTY_ARRAY;
       const cleanedItems = JSON.parse(items) as T[];
       const updatedItems = [...cleanedItems, item];
-      this.storageService.setItem(storage, updatedItems);
+      this.storageService.setItem(storage, updatedItems, replacer);
       resolve(item);
     });
   }
@@ -38,6 +42,7 @@ export class CrudService {
     id: keyof T,
     key: unknown,
     item: U,
+    replacer: (number | string)[] | undefined,
     storage = environment.dbname
   ) {
     return new Promise<T | undefined>((resolve, reject) => {
@@ -60,12 +65,17 @@ export class CrudService {
         ...parsedItems.filter((each) => each[id] !== key),
         updatedItem
       ];
-      this.storageService.setItem(storage, updatedItems);
+      this.storageService.setItem(storage, updatedItems, replacer);
       resolve(updatedItem);
     });
   }
 
-  delete<T>(id: keyof T, key: unknown, storage = environment.dbname) {
+  delete<T>(
+    id: keyof T,
+    key: unknown,
+    replacer: (number | string)[] | undefined,
+    storage = environment.dbname
+  ) {
     return new Promise<T | undefined>((resolve, reject) => {
       if (!window) {
         return reject('Window object is undefined');
@@ -79,7 +89,7 @@ export class CrudService {
         );
       }
       const updatedItems = parsedItems.filter((each) => each[id] !== key);
-      this.storageService.setItem(storage, updatedItems);
+      this.storageService.setItem(storage, updatedItems, replacer);
       resolve(itemToBeDeleted);
     });
   }

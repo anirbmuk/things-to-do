@@ -22,3 +22,12 @@ export type Status = 'Incomplete' | 'Complete';
 export type State = 'error' | 'warn' | 'info' | 'safe' | 'later';
 
 export type Rating = 'beforetime' | 'ontime' | 'delayed' | 'late';
+
+export const enumerables = [
+  'todoid',
+  'duedate',
+  'heading',
+  'text',
+  'status',
+  'completedon'
+];

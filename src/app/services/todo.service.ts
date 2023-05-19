@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { ITodo } from '../models/todo.model';
+import { ITodo, enumerables } from '../models/todo.model';
 import { AddTodo, GroupBy, GroupedTodo, UpdateTodo } from '../types';
 import { CrudService } from './crud.service';
 import { DateService } from './date.service';
@@ -16,24 +16,28 @@ export class TodoService {
 
   addTodo(todo: AddTodo) {
     const duedateUTC = this.dateService.getStorageDate(todo.duedate);
-    return this.crudService.create<ITodo>({
-      ...todo,
-      todoid: this.generateTodoId(),
-      status: 'Incomplete',
-      ...(duedateUTC && { duedate: duedateUTC })
-    });
+    return this.crudService.create<ITodo>(
+      {
+        ...todo,
+        todoid: this.generateTodoId(),
+        status: 'Incomplete',
+        ...(duedateUTC && { duedate: duedateUTC })
+      },
+      enumerables
+    );
   }
 
   updateTodo(params: { todoid: ITodo['todoid']; todo: UpdateTodo }) {
     return this.crudService.update<ITodo, UpdateTodo>(
       'todoid',
       params.todoid,
-      params.todo
+      params.todo,
+      enumerables
     );
   }
 
   deleteTodo(todoid: ITodo['todoid']) {
-    return this.crudService.delete<ITodo>('todoid', todoid);
+    return this.crudService.delete<ITodo>('todoid', todoid, enumerables);
   }
 
   private async _getTodos() {
