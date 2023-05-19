@@ -1,21 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
-import { combineLatest, EMPTY, from } from 'rxjs';
-import {
-  catchError,
-  concatMap,
-  exhaustMap,
-  filter,
-  switchMap,
-  tap
-} from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, EMPTY, from } from 'rxjs';
+import { catchError, concatMap, filter, switchMap, tap } from 'rxjs/operators';
 import { ModalService } from '../modals';
 import { ITodo, ITodoState } from '../models';
 import { StorageService, TodoService } from '../services';
 import { AddTodo, GroupBy, GroupedTodo, UpdateTodo } from '../types';
 
 const defaultState: ITodoState = {
-  todos: [] as GroupedTodo[],
   showAll: false,
   groupBy: 'day',
   searchString: ''
@@ -31,7 +23,9 @@ export class StoreService extends ComponentStore<ITodoState> {
   private readonly modalService = inject(ModalService);
   private readonly storageService = inject(StorageService);
 
-  readonly groupedtodos$ = this.select(({ todos }) => todos);
+  private readonly groupedtodos = new BehaviorSubject<GroupedTodo[]>([]);
+  readonly groupedtodos$ = this.groupedtodos.asObservable();
+
   readonly showAll$ = this.select(({ showAll }) => showAll);
   readonly searchString$ = this.select(({ searchString }) => searchString);
   readonly groupBy$ = this.select(({ groupBy }) => groupBy);
@@ -79,7 +73,7 @@ export class StoreService extends ComponentStore<ITodoState> {
     this.groupBy$,
     this.conditions$
   ]).pipe(
-    exhaustMap(([groupByClause, conditions]) =>
+    switchMap(([groupByClause, conditions]) =>
       from(this.todoService.getTodos(groupByClause, conditions)).pipe(
         catchError(() => EMPTY)
       )
@@ -94,12 +88,7 @@ export class StoreService extends ComponentStore<ITodoState> {
     )
   );
 
-  readonly updateTodos = this.updater(
-    (state: ITodoState, todos: GroupedTodo[]) => ({
-      ...state,
-      todos
-    })
-  );
+  private updateTodos = (todos: GroupedTodo[]) => this.groupedtodos.next(todos);
 
   readonly updateShowAll = this.updater(
     (state: ITodoState, showAll: boolean) => {
@@ -215,7 +204,7 @@ export class StoreService extends ComponentStore<ITodoState> {
   constructor() {
     const storageService = inject(StorageService);
     const groupBy = JSON.parse(
-      storageService.getItem('groupby') || '"day"'
+      storageService.getItem('groupby') || 'day'
     ) as GroupBy;
     const showAll =
       JSON.parse(storageService.getItem('showall') || 'false') === true;
