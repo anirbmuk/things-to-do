@@ -98,28 +98,15 @@ export class DateService {
       return this.getRating(0);
     }
 
-    const dueDate = new Date(duedate);
-    const completedDate = new Date(completeddate);
+    const [formattedDueDateString] = duedate.split('T');
+    const formattedDueDate = new Date(
+      `${formattedDueDateString}T00:00:00.000Z`
+    );
 
-    const formattedDueDateString = `${dueDate.getFullYear()}-${(
-      dueDate.getMonth() + 1
-    )
-      .toString()
-      .padStart(2, '0')}-${dueDate
-      .getDate()
-      .toString()
-      .padStart(2, '0')}T00:00:00.000Z`;
-    const formattedDueDate = new Date(formattedDueDateString);
-
-    const formattedcompletedDateString = `${completedDate.getFullYear()}-${(
-      completedDate.getMonth() + 1
-    )
-      .toString()
-      .padStart(2, '0')}-${completedDate
-      .getDate()
-      .toString()
-      .padStart(2, '0')}T00:00:00.000Z`;
-    const formattedcompletedDate = new Date(formattedcompletedDateString);
+    const [formattedcompletedDateString] = completeddate.split('T');
+    const formattedcompletedDate = new Date(
+      `${formattedcompletedDateString}T00:00:00.000Z`
+    );
 
     const variation =
       Math.round(+formattedcompletedDate - +formattedDueDate) /
