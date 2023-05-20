@@ -63,6 +63,7 @@ export class StoreService extends ComponentStore<ITodoState> {
             item.text?.toLowerCase().includes(searchString) ||
             item.heading.toLowerCase().includes(searchString) ||
             item.additional?.message?.toLowerCase()?.includes(searchString) ||
+            item.performance?.message?.toLowerCase()?.includes(searchString) ||
             false
         );
     }
