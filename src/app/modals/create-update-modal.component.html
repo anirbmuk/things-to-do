@@ -1,67 +1,69 @@
-<h3 class="!text-lg font-semiBold !mb-2" mat-dialog-title>
-  {{
-    data.mode === 'create'
-      ? 'Create TODO'
-      : editable
-      ? 'Update TODO'
-      : 'View TODO'
-  }}
-</h3>
-<hr />
-<div mat-dialog-content>
-  <div class="mb-2 my-6">
-    <form *ngIf="createUpdateForm" [formGroup]="createUpdateForm">
-      <label
-        aria-required="true"
-        for="headingid"
-        required
-        [attr.aria-disabled]="!editable"
-        >Heading</label
-      >
-      <input
-        id="headingid"
-        type="text"
-        class="caret-indigo text-black-dark text-sm md:text-md w-full my-1 p-2 rounded"
-        required
-        formControlName="heading" />
-      <label for="textid">Text</label>
-      <textarea
-        id="textid"
-        type="text"
-        class="caret-indigo text-black-dark text-sm md:text-md w-full my-1 p-2 rounded"
-        formControlName="text"
-        rows="3"></textarea>
-      <label for="duedateid" required [attr.aria-disabled]="!editable"
-        >Due On</label
-      >
-      <input
-        aria-required="true"
-        id="duedateid"
-        class="caret-indigo text-black-dark text-sm md:text-md w-full my-1 p-2 rounded"
-        required
-        type="datetime-local"
-        formControlName="duedate" />
-    </form>
+<div data-test-id="createupdatemodal">
+  <h3 class="!text-lg font-semiBold !mb-2" mat-dialog-title>
+    {{
+      data.mode === 'create'
+        ? 'Create TODO'
+        : editable
+        ? 'Update TODO'
+        : 'View TODO'
+    }}
+  </h3>
+  <hr />
+  <div mat-dialog-content>
+    <div class="mb-2 my-6">
+      <form *ngIf="createUpdateForm" [formGroup]="createUpdateForm">
+        <label
+          aria-required="true"
+          for="headingid"
+          required
+          [attr.aria-disabled]="!editable"
+          >Heading</label
+        >
+        <input
+          id="headingid"
+          type="text"
+          class="caret-indigo text-black-dark text-sm md:text-md w-full my-1 p-2 rounded"
+          required
+          formControlName="heading" />
+        <label for="textid">Text</label>
+        <textarea
+          id="textid"
+          type="text"
+          class="caret-indigo text-black-dark text-sm md:text-md w-full my-1 p-2 rounded"
+          formControlName="text"
+          rows="3"></textarea>
+        <label for="duedateid" required [attr.aria-disabled]="!editable"
+          >Due On</label
+        >
+        <input
+          aria-required="true"
+          id="duedateid"
+          class="caret-indigo text-black-dark text-sm md:text-md w-full my-1 p-2 rounded"
+          required
+          type="datetime-local"
+          formControlName="duedate" />
+      </form>
+    </div>
   </div>
-</div>
-<hr />
-<div mat-dialog-actions>
-  <button
-    mat-stroked-button
-    color="primary"
-    (click)="onDialogAction()"
-    type="button"
-    [disabled]="createUpdateForm?.invalid || !editable"
-    mat-dialog-close>
-    Save
-  </button>
-  <button
-    mat-stroked-button
-    mat-dialog-close
-    cdkFocusInitial
-    color="warn"
-    (click)="closeModal()"
-    type="reset">
-    Cancel
-  </button>
+  <hr />
+  <div mat-dialog-actions>
+    <button
+      mat-stroked-button
+      color="primary"
+      (click)="onDialogAction()"
+      type="button"
+      [disabled]="createUpdateForm?.invalid || !editable"
+      mat-dialog-close>
+      Save
+    </button>
+    <button
+      mat-stroked-button
+      mat-dialog-close
+      cdkFocusInitial
+      color="warn"
+      (click)="closeModal()"
+      type="reset">
+      Cancel
+    </button>
+  </div>
 </div>

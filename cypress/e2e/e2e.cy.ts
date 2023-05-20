@@ -5,15 +5,20 @@ describe('E2E for Things-TODO', () => {
     it('should redirect to notfound', () => {
       cy.visit('/wrong');
       cy.url().should('contain', '/notfound');
-      cy.title().should('equal', '404 | Things TODO');
+      cy.title().should('equal', `404 | ${data.title}`);
+    });
+
+    it('should not display action buttons', () => {
+      cy.visit('/wrong');
+      cy.get('[data-test-id=showsearch]').should('not.exist');
+      cy.get('[data-test-id=addtodobtn]').should('not.exist');
     });
 
     it('clicking on title link should correctly redirect to main page', () => {
       cy.visit('/wrong');
-      cy.get('[data-test-id=titlelink]').should('contain.text', 'Things TODO');
       cy.get('[data-test-id=titlelink]').click();
-      cy.url().should('equal', data.baseUrl);
-      cy.title().should('equal', 'Things TODO');
+      cy.url().should('contain', data.baseUrl);
+      cy.title().should('equal', data.title);
     });
   });
 
@@ -126,6 +131,42 @@ describe('E2E for Things-TODO', () => {
       cy.visit('/');
 
       cy.get('[data-test-id=nodata]').should('contain.text', 'No TODO found');
+    });
+  });
+
+  describe('Test Header', () => {
+    it('should show correct app title', () => {
+      cy.visit('/');
+
+      cy.get('[data-test-id=titlelink]').should('contain.text', 'Things TODO');
+    });
+
+    it('should display action buttons', () => {
+      cy.visit('/');
+
+      cy.get('[data-test-id=showsearch]').should('exist');
+      cy.get('[data-test-id=addtodobtn]').should('exist');
+    });
+
+    it('should correctly toggle input search field', () => {
+      cy.visit('/');
+
+      cy.get('[data-test-id=showsearch]').click();
+      cy.get('[data-test-id=showsearch]').should('not.exist');
+      cy.get('[data-test-id=inputsearch]').should('exist');
+      cy.get('[data-test-id=clearsearch]').should('exist');
+
+      cy.get('[data-test-id=clearsearch]').click();
+      cy.get('[data-test-id=showsearch]').should('exist');
+      cy.get('[data-test-id=inputsearch]').should('not.exist');
+      cy.get('[data-test-id=clearsearch]').should('not.exist');
+    });
+
+    it('should open modal on clicking add icon', () => {
+      cy.visit('/');
+
+      cy.get('[data-test-id=addtodobtn]').click();
+      cy.get('[data-test-id=createupdatemodal]').should('exist');
     });
   });
 });
