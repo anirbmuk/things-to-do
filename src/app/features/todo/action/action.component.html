@@ -8,8 +8,12 @@
       aria-label="Group By day or month"
       (click)="onToggleGroupBy()"
       class="flex justify-start items-center">
-      <mat-button-toggle value="day">Day</mat-button-toggle>
-      <mat-button-toggle value="month">Month</mat-button-toggle>
+      <mat-button-toggle value="day" data-test-id="groupbydate"
+        >Day</mat-button-toggle
+      >
+      <mat-button-toggle value="month" data-test-id="groupbymonth"
+        >Month</mat-button-toggle
+      >
     </mat-button-toggle-group>
   </div>
   <div class="flex flex-col">
@@ -20,8 +24,12 @@
       name="showAll"
       aria-label="Show or hide completed TODOs"
       (click)="onToggleShowAll()">
-      <mat-button-toggle value="hide">Hide</mat-button-toggle>
-      <mat-button-toggle value="show">Show</mat-button-toggle>
+      <mat-button-toggle value="hide" data-test-id="showallhide"
+        >Hide</mat-button-toggle
+      >
+      <mat-button-toggle value="show" data-test-id="showallshow"
+        >Show</mat-button-toggle
+      >
     </mat-button-toggle-group>
   </div>
 </section>
