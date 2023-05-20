@@ -1,5 +1,9 @@
+## 2.2.0
+- Added search capability on the performance status of **Completed** TODOs  
+- Added unit tests for all components  
+
 ## 2.1.2
-- Fixed **`Unexpected token 'd', "day" is not valid JSON`** error, caused by missing double quotes    
+- Fixed **`Unexpected token 'd', "day" is not valid JSON`** error, caused by missing double quotes  
 
 ## 2.1.1
 - Named shortcuts for relative path, for easy imports  
