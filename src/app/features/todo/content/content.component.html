@@ -5,7 +5,7 @@
         <legend class="py-3 pl-1 pr-2.5 -mb-3 text-shadow">
           {{ group.datedivider | tddGroupDate }}
         </legend>
-        <div role="list">
+        <div role="list" list>
           <ng-container
             *ngFor="let todo of group.todos; trackBy: trackByTodoFn">
             <div
@@ -17,7 +17,8 @@
                 'border-green-300': todo.status === 'Complete'
               }"
               role="listitem"
-              (click)="editTodo(todo)">
+              (click)="editTodo(todo)"
+              listitem>
               <div class="grid grid-cols-6 gap-2">
                 <div class="flex flex-col col-span-5 space-y-1">
                   <div *ngIf="todo.additional" class="z-10">
@@ -30,21 +31,24 @@
                         'bg-green-600': todo.additional.state === 'safe',
                         'bg-gray-500': todo.additional.state === 'later'
                       }"
+                      additional
                       >{{ todo.additional.message }}</span
                     >
                   </div>
-                  <div class="text font-bold pt-1 pb-2">
+                  <div class="text font-bold pt-1 pb-2" heading>
                     {{ todo.heading }}
                   </div>
                   <div class="max-h-40 overflow-auto md:overflow-y-auto">
                     <div
-                      class="text-md text-justify whitespace-pre-line break-words py-2 xl:py-1.5 3xl:py-1">
+                      class="text-md text-justify whitespace-pre-line break-words py-2 xl:py-1.5 3xl:py-1"
+                      text>
                       {{ todo.text }}
                     </div>
                   </div>
                   <div
                     *ngIf="todo.status === 'Incomplete'"
-                    class="text-sm todo-duedate pt-4 pb-1 z-10">
+                    class="text-sm todo-duedate pt-4 pb-1 z-10"
+                    status>
                     Due: {{ todo.duedate | tddDisplayDate | date : 'medium' }}
                   </div>
                   <div
@@ -56,7 +60,8 @@
                       '!text-green-600':
                         todo.performance.rating === 'ontime' ||
                         todo.performance.rating === 'beforetime'
-                    }">
+                    }"
+                    performance>
                     {{ todo?.performance?.message }}
                   </div>
                 </div>
