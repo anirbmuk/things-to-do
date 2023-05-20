@@ -204,7 +204,7 @@ export class StoreService extends ComponentStore<ITodoState> {
   constructor() {
     const storageService = inject(StorageService);
     const groupBy = JSON.parse(
-      storageService.getItem('groupby') || 'day'
+      storageService.getItem('groupby') || '"day"'
     ) as GroupBy;
     const showAll =
       JSON.parse(storageService.getItem('showall') || 'false') === true;
