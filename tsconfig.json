@@ -28,7 +28,8 @@
       "@services": ["src/app/services/index.ts"],
       "@pipes": ["src/app/pipes/index.ts"],
       "@environment": ["src/environments/environment.ts"]
-    }
+    },
+    "resolveJsonModule": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
