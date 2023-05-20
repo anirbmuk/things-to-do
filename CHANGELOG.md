@@ -1,3 +1,6 @@
+## 2.1.2
+- Fixed **`Unexpected token 'd', "day" is not valid JSON`** error, caused by missing double quotes    
+
 ## 2.1.1
 - Named shortcuts for relative path, for easy imports  
 
