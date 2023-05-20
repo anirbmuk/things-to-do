@@ -24,7 +24,6 @@ export class ActionComponent {
 
   @Output() toggleShowAll = new EventEmitter<boolean>();
   @Output() toggleGroupBy = new EventEmitter<GroupBy>();
-  @Output() typeSearch = new EventEmitter<string | undefined | null>();
 
   onToggleShowAll() {
     this.toggleShowAll.emit(!this.showAll);
