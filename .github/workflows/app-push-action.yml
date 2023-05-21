@@ -33,8 +33,10 @@ jobs:
       - name: Run unit tests
         run: npm run test:headless
 
-      - name: Run e2e tests
-        run: npm run ci:test-e2e
+      - uses: cypress-io/github-action@v5
+        with:
+          start: npm run start
+          browser: chrome
 
   build:
     needs: [install-check]
