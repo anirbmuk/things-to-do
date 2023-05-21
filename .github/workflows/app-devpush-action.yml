@@ -1,0 +1,65 @@
+name: things-to-do development onpush
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on push events but only for the master branch
+  push:
+    branches: [development]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      - name: Cache node_modules
+        id: cache-node-modules-pre
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-thingstodo-node-modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Install node_modules
+        if: steps.cache-node-modules-pre.outputs.cache-hit != 'true'
+        run: npm ci
+
+  check:
+    needs: [install]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-thingstodo-node-modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Run linter
+        run: npm run lint
+
+      - name: Run unit tests
+        run: npm run test:headless
+
+      - name: Run e2e tests
+        uses: cypress-io/github-action@v5
+        with:
+          start: npm run start
+          wait-on: 'http://localhost:4200'
+
+  build:
+    needs: [check]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-thingstodo-node-modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Build things-to-do project
+        run: npm run build:prod
