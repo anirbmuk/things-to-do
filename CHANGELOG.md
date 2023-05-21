@@ -1,5 +1,5 @@
 ## 2.4.0
-- Added unit tests to GitHub Actions pipeline  
+- Added unit tests and cypress e2e to GitHub Actions pipeline  
 - Lazy loading of NotFoundComponent to reduce main bundle size  
 
 ## 2.3.0
