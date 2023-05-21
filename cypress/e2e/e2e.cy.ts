@@ -169,4 +169,68 @@ describe('E2E for Things-TODO', () => {
       cy.get('[data-test-id=createupdatemodal]').should('exist');
     });
   });
+
+  describe('TODO modal', () => {
+    beforeEach(() => {
+      cy.visit('/');
+      cy.clearAllLocalStorage();
+    });
+
+    it('should create a new TODO', () => {
+      const today = new Date();
+      const dd = `${today.getDate()}`.padStart(2, '0');
+      const mm = `${today.getMonth() + 1}`.padStart(2, '0');
+      const yyyy = `${today.getFullYear()}`.padStart(2, '0');
+      const time = '20:00:00';
+      const duedate = `${yyyy}-${mm}-${dd}T${time}`;
+
+      cy.createtodo(data.todos.new.heading, data.todos.new.text, duedate);
+
+      cy.getAllLocalStorage({ log: true }).then((result) => {
+        const domainKeys = result['http://localhost:4200'];
+        const output = JSON.parse(domainKeys[data.todos.key] as string);
+        expect(output).to.be.instanceOf(Array).of.length(1);
+
+        expect(output[0]['status']).to.equal('Incomplete');
+        expect(output[0]['heading']).to.equal(data.todos.new.heading);
+        expect(output[0]['text']).to.equal(data.todos.new.text);
+        expect(output[0]['todoid']).to.be.not.null;
+      });
+
+      cy.get('[list]').should('exist').should('have.length', 1);
+      const listitem = cy.get('[list]').get('[listitem]');
+      listitem.get('[heading]').should('contain.text', data.todos.new.heading);
+      listitem.get('[text]').should('contain.text', data.todos.new.text);
+      listitem
+        .get('[status]')
+        .should('contain.text', `${data.months[+mm - 1]} ${dd}, ${yyyy}`);
+      listitem.get('[additional]').should('contain.text', 'Due today');
+    });
+
+    it('should toggle TODO status', () => {
+      const today = new Date();
+      const dd = `${today.getDate()}`.padStart(2, '0');
+      const mm = `${today.getMonth() + 1}`.padStart(2, '0');
+      const yyyy = `${today.getFullYear()}`.padStart(2, '0');
+      const time = '20:00:00';
+      const duedate = `${yyyy}-${mm}-${dd}T${time}`;
+
+      cy.createtodo(data.todos.new.heading, data.todos.new.text, duedate);
+
+      cy.get('[data-test-id=showallshow]').click();
+      cy.get('[data-test-id=togglestatus').click();
+
+      const listitem = cy.get('[list]').get('[listitem]');
+      listitem.get('[status]').should('not.exist');
+      listitem.get('[additional]').should('not.exist');
+      listitem.get('[performance]').should('contain.text', 'Completed on time');
+
+      cy.get('[data-test-id=togglestatus').click();
+      listitem
+        .get('[status]')
+        .should('contain.text', `${data.months[+mm - 1]} ${dd}, ${yyyy}`);
+      listitem.get('[additional]').should('contain.text', 'Due today');
+      listitem.get('[performance]').should('not.exist');
+    });
+  });
 });

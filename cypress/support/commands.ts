@@ -25,13 +25,22 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 //
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+declare namespace Cypress {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface Chainable<Subject = any, T = any> {
+    createtodo(heading: string, text: string, duedate: string): Chainable<any>;
+  }
+}
+
+const createNewTodo = (heading: string, text: string, duedate: string) => {
+  cy.get('[data-test-id=addtodobtn]').click();
+
+  cy.get('[data-test-id=createupdatemodal-heading]').click().type(heading);
+  cy.get('[data-test-id=createupdatemodal-text]').click().type(text);
+  cy.get('[data-test-id=createupdatemodal-duedate]').click().type(duedate);
+  cy.get('[data-test-id=createupdatemodal-save]').click();
+
+  cy.wait(500);
+};
+
+Cypress.Commands.add('createtodo', createNewTodo);

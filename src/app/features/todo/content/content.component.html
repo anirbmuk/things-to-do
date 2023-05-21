@@ -73,6 +73,7 @@
                         'text-red-600': todo.status === 'Incomplete',
                         'text-green-600': todo.status === 'Complete'
                       }"
+                      data-test-id="togglestatus"
                       (click)="toogleStatus($event, todo)"
                       >{{
                         todo.status === 'Incomplete'
@@ -85,6 +86,7 @@
                     <mat-icon
                       class="flex justify-end todo-delete"
                       role="button"
+                      data-test-id="deletetodo"
                       (click)="onDeleteTodo($event, todo)">
                       delete</mat-icon
                     >

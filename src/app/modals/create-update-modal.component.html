@@ -24,14 +24,16 @@
           type="text"
           class="caret-indigo text-black-dark text-sm md:text-md w-full my-1 p-2 rounded"
           required
-          formControlName="heading" />
+          formControlName="heading"
+          data-test-id="createupdatemodal-heading" />
         <label for="textid">Text</label>
         <textarea
           id="textid"
           type="text"
           class="caret-indigo text-black-dark text-sm md:text-md w-full my-1 p-2 rounded"
           formControlName="text"
-          rows="3"></textarea>
+          rows="3"
+          data-test-id="createupdatemodal-text"></textarea>
         <label for="duedateid" required [attr.aria-disabled]="!editable"
           >Due On</label
         >
@@ -41,7 +43,8 @@
           class="caret-indigo text-black-dark text-sm md:text-md w-full my-1 p-2 rounded"
           required
           type="datetime-local"
-          formControlName="duedate" />
+          formControlName="duedate"
+          data-test-id="createupdatemodal-duedate" />
       </form>
     </div>
   </div>
@@ -53,6 +56,7 @@
       (click)="onDialogAction()"
       type="button"
       [disabled]="createUpdateForm?.invalid || !editable"
+      data-test-id="createupdatemodal-save"
       mat-dialog-close>
       Save
     </button>
@@ -62,7 +66,8 @@
       cdkFocusInitial
       color="warn"
       (click)="closeModal()"
-      type="reset">
+      type="reset"
+      data-test-id="createupdatemodal-cancel">
       Cancel
     </button>
   </div>

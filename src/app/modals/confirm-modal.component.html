@@ -11,6 +11,7 @@
       color="primary"
       (click)="onDialogAction()"
       type="button"
+      data-test-id="confirmmodal-yes"
       mat-dialog-close>
       Yes
     </button>
@@ -20,6 +21,7 @@
       color="warn"
       (click)="closeModal()"
       type="reset"
+      data-test-id="confirmmodal-no"
       mat-dialog-close
       cdkFocusInitial>
       No
