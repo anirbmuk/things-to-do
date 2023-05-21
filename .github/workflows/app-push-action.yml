@@ -25,7 +25,6 @@ jobs:
           key: ${{ runner.os }}-build-thingstodo-node-modules-${{ hashFiles('package-lock.json') }}
 
       - name: Install node_modules
-        if: steps.cache-node-modules-pre.outputs.cache-hit != 'true'
         run: npm i
 
       - name: Check linting
