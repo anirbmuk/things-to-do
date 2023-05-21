@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  install:
+  install-check:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,17 +28,6 @@ jobs:
         if: steps.cache-node-modules-pre.outputs.cache-hit != 'true'
         run: npm i
 
-  check:
-    needs: [install]
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-build-thingstodo-node-modules-${{ hashFiles('package-lock.json') }}
-
       - name: Check linting
         run: npm run lint
 
@@ -46,10 +35,10 @@ jobs:
         run: npm run test:headless
 
       - name: Run e2e tests
-        run: cypress install && npm run ci:test-e2e
+        run: npm run ci:test-e2e
 
   build:
-    needs: [check]
+    needs: [install-check]
     runs-on: ubuntu-latest
 
     steps:
