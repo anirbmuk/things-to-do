@@ -10,13 +10,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  install-check:
+  install:
     runs-on: ubuntu-latest
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-
       - name: Cache node_modules
         id: cache-node-modules-pre
         uses: actions/cache@v3
@@ -25,21 +24,28 @@ jobs:
           key: ${{ runner.os }}-build-thingstodo-node-modules-${{ hashFiles('package-lock.json') }}
 
       - name: Install node_modules
-        run: npm i
+        if: steps.cache-node-modules-pre.outputs.cache-hit != 'true'
+        run: npm install
 
-      - name: Check linting
+  check:
+    needs: [install]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-thingstodo-node-modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Run linter
         run: npm run lint
 
       - name: Run unit tests
         run: npm run test:headless
 
-      - uses: cypress-io/github-action@v5
-        with:
-          start: npm run start
-          browser: chrome
-
   build:
-    needs: [install-check]
+    needs: [check]
     runs-on: ubuntu-latest
 
     steps:
@@ -73,10 +79,10 @@ jobs:
           name: dist-things-to-do
           path: dist/things-to-do
 
-      - name: Install firebase-tools
-        run: sudo npm i -g firebase-tools@11.30.0
+      - name: Install firebase-tools package globally
+        run: sudo npm install -g firebase-tools@11.30.0
 
-      - name: Deploy things-to-do project
+      - name: Deploy things-to-do project to firebase
         run: firebase deploy
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
