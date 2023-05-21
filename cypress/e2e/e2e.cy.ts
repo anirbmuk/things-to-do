@@ -2,7 +2,7 @@ import * as data from '../fixtures/data.json';
 
 describe('E2E for Things-TODO', () => {
   describe('Test routing', () => {
-    it('should redirect to notfound', () => {
+    it('should redirect invalid page to /notfound', () => {
       cy.visit('/wrong');
       cy.url().should('contain', '/notfound');
       cy.title().should('equal', `404 | ${data.title}`);
