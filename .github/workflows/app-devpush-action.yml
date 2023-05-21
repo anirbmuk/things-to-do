@@ -48,7 +48,8 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           start: npm run start
-          wait-on: 'http://localhost:4200'
+          wait-on: 'http://localhost:4200/'
+          wait-on-timeout: 120
 
   build:
     needs: [check]
