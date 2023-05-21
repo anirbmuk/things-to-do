@@ -5,7 +5,11 @@
     "key": "todos_development",
     "new": {
       "heading": "New TODO Heading",
-      "text": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore at expedita perferendis possimus beatae dolores rem voluptatibus magnam similique minus."
+      "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit."
+    },
+    "alt": {
+      "heading": "Alternate TODO Heading",
+      "text": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus, explicabo."
     }
   },
   "months": [

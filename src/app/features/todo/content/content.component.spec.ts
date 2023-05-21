@@ -81,15 +81,15 @@ describe('ContentComponent', () => {
   it('should construct the TODO list', () => {
     const componentElement: HTMLElement = fixture.nativeElement;
 
-    const lists = componentElement.querySelectorAll('[list]');
+    const lists = componentElement.querySelectorAll('[todolist]');
     expect(lists.length).toEqual(2);
 
-    const firstTodoStructure = lists?.[0].querySelector('[listitem]');
-    const heading1 = firstTodoStructure?.querySelector('[heading]');
-    const text1 = firstTodoStructure?.querySelector('[text]');
-    const status1 = firstTodoStructure?.querySelector('[status]');
-    const additional1 = firstTodoStructure?.querySelector('[additional]');
-    const performance1 = firstTodoStructure?.querySelector('[performance]');
+    const firstTodoStructure = lists?.[0].querySelector('[todolistitem]');
+    const heading1 = firstTodoStructure?.querySelector('[todoheading]');
+    const text1 = firstTodoStructure?.querySelector('[todotext]');
+    const status1 = firstTodoStructure?.querySelector('[todostatus]');
+    const additional1 = firstTodoStructure?.querySelector('[todoadditional]');
+    const performance1 = firstTodoStructure?.querySelector('[todoperformance]');
 
     expect(heading1?.textContent).toContain(groupedTodos[0].todos[0].heading);
     expect(text1?.textContent).toContain(groupedTodos[0].todos[0].text);
@@ -99,10 +99,11 @@ describe('ContentComponent', () => {
       groupedTodos[0].todos[0].performance?.message
     );
 
-    const secondTodoStructure = lists?.[1].querySelector('[listitem]');
-    const status2 = secondTodoStructure?.querySelector('[status]');
-    const additional2 = secondTodoStructure?.querySelector('[additional]');
-    const performance2 = secondTodoStructure?.querySelector('[performance]');
+    const secondTodoStructure = lists?.[1].querySelector('[todolistitem]');
+    const status2 = secondTodoStructure?.querySelector('[todostatus]');
+    const additional2 = secondTodoStructure?.querySelector('[todoadditional]');
+    const performance2 =
+      secondTodoStructure?.querySelector('[todoperformance]');
 
     expect(status2?.textContent).toContain('Due: Feb 1, 2020');
     expect(additional2?.textContent).toContain('Past due date');
@@ -124,7 +125,7 @@ describe('ContentComponent', () => {
     fixture.detectChanges();
     const componentElement: HTMLElement = fixture.nativeElement;
 
-    const lists = componentElement.querySelectorAll('[list]');
+    const lists = componentElement.querySelectorAll('[todolist]');
     expect(lists?.length).toBe(0);
 
     const noDataMessage = componentElement.querySelector('.text-red-600');

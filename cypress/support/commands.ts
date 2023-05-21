@@ -34,14 +34,14 @@ declare namespace Cypress {
 
 const createNewTodo = (heading: string, text: string, duedate: string) => {
   cy.get('[data-test-id=addtodobtn]').click();
-  cy.wait(300);
+  cy.wait(250);
 
   cy.get('[data-test-id=createupdatemodal-heading]').click().type(heading);
   cy.get('[data-test-id=createupdatemodal-text]').click().type(text);
   cy.get('[data-test-id=createupdatemodal-duedate]').click().type(duedate);
   cy.get('[data-test-id=createupdatemodal-save]').click();
 
-  cy.wait(300);
+  cy.wait(250);
 };
 
 Cypress.Commands.add('createtodo', createNewTodo);
