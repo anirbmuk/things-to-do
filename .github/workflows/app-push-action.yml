@@ -46,7 +46,7 @@ jobs:
         run: npm run test:headless
 
       - name: Run e2e tests
-        run: npm run ci:test-e2e
+        run: cypress install && npm run ci:test-e2e
 
   build:
     needs: [check]
@@ -84,7 +84,7 @@ jobs:
           path: dist/things-to-do
 
       - name: Install firebase-tools
-        run: sudo npm i -g firebase-tools
+        run: sudo npm i -g firebase-tools@11.30.0
 
       - name: Deploy things-to-do project
         run: firebase deploy
