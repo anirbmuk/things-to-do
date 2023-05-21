@@ -1,0 +1,46 @@
+/// <reference types="cypress" />
+// ***********************************************
+// This example commands.ts shows you how to
+// create various custom commands and overwrite
+// existing commands.
+//
+// For more comprehensive examples of custom
+// commands please read more here:
+// https://on.cypress.io/custom-commands
+// ***********************************************
+//
+//
+// -- This is a parent command --
+// Cypress.Commands.add('login', (email, password) => { ... })
+//
+//
+// -- This is a child command --
+// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
+//
+//
+// -- This is a dual command --
+// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
+//
+//
+// -- This will overwrite an existing command --
+// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+//
+declare namespace Cypress {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface Chainable<Subject = any, T = any> {
+    createtodo(heading: string, text: string, duedate: string): Chainable<any>;
+  }
+}
+
+const createNewTodo = (heading: string, text: string, duedate: string) => {
+  cy.get('[data-test-id=addtodobtn]').click();
+
+  cy.get('[data-test-id=createupdatemodal-heading]').click().type(heading);
+  cy.get('[data-test-id=createupdatemodal-text]').click().type(text);
+  cy.get('[data-test-id=createupdatemodal-duedate]').click().type(duedate);
+  cy.get('[data-test-id=createupdatemodal-save]').click();
+
+  cy.wait(500);
+};
+
+Cypress.Commands.add('createtodo', createNewTodo);

@@ -1,3 +1,6 @@
+## 2.3.0
+- Added cypress e2e tests  
+
 ## 2.2.0
 - Added search capability on the performance status of **Completed** TODOs  
 - Added unit tests for all components  
