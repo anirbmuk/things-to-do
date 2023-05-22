@@ -24,6 +24,7 @@ export class TodoComponent {
   private readonly todoStore = inject(StoreService);
   readonly groupedtodos$: Observable<GroupedTodo[]> =
     this.todoStore.groupedtodos$;
+  readonly totalPending$: Observable<number> = this.todoStore.totalPending$;
   readonly showAll$: Observable<boolean> = this.todoStore.showAll$;
   readonly groupBy$: Observable<GroupBy> = this.todoStore.groupBy$;
 

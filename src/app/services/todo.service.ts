@@ -103,17 +103,24 @@ export class TodoService {
       dategroups.add(this.groupByFn(new Date(todo.duedate), groupbyClause));
     }
     const groupedByTodos: GroupedTodo[] = [];
+    let totalPending = 0;
     for (const group of [...dategroups]) {
+      const todosInGroup = todos.filter(
+        (todo) =>
+          this.groupByFn(new Date(todo.duedate), groupbyClause) === group
+      );
+      const pending = todosInGroup.filter(
+        (todo) => todo.status === 'Incomplete'
+      ).length;
+      totalPending += pending;
       const groupedTodo: GroupedTodo = {
         datedivider: group,
-        todos: todos.filter(
-          (todo) =>
-            this.groupByFn(new Date(todo.duedate), groupbyClause) === group
-        )
+        todos: todosInGroup,
+        pending
       };
       groupedByTodos.push(groupedTodo);
     }
-    return groupedByTodos;
+    return { pending: totalPending, groupedTodos: groupedByTodos };
   }
 
   private groupByFn(duedate: Date, groupby: GroupBy): string {

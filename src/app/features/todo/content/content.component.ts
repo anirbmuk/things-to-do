@@ -9,13 +9,13 @@ import {
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { ITodo } from '@models';
-import { DisplayDatePipe, GroupDatePipe } from '@pipes';
+import { CountTodoPipe, DisplayDatePipe, GroupDatePipe } from '@pipes';
 import { DateService } from '@services';
 import { GroupedTodo, UpdateTodo } from '@types';
 
 const CORE_MODULES = [CommonModule] as const;
 const MATERIAL_MODULES = [MatIconModule];
-const PIPES = [DisplayDatePipe, GroupDatePipe] as const;
+const PIPES = [DisplayDatePipe, GroupDatePipe, CountTodoPipe] as const;
 
 @Component({
   standalone: true,
@@ -27,6 +27,8 @@ const PIPES = [DisplayDatePipe, GroupDatePipe] as const;
 })
 export class ContentComponent {
   @Input() todos: GroupedTodo[] | null = [];
+  @Input() totalPending: number | null = 0;
+
   @Output() deleteTodo = new EventEmitter<ITodo['todoid']>();
   @Output() updateTodo = new EventEmitter<{
     todoid: ITodo['todoid'];

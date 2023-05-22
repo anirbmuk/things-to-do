@@ -7,6 +7,7 @@
 <hr />
 <ttd-content
   [todos]="groupedtodos$ | async"
+  [totalPending]="totalPending$ | async"
   (updateTodoStatus)="updateStatusAction($event)"
   (updateTodo)="updateTodoAction($event)"
   (deleteTodo)="deleteTodoAction($event)"></ttd-content>

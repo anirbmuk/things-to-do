@@ -7,6 +7,10 @@ export type UpdateTodo = Pick<
   'heading' | 'text' | 'status' | 'duedate' | 'completedon'
 >;
 
-export type GroupedTodo = { datedivider: string; todos: ITodo[] };
+export type GroupedTodo = {
+  datedivider: string;
+  pending: number;
+  todos: ITodo[];
+};
 
 export type GroupBy = 'month' | 'day';

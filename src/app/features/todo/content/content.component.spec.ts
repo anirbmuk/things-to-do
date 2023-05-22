@@ -12,6 +12,7 @@ describe('ContentComponent', () => {
   let groupedTodos: GroupedTodo[] = [
     {
       datedivider: '2020-01',
+      pending: 0,
       todos: [
         {
           additional: undefined,
@@ -31,6 +32,7 @@ describe('ContentComponent', () => {
     },
     {
       datedivider: '2020-02',
+      pending: 1,
       todos: [
         {
           additional: {
@@ -76,6 +78,7 @@ describe('ContentComponent', () => {
 
     expect(legends?.[0]?.textContent).toContain('Jan 2020');
     expect(legends?.[1]?.textContent).toContain('Feb 2020');
+    expect(legends?.[1]?.textContent).toContain('1 pending TODO');
   });
 
   it('should construct the TODO list', () => {

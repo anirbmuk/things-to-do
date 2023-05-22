@@ -26,6 +26,9 @@ export class StoreService extends ComponentStore<ITodoState> {
   private readonly groupedtodos = new BehaviorSubject<GroupedTodo[]>([]);
   readonly groupedtodos$ = this.groupedtodos.asObservable();
 
+  private readonly totalPending = new BehaviorSubject<number>(0);
+  readonly totalPending$ = this.totalPending.asObservable();
+
   readonly showAll$ = this.select(({ showAll }) => showAll);
   readonly searchString$ = this.select(({ searchString }) => searchString);
   readonly groupBy$ = this.select(({ groupBy }) => groupBy);
@@ -84,12 +87,18 @@ export class StoreService extends ComponentStore<ITodoState> {
   readonly fetchTodos = this.effect<void>((param$) =>
     param$.pipe(
       switchMap(() =>
-        this.filteredTodos$.pipe(tap((data) => this.updateTodos(data)))
+        this.filteredTodos$.pipe(
+          tap(({ pending, groupedTodos }) => {
+            this.updateTodos(groupedTodos);
+            this.updateCount(pending);
+          })
+        )
       )
     )
   );
 
   private updateTodos = (todos: GroupedTodo[]) => this.groupedtodos.next(todos);
+  private updateCount = (pending: number) => this.totalPending.next(pending);
 
   readonly updateShowAll = this.updater(
     (state: ITodoState, showAll: boolean) => {
