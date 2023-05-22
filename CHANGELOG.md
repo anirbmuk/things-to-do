@@ -1,3 +1,7 @@
+## 2.5.0
+- Added feature to show pending todo count  
+- More unit and e2e tests  
+
 ## 2.4.0
 - Added unit tests and cypress e2e to GitHub Actions pipeline  
 - Lazy loading of NotFoundComponent to reduce main bundle size  
