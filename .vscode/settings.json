@@ -5,7 +5,7 @@
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
   },
-  "html.format.enable": true,
+  "html.format.enable": false,
   "files.eol": "\n",
   "prettier.singleAttributePerLine": true,
   "prettier.prettierPath": ".prettierrc",
