@@ -1,5 +1,6 @@
 ## 2.5.1
 - More e2e tests  
+- Dark mode css fixes  
 
 ## 2.5.0
 - Added feature to show pending todo count  
