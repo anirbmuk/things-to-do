@@ -2,6 +2,7 @@
   <ng-container *ngIf="todos?.length; else nodata">
     <div
       class="flex justify-center items-center todo-total-count text-md h-3"
+      data-test-id="totalpending"
       [ngClass]="{ show: totalPending }">
       {{ totalPending | tddCountTodo : true }}
     </div>
@@ -9,7 +10,10 @@
       <fieldset class="text-2xl border-t border-gray-300">
         <legend class="py-3 pl-1 pr-2.5 -mb-3 flex justify-center items-center">
           <span class="text-shadow">{{ group.datedivider | tddGroupDate }}</span
-          ><span class="pl-2 text-sm todo-group-count">
+          ><span
+            *ngIf="group.pending"
+            class="pl-2 text-sm todo-group-count"
+            data-test-id="grouppending">
             {{ group.pending | tddCountTodo }}</span
           >
         </legend>
