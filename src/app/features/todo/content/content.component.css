@@ -10,6 +10,14 @@
   @apply text-amber-900;
 }
 
+.todo-group-count {
+  @apply text-gray-500;
+}
+
+.todo-total-count {
+  @apply text-gray-700;
+}
+
 @media (prefers-color-scheme: dark) {
   .todo-content-wrapper {
     @apply bg-transparent border border-white;
@@ -19,5 +27,13 @@
   }
   .todo-delete {
     @apply text-warning;
+  }
+
+  .todo-group-count {
+    @apply text-white;
+  }
+
+  .todo-total-count {
+    @apply text-gray-100;
   }
 }
