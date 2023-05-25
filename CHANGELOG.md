@@ -1,3 +1,6 @@
+## 2.5.2
+- More unit tests  
+
 ## 2.5.1
 - More e2e tests  
 - Dark mode css fixes  
