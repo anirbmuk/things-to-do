@@ -28,11 +28,11 @@
     "clean": "rimraf dist && rimraf .firebase && rimraf firebase-debug.log",
     "build:prod": "ng build --configuration production",
     "deploy:prod": "npm run clean && npm run lint && npm run build:prod && firebase deploy && npm run clean",
-    "pre-commit": "npm run lint && npm run format:check",
     "prepare": "husky install"
   },
   "lint-staged": {
-    "src/**/*{.ts,.js,.html,.css}": "npm run pre-commit"
+    "src/**/*{.ts,.js}": "eslint",
+    "src/**/*{.ts,.js,.html,.css}": "npm run format:check --uncommitted"
   },
   "private": true,
   "dependencies": {
