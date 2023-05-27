@@ -132,6 +132,6 @@ describe('ContentComponent', () => {
     expect(lists?.length).toBe(0);
 
     const noDataMessage = componentElement.querySelector('.text-red-600');
-    expect(noDataMessage?.textContent).toContain('No TODO found');
+    expect(noDataMessage?.textContent).toContain('No TODOs found');
   });
 });
