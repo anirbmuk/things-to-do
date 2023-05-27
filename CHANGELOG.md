@@ -1,3 +1,9 @@
+## 2.6.0
+- Allow search on past TODOs with negative duedate  
+- Fixed search not working for TODOs with label 'Due today'  
+- Fixed cypress type errors with new tsconfig.json for cypress  
+- Fixed lint-staged not applied only on staged files  
+
 ## 2.5.2
 - More unit tests  
 
