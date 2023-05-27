@@ -1,3 +1,7 @@
+## 2.6.1
+- Improved logic for search by arithmetic operators  
+- More e2e coverage, split tests into separate files by functionality  
+
 ## 2.6.0
 - Allow search on past TODOs with negative duedate  
 - Fixed search not working for TODOs with label 'Due today'  
