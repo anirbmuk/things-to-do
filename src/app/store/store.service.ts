@@ -241,20 +241,34 @@ export class StoreService extends ComponentStore<ITodoState> {
   ): ((item: ITodo) => boolean) | undefined {
     switch (operator) {
       case '<': {
-        return (item: ITodo) => (item.additional?.remaining ?? 0) < comparator;
+        return (item: ITodo) =>
+          item.additional?.remaining
+            ? item.additional?.remaining < comparator
+            : false;
       }
       case '>': {
-        return (item: ITodo) => (item.additional?.remaining ?? 0) > comparator;
+        return (item: ITodo) =>
+          item.additional?.remaining
+            ? item.additional?.remaining > comparator
+            : false;
       }
       case '<=': {
-        return (item: ITodo) => (item.additional?.remaining ?? 0) <= comparator;
+        return (item: ITodo) =>
+          item.additional?.remaining
+            ? item.additional?.remaining <= comparator
+            : false;
       }
       case '>=': {
-        return (item: ITodo) => (item.additional?.remaining ?? 0) >= comparator;
+        return (item: ITodo) =>
+          item.additional?.remaining
+            ? item.additional?.remaining >= comparator
+            : false;
       }
       case 'eq': {
         return (item: ITodo) =>
-          (item.additional?.remaining ?? 0) === comparator;
+          item.additional?.remaining
+            ? item.additional?.remaining === comparator
+            : false;
       }
       default: {
         return;

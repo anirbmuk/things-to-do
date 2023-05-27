@@ -58,14 +58,14 @@ describe('DateService', () => {
       expect(output?.remaining).toEqual(1);
     });
 
-    it(`should return 'Due by next week' message for next week's TODOs`, () => {
+    it(`should return 'Due next week' message for next week's TODOs`, () => {
       const nextWeek = new Date(+new Date() + 8 * 24 * 60 * 60 * 1000);
       const output = dateService.getStatus(
         `${nextWeek.getFullYear()}-${(nextWeek.getMonth() + 1)
           .toString()
           .padStart(2, '0')}-${nextWeek.getDate().toString().padStart(2, '0')}`
       );
-      expect(output?.message).toEqual('Due by next week');
+      expect(output?.message).toEqual('Due next week');
       expect(output?.remaining).toBeGreaterThanOrEqual(7);
     });
   });

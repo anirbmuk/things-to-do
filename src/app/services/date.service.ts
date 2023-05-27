@@ -38,17 +38,18 @@ export class DateService {
       .padStart(2, '0')}T00:00:00.000Z`;
     const formattedDueDate = new Date(formattedDue);
 
+    const remaining = Math.round(
+      (+formattedDueDate - +formattedNowDate) / (24 * 60 * 60 * 1000)
+    );
+
     if (+formattedDueDate < +formattedNowDate) {
       return {
         state: 'error',
         message: 'Past due date',
-        remaining: undefined
+        remaining
       };
     }
 
-    const remaining = Math.round(
-      (+formattedDueDate - +formattedNowDate) / (24 * 60 * 60 * 1000)
-    );
     const nextMonth =
       formattedDueDate.getMonth() - formattedNowDate.getMonth() === 1 &&
       formattedDueDate.getFullYear() >= formattedNowDate.getFullYear();
@@ -73,7 +74,7 @@ export class DateService {
     } else if (remaining >= 7 && remaining < 14) {
       return {
         state: 'info',
-        message: 'Due by next week',
+        message: 'Due next week',
         remaining
       };
     } else if (remaining >= 14 && nextMonth) {
