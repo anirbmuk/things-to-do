@@ -47,8 +47,12 @@ export class StoreService extends ComponentStore<ITodoState> {
         OPERATORS.forEach((operator) => {
           if (searchString.includes(operator)) {
             const [, value] = searchString.split(operator);
-            const comparator = +value?.trim();
-            if (comparator && !isNaN(comparator)) {
+            const comparator = value?.trim() ? +value.trim() : undefined;
+            if (
+              comparator !== null &&
+              comparator !== undefined &&
+              !isNaN(comparator)
+            ) {
               const compareConditions = this.getCompareConditions(
                 operator,
                 comparator
