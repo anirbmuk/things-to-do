@@ -46,18 +46,21 @@ export class StoreService extends ComponentStore<ITodoState> {
         hasOperator = true;
         OPERATORS.forEach((operator) => {
           if (searchString.includes(operator)) {
-            const [, value] = searchString.split(operator);
-            const comparator = value?.trim() ? +value.trim() : undefined;
-            if (
-              comparator !== null &&
-              comparator !== undefined &&
-              !isNaN(comparator)
-            ) {
-              const compareConditions = this.getCompareConditions(
-                operator,
-                comparator
-              );
-              compareConditions && tempConditions.push(compareConditions);
+            const values = searchString.split(operator);
+            if (values.length === 2) {
+              const [, value] = values;
+              const comparator = value?.trim() ? +value.trim() : undefined;
+              if (
+                comparator !== null &&
+                comparator !== undefined &&
+                !isNaN(comparator)
+              ) {
+                const compareConditions = this.getCompareConditions(
+                  operator,
+                  comparator
+                );
+                compareConditions && tempConditions.push(compareConditions);
+              }
             }
           }
         });
@@ -242,31 +245,36 @@ export class StoreService extends ComponentStore<ITodoState> {
     switch (operator) {
       case '<': {
         return (item: ITodo) =>
-          item.additional?.remaining
+          item.additional?.remaining !== null &&
+          item.additional?.remaining !== undefined
             ? item.additional?.remaining < comparator
             : false;
       }
       case '>': {
         return (item: ITodo) =>
-          item.additional?.remaining
+          item.additional?.remaining !== null &&
+          item.additional?.remaining !== undefined
             ? item.additional?.remaining > comparator
             : false;
       }
       case '<=': {
         return (item: ITodo) =>
-          item.additional?.remaining
+          item.additional?.remaining !== null &&
+          item.additional?.remaining !== undefined
             ? item.additional?.remaining <= comparator
             : false;
       }
       case '>=': {
         return (item: ITodo) =>
-          item.additional?.remaining
+          item.additional?.remaining !== null &&
+          item.additional?.remaining !== undefined
             ? item.additional?.remaining >= comparator
             : false;
       }
       case 'eq': {
         return (item: ITodo) =>
-          item.additional?.remaining
+          item.additional?.remaining !== null &&
+          item.additional?.remaining !== undefined
             ? item.additional?.remaining === comparator
             : false;
       }
