@@ -26,7 +26,7 @@ describe('StorageService', () => {
     });
   });
 
-  it('should call localstorage setItem', () => {
+  it('setItem should call localstorage.setItem', () => {
     storageService.setItem('item', item);
 
     expect(mockService.setItem).toHaveBeenCalledOnceWith(
@@ -35,7 +35,7 @@ describe('StorageService', () => {
     );
   });
 
-  it('should call localstorage getItem', () => {
+  it('getItem should call localstorage.getItem', () => {
     storageService.getItem('item');
 
     expect(mockService.getItem).toHaveBeenCalledOnceWith('item');

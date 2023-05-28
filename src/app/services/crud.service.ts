@@ -17,7 +17,7 @@ export class CrudService {
   ) {
     return new Promise<T | undefined>((resolve, reject) => {
       if (!window) {
-        return reject('Window object is undefined');
+        return reject(new Error('Window object is undefined'));
       }
       const items = this.storageService.getItem(storage) || EMPTY_ARRAY;
       const cleanedItems = JSON.parse(items) as T[];
@@ -30,7 +30,7 @@ export class CrudService {
   read<T>(storage = environment.dbname) {
     return new Promise<T[]>((resolve, reject) => {
       if (!window) {
-        return reject('Window object is undefined');
+        return reject(new Error('Window object is undefined'));
       }
       const items = this.storageService.getItem(storage) || EMPTY_ARRAY;
       const parsedItems = JSON.parse(items) as T[];
@@ -47,14 +47,16 @@ export class CrudService {
   ) {
     return new Promise<T | undefined>((resolve, reject) => {
       if (!window) {
-        return reject('Window object is undefined');
+        return reject(new Error('Window object is undefined'));
       }
       const items = this.storageService.getItem(storage) || EMPTY_ARRAY;
       const parsedItems = JSON.parse(items) as T[];
       const itemToBeUpdated = parsedItems.find((each) => each[id] === key);
       if (!itemToBeUpdated) {
         return reject(
-          `[updateItem] object with { ${String(id)}: ${key} } not found`
+          new Error(
+            `[updateItem] object with { ${String(id)}: ${key} } not found`
+          )
         );
       }
       const updatedItem = {
@@ -78,14 +80,16 @@ export class CrudService {
   ) {
     return new Promise<T | undefined>((resolve, reject) => {
       if (!window) {
-        return reject('Window object is undefined');
+        return reject(new Error('Window object is undefined'));
       }
       const items = this.storageService.getItem(storage) || EMPTY_ARRAY;
       const parsedItems = JSON.parse(items) as T[];
       const itemToBeDeleted = parsedItems.find((each) => each[id] === key);
       if (!itemToBeDeleted) {
         return reject(
-          `[deleteItem] object with { ${String(id)}: ${key} } not found`
+          new Error(
+            `[deleteItem] object with { ${String(id)}: ${key} } not found`
+          )
         );
       }
       const updatedItems = parsedItems.filter((each) => each[id] !== key);

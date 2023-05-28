@@ -1,6 +1,6 @@
 import { ITodo } from '@models';
 
-export type AddTodo = Omit<ITodo, 'todoid' | 'status'>;
+export type AddTodo = Pick<ITodo, 'heading' | 'text' | 'duedate'>;
 
 export type UpdateTodo = Pick<
   ITodo,
