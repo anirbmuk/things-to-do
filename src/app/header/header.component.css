@@ -1,3 +1,7 @@
 input::placeholder {
   @apply text-sm md:text-md text-gray-800;
 }
+
+input[data-test-id='inputsearch']:focus {
+  @apply !bg-transparent;
+}

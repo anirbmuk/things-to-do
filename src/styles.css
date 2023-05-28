@@ -111,10 +111,10 @@
     @apply !w-full;
   }
   input[type='datetime-local'] {
-    @apply !block !p-2 !w-full;
-    appearance: textfield;
-    -webkit-appearance: textfield;
-    -moz-appearance: textfield;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -webkit-min-logical-width: calc(100% - 1rem);
   }
   .mat-mdc-dialog-container hr {
     @apply mx-4;
