@@ -6,7 +6,6 @@ import {
   inject
 } from '@angular/core';
 import {
-  FormBuilder,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
@@ -61,8 +60,7 @@ export class ConfirmDialogComponent implements OnInit {
 export class CreateUpdateDialogComponent implements OnInit {
   readonly data: { mode: 'create' | 'update'; todo?: ITodo } =
     inject(MAT_DIALOG_DATA);
-  readonly dialogRef = inject(MatDialogRef<ConfirmDialogComponent>);
-  private readonly formBuilder = inject(FormBuilder);
+  readonly dialogRef = inject(MatDialogRef<CreateUpdateDialogComponent>);
   private readonly dateService = inject(DateService);
 
   createUpdateForm?: FormGroup<{
