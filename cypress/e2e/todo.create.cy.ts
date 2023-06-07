@@ -35,7 +35,7 @@ describe('Create TODO', () => {
     listitem.get('[todotext]').should('contain.text', data.todos.new.text);
     listitem
       .get('[todostatus]')
-      .should('contain.text', `${data.months[+mm - 1]} ${dd}, ${yyyy}`);
+      .should('contain.text', `${data.months[+mm - 1]} ${+dd}, ${yyyy}`);
     listitem.get('[todoadditional]').should('contain.text', 'Due today');
   });
 
