@@ -40,7 +40,7 @@
                         'bg-red': todo.additional.state === 'error',
                         'bg-warning': todo.additional.state === 'warn',
                         'bg-info': todo.additional.state === 'info',
-                        'bg-green-600': todo.additional.state === 'safe',
+                        'bg-green-700': todo.additional.state === 'safe',
                         'bg-gray-500': todo.additional.state === 'later'
                       }"
                       todoadditional
@@ -82,8 +82,8 @@
                     <mat-icon
                       role="button"
                       [ngClass]="{
-                        'text-red-600': todo.status === 'Incomplete',
-                        'text-green-600': todo.status === 'Complete'
+                        'text-red': todo.status === 'Incomplete',
+                        'text-green-700': todo.status === 'Complete'
                       }"
                       data-test-id="togglestatus"
                       (click)="toogleStatus($event, todo)"
