@@ -59,7 +59,7 @@
     @apply !text-md;
   }
   .mat-mdc-dialog-surface.mdc-dialog__surface {
-    @apply !pb-4 !px-2;
+    @apply !px-2 !pb-4;
   }
   .mat-mdc-dialog-content.mdc-dialog__content {
     @apply !px-4;
@@ -88,20 +88,20 @@
   }
   label[required]::after {
     content: ' *';
-    @apply text-red-600 text-sm;
+    @apply text-sm text-red-600;
   }
   input,
   textarea,
   select {
-    @apply !text bg-indigo-50 border border-indigo-200 outline-indigo-400;
+    @apply border border-indigo-200 bg-indigo-50 !text outline-indigo-400;
   }
   input:disabled,
   select:disabled,
   textarea:disabled {
-    @apply cursor-not-allowed bg-gray-100 border border-gray-300;
+    @apply cursor-not-allowed border border-gray-300 bg-gray-100;
   }
   input.ng-invalid.ng-dirty {
-    @apply bg-red-100 text-red-700 outline-red-400 border-red-400;
+    @apply border-red-400 bg-red-100 text-red-700 outline-red-400;
   }
   form,
   form > * {
@@ -139,7 +139,7 @@
       @apply !border-white;
     }
     .mat-mdc-dialog-container {
-      @apply !bg-black-dark !border border-white !text-white;
+      @apply !border border-white !bg-black-dark !text-white;
     }
     .mat-mdc-outlined-button:not(:disabled) {
       @apply !border !border-white !text-white;

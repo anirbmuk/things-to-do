@@ -4,6 +4,6 @@ h1 {
 
 @media (prefers-color-scheme: dark) {
   h1 {
-    @apply text-white text-12xl font-bold;
+    @apply text-12xl font-bold text-white;
   }
 }

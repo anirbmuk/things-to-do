@@ -1,5 +1,5 @@
 <div data-test-id="createupdatemodal">
-  <h3 class="!text-lg font-semiBold !mb-2" mat-dialog-title>
+  <h3 class="!text-lg !mb-2 font-semiBold" mat-dialog-title>
     {{
       data.mode === 'create'
         ? 'Create TODO'
@@ -10,7 +10,7 @@
   </h3>
   <hr />
   <div mat-dialog-content>
-    <div class="mb-2 my-6">
+    <div class="my-6 mb-2">
       <form *ngIf="createUpdateForm" [formGroup]="createUpdateForm">
         <label
           aria-required="true"
@@ -23,7 +23,7 @@
           id="headingid"
           name="headingid"
           type="text"
-          class="caret-indigo text-black-dark text-sm md:text-md w-full my-1 p-2 rounded"
+          class="my-1 w-full rounded p-2 text-sm text-black-dark caret-indigo md:text-md"
           required
           formControlName="heading"
           data-test-id="createupdatemodal-heading" />
@@ -32,7 +32,7 @@
           id="textid"
           name="textid"
           type="text"
-          class="caret-indigo text-black-dark text-sm md:text-md w-full my-1 p-2 rounded"
+          class="my-1 w-full rounded p-2 text-sm text-black-dark caret-indigo md:text-md"
           formControlName="text"
           rows="3"
           data-test-id="createupdatemodal-text"></textarea>
@@ -43,7 +43,7 @@
           aria-required="true"
           id="duedateid"
           name="duedateid"
-          class="caret-indigo text-black-dark text-sm md:text-md w-full my-1 p-2 rounded"
+          class="my-1 w-full rounded p-2 text-sm text-black-dark caret-indigo md:text-md"
           required
           type="datetime-local"
           formControlName="duedate"

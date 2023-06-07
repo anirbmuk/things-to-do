@@ -1,5 +1,5 @@
 input::placeholder {
-  @apply text-sm md:text-md text-gray-800;
+  @apply text-sm text-gray-800 md:text-md;
 }
 
 input[data-test-id='inputsearch']:focus {
