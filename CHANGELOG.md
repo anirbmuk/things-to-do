@@ -1,3 +1,8 @@
+## 2.7.0
+- Improved sorting logic for pending TODOs  
+- Added prettier-plugin-tailwindcss plugin  
+- UI improvements  
+
 ## 2.6.1
 - Improved logic for search by arithmetic operators  
 - More e2e coverage, split tests into separate files by functionality  
