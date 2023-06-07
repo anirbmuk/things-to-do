@@ -42,17 +42,15 @@ export class TodoService {
 
   private async _getTodos() {
     const storedTodos = await this.crudService.read<ITodo>();
-    return storedTodos
-      .map((todo) => {
-        const additional = this.getAdditionalInfo(todo);
-        const performance = this.getPerformanceInfo(todo);
-        return {
-          ...todo,
-          additional,
-          ...(performance && { performance })
-        };
-      })
-      .sort(defaultSort);
+    return storedTodos.map((todo) => {
+      const additional = this.getAdditionalInfo(todo);
+      const performance = this.getPerformanceInfo(todo);
+      return {
+        ...todo,
+        additional,
+        ...(performance && { performance })
+      };
+    });
   }
 
   async getTodos(
@@ -104,18 +102,22 @@ export class TodoService {
     }
     const groupedByTodos: GroupedTodo[] = [];
     let totalPending = 0;
-    for (const group of [...dategroups]) {
+    for (const group of [...dategroups].sort()) {
       const todosInGroup = todos.filter(
         (todo) =>
           this.groupByFn(new Date(todo.duedate), groupbyClause) === group
       );
-      const pending = todosInGroup.filter(
-        (todo) => todo.status === 'Incomplete'
-      ).length;
+      const incompleteTodosInGroup = todosInGroup
+        .filter((todo) => todo.status === 'Incomplete')
+        .sort(defaultSort);
+      const completeTodosInGroup = todosInGroup
+        .filter((todo) => todo.status === 'Complete')
+        .sort(defaultSort);
+      const pending = incompleteTodosInGroup.length;
       totalPending += pending;
       const groupedTodo: GroupedTodo = {
         datedivider: group,
-        todos: todosInGroup,
+        todos: [...incompleteTodosInGroup, ...completeTodosInGroup],
         pending
       };
       groupedByTodos.push(groupedTodo);
