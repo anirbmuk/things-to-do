@@ -2,6 +2,9 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ActionComponent } from './action.component';
 
+const MAT_BUTTON_TOGGLE_GROUP = 'mat-button-toggle-group';
+const MAT_BUTTON_TOGGLE_CHECKED = 'mat-button-toggle-checked';
+
 describe('ActionComponent', () => {
   let component: ActionComponent;
   let fixture: ComponentFixture<ActionComponent>;
@@ -32,7 +35,7 @@ describe('ActionComponent', () => {
   it('should contain 2 button-toggle groups', () => {
     const componentElement: HTMLElement = fixture.nativeElement;
     const buttonToggleGroups = componentElement.querySelectorAll(
-      'mat-button-toggle-group'
+      MAT_BUTTON_TOGGLE_GROUP
     );
     expect(buttonToggleGroups?.length).toEqual(2);
   });
@@ -40,7 +43,7 @@ describe('ActionComponent', () => {
   it('should contain 2 button-toggles inside each button-toggle group', () => {
     const componentElement: HTMLElement = fixture.nativeElement;
     const buttonToggleGroups = componentElement.querySelectorAll(
-      'mat-button-toggle-group'
+      MAT_BUTTON_TOGGLE_GROUP
     );
     const groupByToggleButtons =
       buttonToggleGroups?.[0].querySelectorAll('mat-button-toggle');
@@ -50,21 +53,21 @@ describe('ActionComponent', () => {
     expect(groupByToggleButtons?.length).toEqual(2);
     expect(groupByToggleButtons?.[0]?.textContent).toContain('Day');
     expect(groupByToggleButtons?.[0]?.classList).toContain(
-      'mat-button-toggle-checked'
+      MAT_BUTTON_TOGGLE_CHECKED
     );
     expect(groupByToggleButtons?.[1]?.textContent).toContain('Month');
     expect(groupByToggleButtons?.[1]?.classList).not.toContain(
-      'mat-button-toggle-checked'
+      MAT_BUTTON_TOGGLE_CHECKED
     );
 
     expect(completedToggleButtons?.length).toEqual(2);
     expect(completedToggleButtons?.[0]?.textContent).toContain('Hide');
     expect(completedToggleButtons?.[0]?.classList).toContain(
-      'mat-button-toggle-checked'
+      MAT_BUTTON_TOGGLE_CHECKED
     );
     expect(completedToggleButtons?.[1]?.textContent).toContain('Show');
     expect(completedToggleButtons?.[1]?.classList).not.toContain(
-      'mat-button-toggle-checked'
+      MAT_BUTTON_TOGGLE_CHECKED
     );
   });
 
@@ -73,7 +76,7 @@ describe('ActionComponent', () => {
     const onToggleGroupBy = spyOn(component, 'onToggleGroupBy');
     const onToggleShowAll = spyOn(component, 'onToggleShowAll');
     const buttonToggleGroups = componentElement.querySelectorAll(
-      'mat-button-toggle-group'
+      MAT_BUTTON_TOGGLE_GROUP
     );
 
     (buttonToggleGroups?.[0] as HTMLElement).click();
