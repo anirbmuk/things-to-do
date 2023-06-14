@@ -1,3 +1,9 @@
+## 2.8.0
+- Bug fix for incorrect logic behind 'Due next month' label  
+- Added new 'Due this month' label  
+- Added eslint-plugin-sonarjs plugin with cognitive complexity check  
+- More unit and e2e tests  
+
 ## 2.7.0
 - Improved sorting logic for pending TODOs  
 - Added prettier-plugin-tailwindcss plugin  

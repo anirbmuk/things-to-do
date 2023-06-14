@@ -1,6 +1,6 @@
 {
   "name": "things-to-do",
-  "version": "2.7.0",
+  "version": "2.8.0",
   "description": "A light and fast todo-app, built with angular 15",
   "author": {
     "email": "anirban.mjee@gmail.com",
