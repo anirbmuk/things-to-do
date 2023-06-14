@@ -6,7 +6,8 @@
   "env": {
     "es6": true
   },
-  "ignorePatterns": ["projects/**/*"],
+  "ignorePatterns": ["projects/**/*", "*.cy.ts"],
+  "plugins": ["sonarjs"],
   "overrides": [
     {
       "files": ["*.ts"],
@@ -16,7 +17,8 @@
       },
       "extends": [
         "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates"
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:sonarjs/recommended"
       ],
       "rules": {
         "@angular-eslint/directive-selector": [
@@ -38,7 +40,8 @@
         "no-console": ["error", { "allow": ["error"] }],
         "no-undef": "off",
         "semi": ["error", "always"],
-        "@typescript-eslint/no-unused-vars": "error"
+        "@typescript-eslint/no-unused-vars": "error",
+        "sonarjs/cognitive-complexity": "warn"
       }
     },
     {
