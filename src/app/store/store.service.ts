@@ -33,6 +33,7 @@ export class StoreService extends ComponentStore<ITodoState> {
   readonly searchString$ = this.select(({ searchString }) => searchString);
   readonly groupBy$ = this.select(({ groupBy }) => groupBy);
 
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   private conditions$ = this.select(({ showAll, searchString }) => {
     const conditions: ((item: ITodo) => boolean)[] = [];
 
@@ -43,23 +44,18 @@ export class StoreService extends ComponentStore<ITodoState> {
       let hasOperator = false;
       const tempConditions: ((item: ITodo) => boolean)[] = [];
       if (OPERATORS.some((operator) => searchString.includes(operator))) {
-        hasOperator = true;
         OPERATORS.forEach((operator) => {
           if (searchString.includes(operator)) {
             const values = searchString.split(operator);
             if (values.length === 2) {
               const [, value] = values;
               const comparator = value?.trim() ? +value.trim() : undefined;
-              if (
-                comparator !== null &&
-                comparator !== undefined &&
-                !isNaN(comparator)
-              ) {
+              if (comparator !== undefined && !isNaN(comparator)) {
                 const compareConditions = this.getCompareConditions(
                   operator,
                   comparator
                 );
-                compareConditions && tempConditions.push(compareConditions);
+                tempConditions.push(compareConditions);
               }
             }
           }
@@ -67,7 +63,7 @@ export class StoreService extends ComponentStore<ITodoState> {
         hasOperator = !!tempConditions.length;
         conditions.push(...tempConditions);
       }
-      !hasOperator &&
+      if (!hasOperator) {
         conditions.push(
           (item: ITodo) =>
             item.text?.toLowerCase().includes(searchString) ||
@@ -76,6 +72,7 @@ export class StoreService extends ComponentStore<ITodoState> {
             item.performance?.message?.toLowerCase()?.includes(searchString) ||
             false
         );
+      }
     }
     return conditions;
   });
@@ -241,46 +238,35 @@ export class StoreService extends ComponentStore<ITodoState> {
   private getCompareConditions(
     operator: string,
     comparator: number
-  ): ((item: ITodo) => boolean) | undefined {
-    switch (operator) {
-      case '<': {
-        return (item: ITodo) =>
-          item.additional?.remaining !== null &&
-          item.additional?.remaining !== undefined
-            ? item.additional?.remaining < comparator
-            : false;
+  ): (item: ITodo) => boolean {
+    return (item: ITodo) => {
+      if (
+        item.additional?.remaining !== null &&
+        item.additional?.remaining !== undefined
+      ) {
+        const remaining = item.additional.remaining;
+        switch (operator) {
+          case '<': {
+            return remaining < comparator;
+          }
+          case '>': {
+            return remaining > comparator;
+          }
+          case '<=': {
+            return remaining <= comparator;
+          }
+          case '>=': {
+            return remaining >= comparator;
+          }
+          case 'eq': {
+            return remaining === comparator;
+          }
+          default: {
+            return false;
+          }
+        }
       }
-      case '>': {
-        return (item: ITodo) =>
-          item.additional?.remaining !== null &&
-          item.additional?.remaining !== undefined
-            ? item.additional?.remaining > comparator
-            : false;
-      }
-      case '<=': {
-        return (item: ITodo) =>
-          item.additional?.remaining !== null &&
-          item.additional?.remaining !== undefined
-            ? item.additional?.remaining <= comparator
-            : false;
-      }
-      case '>=': {
-        return (item: ITodo) =>
-          item.additional?.remaining !== null &&
-          item.additional?.remaining !== undefined
-            ? item.additional?.remaining >= comparator
-            : false;
-      }
-      case 'eq': {
-        return (item: ITodo) =>
-          item.additional?.remaining !== null &&
-          item.additional?.remaining !== undefined
-            ? item.additional?.remaining === comparator
-            : false;
-      }
-      default: {
-        return;
-      }
-    }
+      return false;
+    };
   }
 }

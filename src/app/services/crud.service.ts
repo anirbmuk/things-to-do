@@ -3,6 +3,7 @@ import { environment } from '@environment';
 import { StorageService } from './storage.service';
 
 const EMPTY_ARRAY = '[]';
+const NO_WINDOWS_OBJECT_ERROR = 'Window object is undefined';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class CrudService {
   ) {
     return new Promise<T | undefined>((resolve, reject) => {
       if (!window) {
-        return reject(new Error('Window object is undefined'));
+        return reject(new Error(NO_WINDOWS_OBJECT_ERROR));
       }
       const items = this.storageService.getItem(storage) || EMPTY_ARRAY;
       const cleanedItems = JSON.parse(items) as T[];
@@ -30,7 +31,7 @@ export class CrudService {
   read<T>(storage = environment.dbname) {
     return new Promise<T[]>((resolve, reject) => {
       if (!window) {
-        return reject(new Error('Window object is undefined'));
+        return reject(new Error(NO_WINDOWS_OBJECT_ERROR));
       }
       const items = this.storageService.getItem(storage) || EMPTY_ARRAY;
       const parsedItems = JSON.parse(items) as T[];
@@ -47,7 +48,7 @@ export class CrudService {
   ) {
     return new Promise<T | undefined>((resolve, reject) => {
       if (!window) {
-        return reject(new Error('Window object is undefined'));
+        return reject(new Error(NO_WINDOWS_OBJECT_ERROR));
       }
       const items = this.storageService.getItem(storage) || EMPTY_ARRAY;
       const parsedItems = JSON.parse(items) as T[];
@@ -80,7 +81,7 @@ export class CrudService {
   ) {
     return new Promise<T | undefined>((resolve, reject) => {
       if (!window) {
-        return reject(new Error('Window object is undefined'));
+        return reject(new Error(NO_WINDOWS_OBJECT_ERROR));
       }
       const items = this.storageService.getItem(storage) || EMPTY_ARRAY;
       const parsedItems = JSON.parse(items) as T[];

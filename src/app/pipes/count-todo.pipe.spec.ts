@@ -1,5 +1,7 @@
 import { CountTodoPipe } from './count-todo.pipe';
 
+const ALL_CAUGHT_UP = 'All caught up ✔';
+
 describe('CountTodoPipe', () => {
   let pipe: CountTodoPipe;
 
@@ -18,18 +20,18 @@ describe('CountTodoPipe', () => {
     expect(output).toBeFalsy();
 
     output = pipe.transform(0, true);
-    expect(output).toEqual('All caught up ✔');
+    expect(output).toEqual(ALL_CAUGHT_UP);
 
     output = pipe.transform(null);
     expect(output).toBeFalsy();
 
     output = pipe.transform(null, true);
-    expect(output).toEqual('All caught up ✔');
+    expect(output).toEqual(ALL_CAUGHT_UP);
 
     output = pipe.transform(-1);
     expect(output).toBeFalsy();
 
     output = pipe.transform(-1, true);
-    expect(output).toEqual('All caught up ✔');
+    expect(output).toEqual(ALL_CAUGHT_UP);
   });
 });

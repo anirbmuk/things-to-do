@@ -58,13 +58,14 @@ export class ContentComponent {
 
   toogleStatus(event: Event, todo: ITodo) {
     event.stopPropagation();
+    const status = todo.status === 'Complete' ? 'Incomplete' : 'Complete';
     this.updateTodoStatus.emit({
       todoid: todo.todoid,
       todo: {
         ...todo,
-        status: todo.status === 'Complete' ? 'Incomplete' : 'Complete',
+        status,
         completedon:
-          todo.status === 'Incomplete'
+          status === 'Complete'
             ? this.dateService.getStorageFormDateTime()
             : undefined
       }
