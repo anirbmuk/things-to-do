@@ -1,10 +1,40 @@
 import { DateService } from './date.service';
 
+const OUTPUT_DATE = '2020-01-01T00:00:00.000Z';
+
 describe('DateService', () => {
   let dateService: DateService;
 
   beforeEach(() => {
     dateService = new DateService();
+  });
+
+  describe('isNextMonth', () => {
+    it('should calculate next month correctly', () => {
+      expect(
+        dateService.isNextMonth(new Date('2024-01-02'), new Date('2023-12-15'))
+      ).toEqual(true);
+      expect(
+        dateService.isNextMonth(new Date('2023-07-02'), new Date('2023-06-15'))
+      ).toEqual(true);
+      expect(
+        dateService.isNextMonth(new Date('2023-12-16'), new Date('2023-10-15'))
+      ).toEqual(false);
+      expect(
+        dateService.isNextMonth(new Date('2024-07-02'), new Date('2023-06-15'))
+      ).toEqual(false);
+    });
+  });
+
+  describe('isThisMonth', () => {
+    it('should calculate this month correctly', () => {
+      expect(
+        dateService.isThisMonth(new Date('2023-09-15'), new Date('2023-09-29'))
+      ).toEqual(true);
+      expect(
+        dateService.isThisMonth(new Date('2023-12-31'), new Date('2024-12-31'))
+      ).toEqual(false);
+    });
   });
 
   describe('getStorageDate', () => {
@@ -20,7 +50,7 @@ describe('DateService', () => {
 
     it('should return correct string for correct input', () => {
       const output = dateService.getStorageDate('2020-01-01');
-      expect(output).toEqual('2020-01-01T00:00:00.000Z');
+      expect(output).toEqual(OUTPUT_DATE);
     });
   });
 
@@ -68,14 +98,33 @@ describe('DateService', () => {
       expect(output?.message).toEqual('Due next week');
       expect(output?.remaining).toBeGreaterThanOrEqual(7);
     });
+
+    it(`should return 'Due next month' message for next month's TODOs`, () => {
+      const now = new Date();
+      const lastDayOfMonth = new Date(
+        now.getFullYear(),
+        now.getMonth() + 1,
+        0
+      ).getDate();
+      const daysToLastDayOfMonth = lastDayOfMonth - now.getDate();
+      if (daysToLastDayOfMonth >= 14) {
+        now.setDate(lastDayOfMonth + 1);
+      } else {
+        now.setDate(lastDayOfMonth + 14 - daysToLastDayOfMonth);
+      }
+      const output = dateService.getStatus(
+        `${now.getFullYear()}-${(now.getMonth() + 1)
+          .toString()
+          .padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}`
+      );
+      expect(output?.message).toEqual('Due next month');
+      expect(output?.remaining).toBeGreaterThanOrEqual(7);
+    });
   });
 
   describe('getPerformance', () => {
     it(`should return 'ontime' for TODOs without completedon`, () => {
-      const output = dateService.getPerformance(
-        '2020-01-01T00:00:00.000Z',
-        undefined
-      );
+      const output = dateService.getPerformance(OUTPUT_DATE, undefined);
       expect(output?.message).toBeTruthy();
       expect(output?.rating).toEqual('ontime');
       expect(output?.message).toEqual('Completed on time :-)');
@@ -83,7 +132,7 @@ describe('DateService', () => {
 
     it(`should return 'ontime' for TODOs with completedon within 1 day`, () => {
       const output = dateService.getPerformance(
-        '2020-01-01T00:00:00.000Z',
+        OUTPUT_DATE,
         '2020-01-01T23:59:00.000Z'
       );
       expect(output?.message).toBeTruthy();
@@ -93,7 +142,7 @@ describe('DateService', () => {
 
     it(`should return 'delayed' for TODOs with completedon within 2 days`, () => {
       const output = dateService.getPerformance(
-        '2020-01-01T00:00:00.000Z',
+        OUTPUT_DATE,
         '2020-01-02T23:59:00.000Z'
       );
       expect(output?.message).toBeTruthy();
@@ -103,7 +152,7 @@ describe('DateService', () => {
 
     it(`should return 'late' for TODOs with completedon more than 2 days`, () => {
       const output = dateService.getPerformance(
-        '2020-01-01T00:00:00.000Z',
+        OUTPUT_DATE,
         '2020-01-03T23:59:00.000Z'
       );
       expect(output?.message).toBeTruthy();

@@ -50,9 +50,6 @@ export class DateService {
       };
     }
 
-    const nextMonth =
-      formattedDueDate.getMonth() - formattedNowDate.getMonth() === 1 &&
-      formattedDueDate.getFullYear() >= formattedNowDate.getFullYear();
     if (remaining === 0) {
       return {
         state: 'warn',
@@ -77,7 +74,19 @@ export class DateService {
         message: 'Due next week',
         remaining
       };
-    } else if (remaining >= 14 && nextMonth) {
+    } else if (
+      remaining >= 14 &&
+      this.isThisMonth(formattedDueDate, formattedNowDate)
+    ) {
+      return {
+        state: 'safe',
+        message: 'Due this month',
+        remaining
+      };
+    } else if (
+      remaining >= 14 &&
+      this.isNextMonth(formattedDueDate, formattedNowDate)
+    ) {
       return {
         state: 'safe',
         message: 'Due next month',
@@ -180,5 +189,28 @@ export class DateService {
       rating: 'late',
       message: 'Task was delayed :-('
     };
+  }
+
+  isNextMonth(due: Date, now: Date) {
+    if (+due < +now) {
+      return false;
+    }
+    const duemonth = due.getMonth();
+    const nowmonth = now.getMonth();
+    if (due.getFullYear() === now.getFullYear()) {
+      return duemonth - nowmonth === 1;
+    } else if (due.getFullYear() - now.getFullYear() === 1) {
+      return duemonth - nowmonth === -11;
+    }
+    return false;
+  }
+
+  isThisMonth(due: Date, now: Date) {
+    const duemonth = due.getMonth();
+    const nowmonth = now.getMonth();
+    if (due.getFullYear() === now.getFullYear()) {
+      return duemonth === nowmonth;
+    }
+    return false;
   }
 }
