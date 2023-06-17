@@ -114,10 +114,10 @@ describe('ContentComponent', () => {
   });
 
   it('should toggle status', () => {
-    component.toogleStatus(new Event('click'), groupedTodos[0].todos[0]);
+    component.toggleStatus(new Event('click'), groupedTodos[0].todos[0]);
     expect(mockDateService.getStorageFormDateTime).not.toHaveBeenCalled();
 
-    component.toogleStatus(new Event('click'), groupedTodos[1].todos[0]);
+    component.toggleStatus(new Event('click'), groupedTodos[1].todos[0]);
     expect(mockDateService.getStorageFormDateTime).toHaveBeenCalled();
   });
 
