@@ -1,3 +1,6 @@
+## 2.9.0
+- Feature to share TODO on OS supported media  
+
 ## 2.8.0
 - Bug fix for incorrect logic behind 'Due next month' label  
 - Added new 'Due this month' label  
