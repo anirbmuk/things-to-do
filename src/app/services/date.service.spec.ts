@@ -89,7 +89,7 @@ describe('DateService', () => {
     });
 
     it(`should return 'Due next week' message for next week's TODOs`, () => {
-      const nextWeek = new Date(+new Date() + 8 * 24 * 60 * 60 * 1000);
+      const nextWeek = new Date(+new Date() + 7 * 24 * 60 * 60 * 1000);
       const output = dateService.getStatus(
         `${nextWeek.getFullYear()}-${(nextWeek.getMonth() + 1)
           .toString()

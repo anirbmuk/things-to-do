@@ -68,14 +68,14 @@ export class DateService {
         message: `Due in ${remaining} days`,
         remaining
       };
-    } else if (remaining >= 7 && remaining < 14) {
+    } else if (remaining >= 7 && remaining < 8) {
       return {
         state: 'info',
         message: 'Due next week',
         remaining
       };
     } else if (
-      remaining >= 14 &&
+      remaining >= 8 &&
       this.isThisMonth(formattedDueDate, formattedNowDate)
     ) {
       return {
@@ -84,7 +84,7 @@ export class DateService {
         remaining
       };
     } else if (
-      remaining >= 14 &&
+      remaining >= 8 &&
       this.isNextMonth(formattedDueDate, formattedNowDate)
     ) {
       return {
