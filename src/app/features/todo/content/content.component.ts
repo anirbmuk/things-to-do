@@ -38,6 +38,7 @@ export class ContentComponent {
     todoid: ITodo['todoid'];
     todo: UpdateTodo;
   }>();
+  @Output() shareTodo = new EventEmitter<string>();
 
   private readonly dateService = inject(DateService);
 
@@ -56,7 +57,7 @@ export class ContentComponent {
     });
   }
 
-  toogleStatus(event: Event, todo: ITodo) {
+  toggleStatus(event: Event, todo: ITodo) {
     event.stopPropagation();
     const status = todo.status === 'Complete' ? 'Incomplete' : 'Complete';
     this.updateTodoStatus.emit({
@@ -75,5 +76,13 @@ export class ContentComponent {
   onDeleteTodo(event: Event, todo: ITodo) {
     event.stopPropagation();
     this.deleteTodo.emit(todo.todoid);
+  }
+
+  onShareTodo(event: Event, todo: ITodo) {
+    event.stopPropagation();
+    const headingLength = Math.max(Math.floor(todo.heading.length * 1.5), 10);
+    const fill = (new Array(headingLength) as string[]).fill('-', 0).join('');
+    const data = `${todo.heading || ''}\n${fill}\n${todo.text || ''}\n`;
+    this.shareTodo.emit(data);
   }
 }

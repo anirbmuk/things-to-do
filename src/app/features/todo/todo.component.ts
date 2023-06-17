@@ -47,4 +47,8 @@ export class TodoComponent {
   deleteTodoAction(todoid: ITodo['todoid']) {
     this.todoStore.deleteTodoWithConfirmation(todoid);
   }
+
+  shareTodoAction(text: string) {
+    window.navigator.share({ title: 'Sharing my TODO item', text });
+  }
 }

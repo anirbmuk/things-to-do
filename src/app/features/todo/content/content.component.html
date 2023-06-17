@@ -86,12 +86,21 @@
                         'text-green-700': todo.status === 'Complete'
                       }"
                       data-test-id="togglestatus"
-                      (click)="toogleStatus($event, todo)"
+                      (click)="toggleStatus($event, todo)"
                       >{{
                         todo.status === 'Incomplete'
                           ? 'unpublished'
                           : 'check_circle'
                       }}</mat-icon
+                    >
+                  </div>
+                  <div class="flex justify-end">
+                    <mat-icon
+                      role="button"
+                      data-test-id="sharetodo"
+                      class="todo-share-btn"
+                      (click)="onShareTodo($event, todo)"
+                      >share</mat-icon
                     >
                   </div>
                   <div class="flex justify-end">

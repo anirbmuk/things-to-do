@@ -18,6 +18,10 @@
   @apply text-gray-700;
 }
 
+.todo-share-btn {
+  @apply text-gray-700;
+}
+
 @media (prefers-color-scheme: dark) {
   .todo-content-wrapper {
     @apply border border-white bg-transparent;
@@ -34,6 +38,10 @@
   }
 
   .todo-total-count {
+    @apply text-gray-100;
+  }
+
+  .todo-share-btn {
     @apply text-gray-100;
   }
 }
