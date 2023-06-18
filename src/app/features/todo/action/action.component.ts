@@ -10,6 +10,10 @@ import { GroupBy } from '@types';
 
 const MATERIAL_MODULES = [MatButtonToggleModule] as const;
 
+function toBoolean(value: string | boolean | null): boolean {
+  return value !== null && `${value}` !== 'false';
+}
+
 @Component({
   standalone: true,
   imports: [...MATERIAL_MODULES],
@@ -19,8 +23,11 @@ const MATERIAL_MODULES = [MatButtonToggleModule] as const;
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ActionComponent {
-  @Input() showAll: boolean | null = false;
-  @Input() groupBy: GroupBy | null = 'day';
+  @Input({ required: true, transform: toBoolean }) showAll:
+    | string
+    | boolean
+    | null = false;
+  @Input({ required: true }) groupBy: GroupBy | null = 'day';
 
   @Output() toggleShowAll = new EventEmitter<boolean>();
   @Output() toggleGroupBy = new EventEmitter<GroupBy>();

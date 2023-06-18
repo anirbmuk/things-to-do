@@ -26,8 +26,8 @@ const PIPES = [DisplayDatePipe, GroupDatePipe, CountTodoPipe] as const;
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContentComponent {
-  @Input() todos: GroupedTodo[] | null = [];
-  @Input() totalPending: number | null = 0;
+  @Input({ required: true }) todos: GroupedTodo[] | null = [];
+  @Input({ required: true }) totalPending: number | null = 0;
 
   @Output() deleteTodo = new EventEmitter<ITodo['todoid']>();
   @Output() updateTodo = new EventEmitter<{
