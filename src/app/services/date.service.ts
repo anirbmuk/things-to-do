@@ -79,7 +79,7 @@ export class DateService {
       this.isThisMonth(formattedDueDate, formattedNowDate)
     ) {
       return {
-        state: 'safe',
+        state: 'moderate',
         message: 'Due this month',
         remaining
       };
