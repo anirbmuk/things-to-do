@@ -24,6 +24,7 @@ A light and fast todo-app, built with angular 16
 > - All standalone components  
 > - Typed reactive forms  
 > - New **`inject`** function (replacing constructors)  
+> - Required inputs  
 
 - - - -
 
