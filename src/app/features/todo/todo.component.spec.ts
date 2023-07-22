@@ -5,10 +5,17 @@ import { StoreService } from '@store';
 import { UpdateTodo } from '@types';
 import { TodoComponent } from './todo.component';
 
+class MockNavigator {
+  share(params: { text: string; title: string }) {
+    return params;
+  }
+}
+
 describe('TodoComponent', () => {
   let component: TodoComponent;
   let fixture: ComponentFixture<TodoComponent>;
   let mockStoreService: StoreService;
+  let mockNavigator: MockNavigator;
 
   beforeEach(waitForAsync(() => {
     mockStoreService = jasmine.createSpyObj<StoreService>(
@@ -29,6 +36,12 @@ describe('TodoComponent', () => {
   }));
 
   beforeEach(() => {
+    mockNavigator = jasmine.createSpyObj<MockNavigator>('MockNavigator', [
+      'share'
+    ]);
+    Object.defineProperty(window, 'navigator', {
+      value: mockNavigator
+    });
     fixture = TestBed.createComponent(TodoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -72,5 +85,11 @@ describe('TodoComponent', () => {
     expect(
       mockStoreService.deleteTodoWithConfirmation
     ).toHaveBeenCalledOnceWith('a1b2c3d4e5');
+
+    component.shareTodoAction('Test data');
+    expect(mockNavigator.share).toHaveBeenCalledOnceWith({
+      text: 'Test data',
+      title: 'Sharing my TODO item'
+    });
   });
 });

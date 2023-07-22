@@ -19,7 +19,7 @@ export interface ITodo {
 
 export type Status = 'Incomplete' | 'Complete';
 
-export type State = 'error' | 'warn' | 'info' | 'safe' | 'later';
+export type State = 'error' | 'warn' | 'info' | 'moderate' | 'safe' | 'later';
 
 export type Rating = 'beforetime' | 'ontime' | 'delayed' | 'late';
 
