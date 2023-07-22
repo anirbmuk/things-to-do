@@ -1,3 +1,6 @@
+## 3.0.0
+- Updated to angular 16  
+
 ## 2.9.0
 - Feature to share TODO on OS supported media  
 
