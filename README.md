@@ -1,5 +1,5 @@
 # things-to-do  
-A light and fast todo-app, built with angular 16  
+A light and fast todo-app, built with angular 17  
 
 - - - -
 
@@ -20,7 +20,7 @@ A light and fast todo-app, built with angular 16
 :heavy_check_mark: **Easy Share**  
 > Share your TODO items on your favourite medium.  
 
-:heavy_check_mark: **Built with Angular v16**  
+:heavy_check_mark: **Built with Angular 17**  
 > - All standalone components  
 > - Typed reactive forms  
 > - New **`inject`** function (replacing constructors)  
