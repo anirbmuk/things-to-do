@@ -45,7 +45,7 @@ jobs:
         run: npm run test:headless
 
       - name: Run e2e tests
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@V6
         with:
           start: npm run start
           browser: chrome
