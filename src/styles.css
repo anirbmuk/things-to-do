@@ -119,6 +119,9 @@
   .mat-mdc-dialog-container hr {
     @apply mx-4;
   }
+  .mat-button-toggle .mat-pseudo-checkbox {
+    display: none;
+  }
   @media (prefers-color-scheme: dark) {
     input:focus,
     textarea:focus,
