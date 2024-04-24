@@ -82,7 +82,8 @@ export class ContentComponent {
     event.stopPropagation();
     const headingLength = Math.max(Math.floor(todo.heading.length * 1.5), 10);
     const fill = (new Array(headingLength) as string[]).fill('-', 0).join('');
-    const data = `${todo.heading || ''}\n${fill}\n${todo.text || ''}\n`;
+    const due = `Due: ${this.dateService.getReadableDate(todo.duedate)}`;
+    const data = `${todo.heading || ''}\n${fill}\n${todo.text || ''}\n\n${due}\n`;
     this.shareTodo.emit(data);
   }
 }

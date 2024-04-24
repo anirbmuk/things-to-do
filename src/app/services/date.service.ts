@@ -213,4 +213,9 @@ export class DateService {
     }
     return false;
   }
+
+  getReadableDate(isoDate: string) {
+    const [date] = (new Date(isoDate).toString()).split(' (');
+    return date;
+  }
 }
