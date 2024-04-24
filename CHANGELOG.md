@@ -1,3 +1,7 @@
+## 4.1.0
+- Fixed UI issues with material 17  
+- Added due-date in the content shared  
+
 ## 4.0.0
 - Updated to angular 17  
 
