@@ -1,5 +1,8 @@
-# things-to-do  
+# things-to-do (archived)  
 A light and fast todo-app, built with angular 17  
+
+# somethings-todo  
+New and improved Vue3 application available at https://github.com/anirbmuk/somethings-todo  
 
 - - - -
 
